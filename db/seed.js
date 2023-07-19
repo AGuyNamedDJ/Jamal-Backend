@@ -3,7 +3,7 @@ const { create } = require('domain');
 const { client } = require('./index');
 
 // Page Imports
-const { createUser, getUserByUsername, loginUser } = require('./users');
+const { createUser, getAllUsers, getUserById, getUserByUsername, loginUser } = require('./users');
 
 // Step 2: User Methods
     // Method: dropTables

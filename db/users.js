@@ -13,7 +13,7 @@ async function createUser({ username, password, email, full_name, user_role, pro
         INSERT INTO users(username, password, email, full_name, user_role, profile_image, phone_number) 
         VALUES($1, $2, $3, $4, $5, $6, $7)
         RETURNING *;
-      `, [username, hashedPassword, email, full_name, user_role, profile_image, phone_number, address]);
+      `, [username, hashedPassword, email, full_name, user_role, profile_image, phone_number]);
   
       return result.rows[0];
     } catch (error) {
@@ -23,22 +23,56 @@ async function createUser({ username, password, email, full_name, user_role, pro
     }
 }
 
+// getAllUsers
+async function getAllUsers() {
+    try {
+        const { rows } = await client.query(`
+        SELECT id, username, email, full_name, user_role, profile_image, phone_number
+        FROM users;
+    `);
+
+        return rows;
+    } catch (error) {
+        console.error("Could not get all users.");
+        console.log(error);
+        throw error;
+    }
+}
+
+// getUserById
+async function getUserById(userId) {
+    try {
+        const { rows: [user] } = await client.query(`
+        SELECT id, username, email, full_name, user_role, profile_image, phone_number
+        FROM users
+        WHERE id = $1;
+    `, [userId]);
+
+        return user;
+    } catch (error) {
+        console.error(`Could not get user with id ${userId}`);
+        console.log(error);
+        throw error;
+    }
+}
+
 // getUserByUsername
 async function getUserByUsername(username) {
     try {
-      const { rows } = await client.query(`
-        SELECT *
+        const { rows: [user] } = await client.query(`
+        SELECT id, username, email, full_name, user_role, profile_image, phone_number
         FROM users
         WHERE username = $1;
-      `, [username]);
+    `, [username]);
+
   
-      return rows[0];
+      return user;
     } catch (error) {
         console.error(`Could not get user with username ${username}`);
         console.error(error);
         throw error;
     }
-  }
+}
   
 
 // loginUser
@@ -76,6 +110,8 @@ async function loginUser({ username, password }) {
 
 module.exports = {
     createUser,
+    getAllUsers,
+    getUserById,
     getUserByUsername,
     loginUser
 };
