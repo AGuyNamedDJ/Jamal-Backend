@@ -17,8 +17,9 @@ async function createUser({ username, password, email, full_name, user_role, pro
   
       return result.rows[0];
     } catch (error) {
-      console.error(`Could not create user ${username}`);
-      console.log(error);
+        console.error(`Could not create user ${username}`);
+        console.log(error);
+        throw error; // Re-throw the error after logging it
     }
 }
 
@@ -33,8 +34,9 @@ async function getUserByUsername(username) {
   
       return rows[0];
     } catch (error) {
-      console.error(`Could not get user with username ${username}`);
-      throw error;
+        console.error(`Could not get user with username ${username}`);
+        console.error(error);
+        throw error;
     }
   }
   
@@ -67,7 +69,8 @@ async function loginUser({ username, password }) {
         return user;
     } catch (error) {
         console.error(`Could not log in user ${username}`);
-        console.log(error);
+        console.error(error);
+        throw error;
     }
 }
 
