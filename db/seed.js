@@ -111,39 +111,63 @@ const { createUser, getAllUsers, getUserById, getUserByUsername, loginUser } = r
     // Test DB
     async function testDB() {
         try {
-            console.log("Starting to test database...");
-    
-            // User Testing
-                // Test initialUsers
-                console.log("Calling createUser...");
-                const users = [];
-                for (const userData of initialUsers) {
-                    const user = await createUser(userData);
-                    users.push(user);
-                    console.log("Created user", user);
-                }
+          console.log("Starting to test database...");
+      
+          // User Testing
+            // Test createUser
+            console.log("Calling createUser...");
+            const usersData = [
+                {
+                username: 'Owner1',
+                password: 'Dalron',
+                email: 'user1@example.com',
+                full_name: 'Dalron J. Robertson',
+                user_role: 'stylist',
+                profile_image: 'url',
+                phone_number: '123-456-7890',
+                },
+                {
+                username: 'Owner2',
+                password: 'Dalron',
+                email: 'user2@example.com',
+                full_name: 'Mrs. Robertson',
+                user_role: 'customer',
+                profile_image: 'url',
+                phone_number: '123-456-7891',
+                },
+            ];
         
-                // Test getAllUsers
-                console.log("Calling getAllUsers...");
-                const allUsers = await getAllUsers();
-                console.log("All users", allUsers);
+            // Test createUser
+            console.log("Calling createUser...");
+            const createdUsers = [];
+            for (const userData of usersData) {
+              const user = await createUser(userData);
+              createdUsers.push(user);
+              console.log("Created user", user);
+            }
 
-                // Test getUserById
-                console.log("Calling getUserById for the first user...");
-                const singleUserById = await getUserById(users[0].id);
-                console.log("User by ID", singleUserById);
+            // Test getAllUsers
+            console.log("Calling getAllUsers...");
+            const allUsers = await getAllUsers();
+            console.log("All users", allUsers);
         
-                // Test getUserByUsername
-                console.log("Calling getUserByUsername for the second user...");
-                const singleUserByUsername = await getUserByUsername(initialUsers[1].username);
-                console.log("User by Username", singleUserByUsername);
-    
+            // Test getUserById
+            console.log("Calling getUserById for the first user...");
+            const singleUserById = await getUserById(createdUsers[0].id);
+            console.log("User by ID", singleUserById);
+        
+            // Test getUserByUsername
+            console.log("Calling getUserByUsername for the second user...");
+            const singleUserByUsername = await getUserByUsername(usersData[1].username);
+            console.log("User by Username", singleUserByUsername);
+        
             console.log("Finished testing database.");
-        } catch (error) {
+            } catch (error) {
             console.log("Error during testDB!");
             console.log(error);
-        }
-    };
+            }
+        };
+      
   
    // Final Call
     rebuildDB()

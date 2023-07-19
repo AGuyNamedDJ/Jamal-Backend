@@ -6,13 +6,11 @@ const bcrypt = require('bcrypt')
 async function createUser({ username, password, email, full_name, user_role, profile_image, phone_number }) {
     try {
       console.log(`Hashing password for ${username}`);
-      
       const SALT_COUNT = 10;
       const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
-      
       console.log(`Password hashed for ${username}`);
       console.log(`Inserting ${username} into database`);
-
+  
       const result = await client.query(`
         INSERT INTO users(username, password, email, full_name, user_role, profile_image, phone_number) 
         VALUES($1, $2, $3, $4, $5, $6, $7)
@@ -21,15 +19,14 @@ async function createUser({ username, password, email, full_name, user_role, pro
       `, [username, hashedPassword, email, full_name, user_role, profile_image, phone_number]);
   
       console.log(`User ${username} inserted into database`);
-      return result.rows[0];
+      return result.rows;
     } catch (error) {
-        console.error(`Could not create user ${username}`);
-        console.error("Error details: ", error);
-        throw error; // Re-throw the error after logging it
+      console.error(`Could not create user ${username}`);
+      console.error("Error details: ", error);
+      throw error;
     }
-}
-
-
+  }
+ 
 // getAllUsers
 async function getAllUsers() {
     try {
@@ -47,21 +44,24 @@ async function getAllUsers() {
 }
 
 // getUserById
-async function getUserById(userId) {
+// getUserById function
+async function getUserById(id) {
     try {
-        const { rows: [user] } = await client.query(`
-        SELECT id, username, email, full_name, user_role, profile_image, phone_number
+        const { rows: [ users ] } = await client.query(`
+        SELECT id, username
         FROM users
-        WHERE id = $1;
-    `, [userId]);
+        WHERE id= $1;
+        `,[id]);
 
-        return user;
+        if (!users) {
+            return null
+        }
+        return users;
     } catch (error) {
-        console.error(`Could not get user with id ${userId}`);
-        console.log(error);
-        throw error;
+        console.log(error)
     }
-}
+};
+
 
 // getUserByUsername
 async function getUserByUsername(username) {
