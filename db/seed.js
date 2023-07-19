@@ -11,19 +11,19 @@ const { createUser, getAllUsers, getUserById, getUserByUsername, loginUser } = r
         try {
             console.log("Dropping tables... ");
             await client.query(`
-            DROP TABLE IF EXISTS users;
-            DROP TABLE IF EXISTS suite_renters;
-            DROP TABLE IF EXISTS salon_suites;
-            DROP TABLE IF EXISTS services;
-            DROP TABLE IF EXISTS appointments;
-            DROP TABLE IF EXISTS payments;
-            DROP TABLE IF EXISTS reviews;
-            DROP TABLE IF EXISTS favorites;
-            DROP TABLE IF EXISTS notifications;
-            DROP TABLE IF EXISTS messages;
-            DROP TABLE IF EXISTS services;
-            DROP TABLE IF EXISTS promotions;
-            DROP TABLE IF EXISTS business_hours;
+            DROP TABLE IF EXISTS suite_renters CASCADE;
+            DROP TABLE IF EXISTS users CASCADE;
+            DROP TABLE IF EXISTS salon_suites CASCADE;
+            DROP TABLE IF EXISTS services CASCADE;
+            DROP TABLE IF EXISTS appointments CASCADE;
+            DROP TABLE IF EXISTS payments CASCADE;
+            DROP TABLE IF EXISTS reviews CASCADE;
+            DROP TABLE IF EXISTS favorites CASCADE;
+            DROP TABLE IF EXISTS notifications CASCADE;
+            DROP TABLE IF EXISTS messages CASCADE;
+            DROP TABLE IF EXISTS services CASCADE;
+            DROP TABLE IF EXISTS promotions CASCADE;
+            DROP TABLE IF EXISTS business_hours CASCADE;
             `)
         
             console.log("Finished dropping tables.")
@@ -69,32 +69,39 @@ const { createUser, getAllUsers, getUserById, getUserByUsername, loginUser } = r
     async function createInitialUsers() {
         console.log("Creating initial users...");
         try {
-    
-            const initialUsers = [
-                { username: 'user1', password: 'password1', email: 'user1@example.com', full_name: 'User One', user_role: 'stylist', profile_image: 'url', phone_number: '123-456-7890', address: '123 Main St' },
-                { username: 'user2', password: 'password2', email: 'user2@example.com', full_name: 'User Two', user_role: 'customer', profile_image: 'url', phone_number: '123-456-7891', address: '234 Main St' },
-                // More users here as needed
-            ];
-    
-            const users = await Promise.all(initialUsers.map(createUser));
-            console.log(users);
-    
+            await createUser({
+                username: 'Owner1', 
+                password: 'Dalron', 
+                email: 'user1@example.com', 
+                full_name: 'Dalron J. Robertson', 
+                user_role: 'stylist', 
+                profile_image: 'url', 
+                phone_number: '123-456-7890'
+            });
+            await createUser({
+                username: 'Owner2', 
+                password: 'Dalron', 
+                email: 'user2@example.com', 
+                full_name: 'Mrs. Robertson', 
+                user_role: 'customer', 
+                profile_image: 'url', 
+                phone_number: '123-456-7891'
+            });
+     
             console.log("Finished creating initial users.");
         } catch (error) {
             console.error("Error creating initial users!");
             console.log(error);
-            throw error;
         }
     };
     
-
-
     // Rebuild DB
     async function rebuildDB() {
         try {
             client.connect();
             await dropTables();
             await createTables();
+            await createInitialUsers();
         } catch (error) {
             console.log("Error during rebuildDB!")
             console.log(error.detail);
@@ -106,12 +113,31 @@ const { createUser, getAllUsers, getUserById, getUserByUsername, loginUser } = r
         try {
             console.log("Starting to test database...");
     
-            // Test
-            // console.log("Calling all ...");
-            // const manufacturer = await ();
-            // console.log("Results", );
+            // User Testing
+                // Test initialUsers
+                console.log("Calling createUser...");
+                const users = [];
+                for (const userData of initialUsers) {
+                    const user = await createUser(userData);
+                    users.push(user);
+                    console.log("Created user", user);
+                }
+        
+                // Test getAllUsers
+                console.log("Calling getAllUsers...");
+                const allUsers = await getAllUsers();
+                console.log("All users", allUsers);
 
-            // Test Concluded
+                // Test getUserById
+                console.log("Calling getUserById for the first user...");
+                const singleUserById = await getUserById(users[0].id);
+                console.log("User by ID", singleUserById);
+        
+                // Test getUserByUsername
+                console.log("Calling getUserByUsername for the second user...");
+                const singleUserByUsername = await getUserByUsername(initialUsers[1].username);
+                console.log("User by Username", singleUserByUsername);
+    
             console.log("Finished testing database.");
         } catch (error) {
             console.log("Error during testDB!");

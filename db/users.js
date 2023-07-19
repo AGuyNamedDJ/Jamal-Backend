@@ -3,11 +3,16 @@ const { client } = require("./Index");
 const bcrypt = require('bcrypt')
 
 // createUsers
-async function createUser({ username, password, email, full_name, user_role, profile_image, phone_number, address }) {
+async function createUser({ username, password, email, full_name, user_role, profile_image, phone_number }) {
     try {
-      // Hash the password
+      console.log(`Hashing password for ${username}`);
+      
       const SALT_COUNT = 10;
       const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
+      
+      console.log(`Password hashed for ${username}`);
+
+      console.log(`Inserting ${username} into database`);
 
       const result = await client.query(`
         INSERT INTO users(username, password, email, full_name, user_role, profile_image, phone_number) 
@@ -15,10 +20,12 @@ async function createUser({ username, password, email, full_name, user_role, pro
         RETURNING *;
       `, [username, hashedPassword, email, full_name, user_role, profile_image, phone_number]);
   
+      console.log(`User ${username} inserted into database`);
+
       return result.rows[0];
     } catch (error) {
         console.error(`Could not create user ${username}`);
-        console.log(error);
+        console.error(error);
         throw error; // Re-throw the error after logging it
     }
 }
