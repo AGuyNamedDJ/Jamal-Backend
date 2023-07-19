@@ -153,7 +153,7 @@ const { createUser, getAllUsers, getUserById, getUserByUsername, loginUser } = r
         
             // Test getUserById
             console.log("Calling getUserById for the first user...");
-            const singleUserById = await getUserById(createdUsers[0].id);
+            const singleUserById = await getUserById(createdUsers[1].id);
             console.log("User by ID", singleUserById);
         
             // Test getUserByUsername
