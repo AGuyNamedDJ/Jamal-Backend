@@ -33,7 +33,7 @@ const { createUser, getUserByUsername, loginUser } = require('./users');
         }
     };
 
-    // Create Tables
+    // Method: Create Tables:
     async function createTables() {
         try {
             console.log('Starting to build tables...');
@@ -47,17 +47,47 @@ const { createUser, getUserByUsername, loginUser } = require('./users');
                 user_role VARCHAR(25),
                 profile_image VARCHAR(255),
                 phone_number VARCHAR(15),
-                address VARCHAR(255),
                 "is_active" BOOLEAN DEFAULT true
             );
+            CREATE TABLE suite_renters(
+                id SERIAL PRIMARY KEY,
+                user_id INTEGER REFERENCES users(id),
+                franchise_location VARCHAR(255),
+                suite_number VARCHAR(255)
+            );
             
-            `);
-            console.log('Finished building tables.');
-            } catch (error) {
-            console.error('Error building tables!');
+            
+        `);
+        console.log('Finished building tables.');
+        } catch (error) {
+        console.error('Error building tables!');
+        console.log(error);
+        }
+    };
+
+    // Method: createInitialUsers:
+    async function createInitialUsers() {
+        console.log("Creating initial users...");
+        try {
+    
+            const initialUsers = [
+                { username: 'user1', password: 'password1', email: 'user1@example.com', full_name: 'User One', user_role: 'stylist', profile_image: 'url', phone_number: '123-456-7890', address: '123 Main St' },
+                { username: 'user2', password: 'password2', email: 'user2@example.com', full_name: 'User Two', user_role: 'customer', profile_image: 'url', phone_number: '123-456-7891', address: '234 Main St' },
+                // More users here as needed
+            ];
+    
+            const users = await Promise.all(initialUsers.map(createUser));
+            console.log(users);
+    
+            console.log("Finished creating initial users.");
+        } catch (error) {
+            console.error("Error creating initial users!");
             console.log(error);
-            }
-        };
+            throw error;
+        }
+    };
+    
+
 
     // Rebuild DB
     async function rebuildDB() {
