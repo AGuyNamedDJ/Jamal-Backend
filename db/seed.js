@@ -6,6 +6,7 @@ const { client } = require('./index');
 const { createUser, getAllUsers, getUserById, getUserByUsername, loginUser } = require('./users');
 const { createSuite, getSuiteById, getAllSuites, updateSuite, deleteSuite } = require('./salonSuites');
 const { createRenter, getRenterById, getRentersByUserId, getAllRenters, updateRenter, deleteRenter } = require('./salonRenters');
+const { createService, getAllServices, getServiceById, getServicesByUser, updateService, deleteService} = require('./services');
 
 // Step 2: User Methods
     // Method: dropTables
@@ -64,6 +65,15 @@ const { createRenter, getRenterById, getRentersByUserId, getAllRenters, updateRe
                 rent_end_date DATE NOT NULL,
                 monthly_rental_fee DECIMAL(7,2) NOT NULL,
                 lease_contract_link VARCHAR(1024)
+            );
+            CREATE TABLE services(
+                id SERIAL PRIMARY KEY,
+                user_id INTEGER REFERENCES users(id),
+                name VARCHAR(50) NOT NULL,
+                description TEXT,
+                price DECIMAL(7,2) NOT NULL,
+                duration INTEGER,
+                image_link VARCHAR(255)
             );
             
             
@@ -144,6 +154,27 @@ const { createRenter, getRenterById, getRentersByUserId, getAllRenters, updateRe
             console.log(error)
         }
     };
+
+    // Method: createInitialService
+    async function createInitialService() {
+        try {
+            console.log("Creating initial service...");
+            const service = await createService({
+                user_id: 1, 
+                name: "Haircut",
+                description: "Includes wash, cut, and style.", 
+                price: 35.00,
+                duration: 60,
+                image_link: 'www.example.com/image.jpg'
+            });
+            console.log(service);
+            console.log("Finished creating initial service.");
+        } catch(error){
+            console.log("Error creating initial service!")
+            console.log(error)
+        }
+    };
+
     
 
     
@@ -156,6 +187,9 @@ const { createRenter, getRenterById, getRentersByUserId, getAllRenters, updateRe
             await createInitialUsers();
             await createInitialSalonSuite();
             await createInitialSalonRenter();
+            await createInitialService();
+
+
         } catch (error) {
             console.log("Error during rebuildDB!")
             console.log(error.detail);
@@ -229,17 +263,17 @@ const { createRenter, getRenterById, getRentersByUserId, getAllRenters, updateRe
             // });
             // console.log(newSuite);
 
-            // Test getSuiteById method
+            // Test getSuiteById 
             // console.log("Getting suite by id...");
             // const suite = await getSuiteById(newSuite.id);
             // console.log(suite);
 
-            // Test getAllSuites method
+            // Test getAllSuites 
             // console.log("Getting all suites...");
             // const allSuites = await getAllSuites();
             // console.log(allSuites);
 
-            // Test updateSuite method
+            // Test updateSuite 
             // console.log("Updating suite...");
             // const updatedSuite = await updateSuite({
             //     id: newSuite.id,
@@ -250,65 +284,106 @@ const { createRenter, getRenterById, getRentersByUserId, getAllRenters, updateRe
             // });
             // console.log(updatedSuite);
 
-            // Test deleteSuite method
+            // Test deleteSuite 
             // console.log("Deleting suite...");
             // await deleteSuite(updatedSuite.id);
             // console.log("Suite deleted.");
 
 
         // Test Salon Renter
-            console.log("Creating a new renter...");
-            const newRenter = await createRenter({
+            // console.log("Creating a new renter...");
+            // const newRenter = await createRenter({
+            //     user_id: 1, 
+            //     suite_id: 1,
+            //     rent_start_date: '2023-08-01', 
+            //     rent_end_date: '2024-08-01', 
+            //     monthly_rental_fee: 300.00, 
+            //     lease_contract_link: 'www.example.com/leasecontract.pdf'
+            // });
+            // console.log(newRenter);
+            
+            // Test getRenterById 
+            // console.log("Getting renter by id...");
+            // const renter = await getRenterById(newRenter.id);
+            // console.log(renter);
+            
+            // Test getRentersByUserId 
+            // console.log("Getting renter by user id...");
+            // const rentersByUser = await getRentersByUserId(newRenter.user_id);
+            // console.log(rentersByUser);
+            
+            // Test getAllRenters 
+            // console.log("Getting all renters...");
+            // const allRenters = await getAllRenters();
+            // console.log(allRenters);
+            
+            // Test updateRenter 
+            // console.log("Updating renter...");
+            // const updatedRenter = await updateRenter({
+            //     id: newRenter.id,
+            //     user_id: newRenter.user_id, 
+            //     suite_id: newRenter.suite_id,
+            //     rent_start_date: '2024-08-01', // Notice the column name here
+            //     rent_end_date: '2025-08-01', 
+            //     monthly_rental_fee: 350.00, 
+            //     lease_contract_link: 'www.example.com/new_leasecontract.pdf'
+            // });
+            // console.log(updatedRenter);
+           
+            // Test deleteRenter 
+            // console.log("Deleting renter...");
+            // await deleteRenter(updatedRenter.id);
+            // console.log("Renter deleted.");
+
+
+        // Test Services
+            console.log("Creating a new service...");
+            const newService = await createService({
                 user_id: 1, 
-                suite_id: 1,
-                rent_start_date: '2023-08-01', 
-                rent_end_date: '2024-08-01', 
-                monthly_rental_fee: 300.00, 
-                lease_contract_link: 'www.example.com/leasecontract.pdf'
+                name: "Hair Styling",
+                description: "Includes hair wash, styling, and finish.", 
+                price: 30.00,
+                duration: 90,
+                image_link: 'www.example.com/image2.jpg'
             });
-            console.log(newRenter);
-            
-            // Test getRenterById method
-            console.log("Getting renter by id...");
-            const renter = await getRenterById(newRenter.id);
-            console.log(renter);
-            
-            // Test getRentersByUserId method
-            console.log("Getting renter by user id...");
-            const rentersByUser = await getRentersByUserId(newRenter.user_id);
-            console.log(rentersByUser);
-            
-            // Test getAllRenters method
-            console.log("Getting all renters...");
-            const allRenters = await getAllRenters();
-            console.log(allRenters);
-            
-            // Test updateRenter method
-            console.log("Updating renter...");
-            const updatedRenter = await updateRenter({
-                id: newRenter.id,
-                user_id: newRenter.user_id, 
-                suite_id: newRenter.suite_id,
-                rent_start_date: '2024-08-01', // Notice the column name here
-                rent_end_date: '2025-08-01', 
-                monthly_rental_fee: 350.00, 
-                lease_contract_link: 'www.example.com/new_leasecontract.pdf'
+            console.log(newService);
+
+            // Test getServiceById 
+            console.log("Getting service by id...");
+            const service = await getServiceById(newService.id);
+            console.log(service);
+
+            // Test getAllServices 
+            console.log("Getting all services...");
+            const allServices = await getAllServices();
+            console.log(allServices);
+
+            // Test updateService 
+            console.log("Updating service...");
+            const updatedService = await updateService({
+                id: newService.id,
+                user_id: newService.user_id, 
+                name: "Hair Styling Deluxe",
+                description: "Includes hair wash, deep conditioning, styling, and finish.", 
+                price: 50.00,
+                duration: 120, 
+                image_link: 'www.example.com/image2_deluxe.jpg'
             });
-            console.log(updatedRenter);
-            
-            // Test deleteRenter method
-            console.log("Deleting renter...");
-            await deleteRenter(updatedRenter.id);
-            console.log("Renter deleted.");
+            console.log(updatedService);
+
+            // Test deleteService 
+            console.log("Deleting service...");
+            await deleteService(updatedService.id);
+            console.log("Service deleted.");
+
 
         } catch (error) {
         console.log("Error during testDB!");
         console.log(error);
         }
     };
-      
-  
-   // Final Call
+        
+   // Rebuild Call
     rebuildDB()
         .then(testDB)
         .catch(console.error)
