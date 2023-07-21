@@ -49,12 +49,18 @@ const { createUser, getAllUsers, getUserById, getUserByUsername, loginUser } = r
                 phone_number VARCHAR(15),
                 "is_active" BOOLEAN DEFAULT true
             );
-            CREATE TABLE suite_renters(
+            CREATE TABLE salon_suites(
                 id SERIAL PRIMARY KEY,
                 user_id INTEGER REFERENCES users(id),
                 franchise_location VARCHAR(255),
-                suite_number VARCHAR(255)
+                suite_number VARCHAR(255),
+                lease_start_date DATE,
+                lease_end_date DATE,
+                monthly_rental_fee NUMERIC(6,2)
             );
+            
+            
+            
             
             
         `);
