@@ -5,6 +5,7 @@ const { client } = require('./index');
 // Page Imports
 const { createUser, getAllUsers, getUserById, getUserByUsername, loginUser } = require('./users');
 const { createSuite, getSuiteById, getAllSuites, updateSuite, deleteSuite } = require('./salonSuites');
+const { createRenter, getRenterById, getRentersByUserId, getAllRenters, updateRenter, deleteRenter } = require('./salonRenters');
 
 // Step 2: User Methods
     // Method: dropTables
@@ -12,21 +13,19 @@ const { createSuite, getSuiteById, getAllSuites, updateSuite, deleteSuite } = re
         try {
             console.log("Dropping tables... ");
             await client.query(`
-            DROP TABLE IF EXISTS suite_renters CASCADE;
-            DROP TABLE IF EXISTS users CASCADE;
-            DROP TABLE IF EXISTS salon_suites CASCADE;
-            DROP TABLE IF EXISTS services CASCADE;
-            DROP TABLE IF EXISTS appointments CASCADE;
-            DROP TABLE IF EXISTS payments CASCADE;
-            DROP TABLE IF EXISTS reviews CASCADE;
-            DROP TABLE IF EXISTS favorites CASCADE;
-            DROP TABLE IF EXISTS notifications CASCADE;
             DROP TABLE IF EXISTS messages CASCADE;
+            DROP TABLE IF EXISTS notifications CASCADE;
+            DROP TABLE IF EXISTS favorites CASCADE;
+            DROP TABLE IF EXISTS reviews CASCADE;
+            DROP TABLE IF EXISTS payments CASCADE;
+            DROP TABLE IF EXISTS appointments CASCADE;
+            DROP TABLE IF EXISTS salon_renters CASCADE;
+            DROP TABLE IF EXISTS salon_suites CASCADE;
+            DROP TABLE IF EXISTS users CASCADE;
             DROP TABLE IF EXISTS services CASCADE;
             DROP TABLE IF EXISTS promotions CASCADE;
             DROP TABLE IF EXISTS business_hours CASCADE;
             `)
-        
             console.log("Finished dropping tables.")
         } catch(error){
             console.log("Error dropping tables!")
@@ -56,6 +55,15 @@ const { createSuite, getSuiteById, getAllSuites, updateSuite, deleteSuite } = re
                 franchise_location VARCHAR(255),
                 suite_number VARCHAR(255) NOT NULL,
                 services TEXT
+            );
+            CREATE TABLE salon_renters(
+                id SERIAL PRIMARY KEY,
+                user_id INTEGER REFERENCES users(id),
+                suite_id INTEGER REFERENCES salon_suites(id),
+                rent_start_date DATE NOT NULL,
+                rent_end_date DATE NOT NULL,
+                monthly_rental_fee DECIMAL(7,2) NOT NULL,
+                lease_contract_link VARCHAR(1024)
             );
             
             
@@ -116,6 +124,28 @@ const { createSuite, getSuiteById, getAllSuites, updateSuite, deleteSuite } = re
             console.error(error);
         }
     };
+
+    // Method: createInitialSalonRenter
+    async function createInitialSalonRenter() {
+        try {
+            console.log("Creating initial salon renter...");
+            const renter = await createRenter({
+                user_id: 1, 
+                suite_id: 1, 
+                rent_start_date: '2023-08-01', 
+                rent_end_date: '2024-08-01', 
+                monthly_rental_fee: 300.00, 
+                lease_contract_link: 'www.example.com/leasecontract.pdf'
+            });
+            console.log(renter);
+            console.log("Finished creating initial salon renter.");
+        } catch(error){
+            console.log("Error creating initial salon renter!")
+            console.log(error)
+        }
+    };
+    
+
     
     // Rebuild DB
     async function rebuildDB() {
@@ -125,6 +155,7 @@ const { createSuite, getSuiteById, getAllSuites, updateSuite, deleteSuite } = re
             await createTables();
             await createInitialUsers();
             await createInitialSalonSuite();
+            await createInitialSalonRenter();
         } catch (error) {
             console.log("Error during rebuildDB!")
             console.log(error.detail);
