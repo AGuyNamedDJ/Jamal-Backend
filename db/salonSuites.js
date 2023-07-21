@@ -2,15 +2,15 @@
 const { client } = require("./index");
 
 // Method: createSuite
-async function createSuite({ user_id, franchise_location, suite_number, services }) {
+async function createSuite({ user_id, franchise_location_id, suite_number, services }) {
     try {
         console.log(`Inserting salon suite ${suite_number} into database`);
 
         const result = await client.query(`
-            INSERT INTO salon_suites(user_id, franchise_location, suite_number, services) 
+            INSERT INTO salon_suites(user_id, franchise_location_id, suite_number, services) 
             VALUES($1, $2, $3, $4)
             RETURNING *;
-        `, [user_id, franchise_location, suite_number, services]);
+        `, [user_id, franchise_location_id, suite_number, services]);
 
         const suite = result.rows[0];
         console.log(`Salon suite ${suite_number} inserted into database`);
@@ -57,18 +57,18 @@ async function getAllSuites() {
 }
 
 // Method: updateSuite
-async function updateSuite({ id, user_id, franchise_location, suite_number, services }) {
+async function updateSuite({ id, user_id, franchise_location_id, suite_number, services }) {
     try {
         console.log(`Updating salon suite with ID ${id}`);
         const result = await client.query(`
             UPDATE salon_suites
             SET user_id = $1,
-                franchise_location = $2,
+                franchise_location_id = $2,
                 suite_number = $3,
                 services = $4
             WHERE id = $5
             RETURNING *;
-        `, [user_id, franchise_location, suite_number, services, id]);
+        `, [user_id, franchise_location_id, suite_number, services, id]);
 
         const suite = result.rows[0];
         console.log(`Salon suite with ID ${id} updated.`);

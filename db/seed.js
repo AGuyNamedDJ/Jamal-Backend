@@ -10,6 +10,7 @@ const { createService, getAllServices, getServiceById, getServicesByUser, update
 const { createAppointment, getAppointmentById, getAllAppointments, updateAppointment, deleteAppointment} = require('./appointments');
 const { createPayment, getPaymentById, getAllPayments, updatePayment, deletePayment } = require('./payments');
 const { createReview, getReviewById, getAllReviews, updateReview, deleteReview} = require ('./reviews');
+const { createFranchiseLocation, getAllFranchiseLocations, getFranchiseLocationById, updateFranchiseLocation, getFranchiseLocationByName} = require('./franchiseLocations');
 
 // Step 2: User Methods
     // Method: dropTables
@@ -25,11 +26,12 @@ const { createReview, getReviewById, getAllReviews, updateReview, deleteReview} 
             DROP TABLE IF EXISTS appointments CASCADE;
             DROP TABLE IF EXISTS salon_renters CASCADE;
             DROP TABLE IF EXISTS salon_suites CASCADE;
-            DROP TABLE IF EXISTS users CASCADE;
             DROP TABLE IF EXISTS services CASCADE;
+            DROP TABLE IF EXISTS users CASCADE;
             DROP TABLE IF EXISTS promotions CASCADE;
             DROP TABLE IF EXISTS business_hours CASCADE;
-            `)
+            DROP TABLE IF EXISTS franchise_locations CASCADE;
+        `);
             console.log("Finished dropping tables.")
         } catch(error){
             console.log("Error dropping tables!")
@@ -53,10 +55,23 @@ const { createReview, getReviewById, getAllReviews, updateReview, deleteReview} 
                 phone_number VARCHAR(15),
                 "is_active" BOOLEAN DEFAULT true
             );
+            CREATE TABLE franchise_locations(
+                id SERIAL PRIMARY KEY,
+                name VARCHAR(255) UNIQUE NOT NULL,
+                address VARCHAR(255),
+                city VARCHAR(50),
+                state VARCHAR(50),
+                zip_code VARCHAR(10),
+                country VARCHAR(50),
+                phone_number VARCHAR(15),
+                business_hours TEXT,
+                email VARCHAR(255),
+                additional_info TEXT
+            );
             CREATE TABLE salon_suites(
                 id SERIAL PRIMARY KEY,
+                franchise_location_id INTEGER REFERENCES franchise_locations(id),
                 user_id INTEGER REFERENCES users(id),
-                franchise_location VARCHAR(255),
                 suite_number VARCHAR(255) NOT NULL,
                 services TEXT
             );
@@ -114,7 +129,6 @@ const { createReview, getReviewById, getAllReviews, updateReview, deleteReview} 
             
             
             
-            
                        
             
             
@@ -156,13 +170,36 @@ const { createReview, getReviewById, getAllReviews, updateReview, deleteReview} 
         }
     };
 
+    // Method: createInitialFranchiseLocations:
+    async function createInitialFranchiseLocations() {
+        try {
+            console.log("Creating initial franchise location...");
+            const location = await createFranchiseLocation({
+                name: "Chicago: South Loop",
+                address: "1400 S Wabash Ave",
+                city: "Chicago",
+                state: "IL",
+                zip_code: "60605",
+                country: "USA",
+                phone_number: "+13128282745", 
+                business_hours: "24/7",
+                email: "info@chicagosouthloop.example.com", 
+                additional_info: "24/7 access to the building."
+            });
+            console.log("Initial franchise location created: ", location);
+        } catch (error) {
+            console.error("Error creating initial franchise location!");
+            console.error(error);
+        }
+    };
+    
     // Method: createInitialSalonSuite:
     async function createInitialSalonSuite() {
         try {
             console.log("Creating initial salon suite...");
             const initialSuite = await createSuite({
                 user_id: 1, 
-                franchise_location: "Chicago: South Loop",
+                franchise_location_id: 1,
                 suite_number: "Suite 101",
                 services: "Haircut, Coloring, Styling"
             });
@@ -284,6 +321,7 @@ const { createReview, getReviewById, getAllReviews, updateReview, deleteReview} 
             await dropTables();
             await createTables();
             await createInitialUsers();
+            await createInitialFranchiseLocations();
             await createInitialSalonSuite();
             await createInitialSalonRenter();
             await createInitialService();
@@ -353,6 +391,42 @@ const { createReview, getReviewById, getAllReviews, updateReview, deleteReview} 
             // console.log("User by Username", singleUserByUsername);
         
             // console.log("Finished testing database.");
+
+        // Test Franchise Locations
+
+            // Test getAllFranchiseLocations
+            console.log("Calling getAllFranchiseLocations...");
+            const allLocations = await getAllFranchiseLocations();
+            console.log("All locations", allLocations);
+
+            // Test getFranchiseLocationById
+            console.log("Calling getFranchiseLocationById for the first location...");
+            const singleLocationById = await getFranchiseLocationById(allLocations[0].id);
+            console.log("Location by ID", singleLocationById);
+
+            // Test getFranchiseLocationByName
+            console.log("Calling getFranchiseLocationByName...");
+            const singleLocationByName = await getFranchiseLocationByName(allLocations[0].name);
+            console.log("Location by name", singleLocationByName);
+
+            // Test updateFranchiseLocation
+            console.log("Calling updateFranchiseLocation for the first location...");
+            const updatedLocationData = {
+                name: "Updated Name",
+                address: "Updated Address",
+                city: "Updated City",
+                state: "Updated State",
+                zip_code: "60605",
+                country: "Updated Country",
+                phone_number: "13124995648",
+                business_hours: "Updated Business Hours",
+                email: "Updated Email",
+                additional_info: "Updated Additional Info"
+            };
+            const updatedLocation = await updateFranchiseLocation(allLocations[0].id, updatedLocationData);
+            console.log("Updated Location", updatedLocation);
+
+            console.log("Finished testing franchise locations database.");
 
 
         // Test Salon Suite
@@ -537,23 +611,23 @@ const { createReview, getReviewById, getAllReviews, updateReview, deleteReview} 
                 // console.log(updatedPayment);
 
         // Test Reviews
-                console.log("---Starting to Test Reviews---");
+                // console.log("---Starting to Test Reviews---");
 
             // Test getAllReviews
-                console.log("Getting all reviews...");
-                const allReviews = await getAllReviews();
-                console.log("All Reviews:", allReviews);
+                // console.log("Getting all reviews...");
+                // const allReviews = await getAllReviews();
+                // console.log("All Reviews:", allReviews);
 
             // Test getReviewById
-                console.log("Getting review with id 1...");
-                const reviewById = await getReviewById(1);
-                console.log("Review with ID 1:", reviewById);
+                // console.log("Getting review with id 1...");
+                // const reviewById = await getReviewById(1);
+                // console.log("Review with ID 1:", reviewById);
 
             // Test updateReview
-                console.log("Updating review with id 1...");
-                const updatedReview = await updateReview({id: 1, rating: 4, content: "Service was good."});
-                console.log("Updated Review:", updatedReview);
-                console.log("---Finished Testing Reviews---");
+                // console.log("Updating review with id 1...");
+                // const updatedReview = await updateReview({id: 1, rating: 4, content: "Service was good."});
+                // console.log("Updated Review:", updatedReview);
+                // console.log("---Finished Testing Reviews---");
 
         } catch (error) {
         console.log("Error during testDB!");
