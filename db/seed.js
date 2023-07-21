@@ -413,6 +413,34 @@ const { createAppointment, getAppointmentById, getAllAppointments, updateAppoint
             // console.log("Service deleted.");
 
 
+        // Test Appointments
+        console.log("\n---Testing Appointments---");
+        console.log("Getting all appointments...");
+        let appointments = await getAllAppointments();
+        console.log(appointments);
+    
+        console.log("\nGetting appointment with id 1...");
+        let appointment = await getAppointmentById(1);
+        console.log(appointment);
+    
+        console.log("\nUpdating appointment with id 1...");
+        let updatedAppointment = await updateAppointment({
+            id: 1,
+            userId: 1, 
+            serviceId: 1, 
+            renterId: 1, 
+            appointmentDate: new Date('2023-08-02T10:00:00'), 
+            appointmentEndDate: new Date('2023-08-02T11:00:00'), 
+            status: 'Completed'
+        });
+        console.log(updatedAppointment);
+    
+        console.log("\nDeleting appointment with id 1...");
+        let result = await deleteAppointment(1);
+        console.log(result);
+    
+        console.log("---Finished Testing Appointments---\n");
+
         } catch (error) {
         console.log("Error during testDB!");
         console.log(error);
