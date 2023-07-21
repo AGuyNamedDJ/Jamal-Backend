@@ -9,6 +9,7 @@ const { createRenter, getRenterById, getRentersByUserId, getAllRenters, updateRe
 const { createService, getAllServices, getServiceById, getServicesByUser, updateService, deleteService} = require('./services');
 const { createAppointment, getAppointmentById, getAllAppointments, updateAppointment, deleteAppointment} = require('./appointments');
 const { createPayment, getPaymentById, getAllPayments, updatePayment, deletePayment } = require('./payments');
+const { createReview, getReviewById, getAllReviews, updateReview, deleteReview} = require ('./reviews');
 
 // Step 2: User Methods
     // Method: dropTables
@@ -101,12 +102,20 @@ const { createPayment, getPaymentById, getAllPayments, updatePayment, deletePaym
                 created_at TIMESTAMP DEFAULT NOW(), 
                 updated_at TIMESTAMP DEFAULT NOW()
             );
+            CREATE TABLE reviews(
+                id SERIAL PRIMARY KEY,
+                user_id INTEGER REFERENCES users(id),
+                service_id INTEGER REFERENCES services(id),
+                rating INTEGER NOT NULL CHECK(rating >= 1 AND rating <= 5),
+                content TEXT,
+                created_at TIMESTAMP DEFAULT NOW(), 
+                updated_at TIMESTAMP DEFAULT NOW()
+            );
             
             
             
             
-            
-            
+                       
             
             
         `);
@@ -244,8 +253,25 @@ const { createPayment, getPaymentById, getAllPayments, updatePayment, deletePaym
             console.log("Error creating initial payments!");
             console.log(error);
         }
-    }
+    };
 
+    // Method: createInitialReviews
+    async function createInitialReviews() {
+        try {
+            console.log("Creating initial reviews...");
+            const review1 = await createReview({
+                userId: 1,
+                serviceId: 1, 
+                rating: 5,
+                content: "Great service! Would definitely recommend."
+            });
+            console.log(review1);
+            console.log("Finished creating initial reviews.");
+        } catch (error) {
+            console.log("Error creating initial reviews!");
+            console.log(error);
+        }
+    };
 
 
     
@@ -263,6 +289,7 @@ const { createPayment, getPaymentById, getAllPayments, updatePayment, deletePaym
             await createInitialService();
             await createInitialAppointments();
             await createInitialPayments();
+            await createInitialReviews();
 
 
         } catch (error) {
@@ -486,28 +513,47 @@ const { createPayment, getPaymentById, getAllPayments, updatePayment, deletePaym
 
         // Test Payments
                 // Test getAllPayments
-                console.log("Getting all payments...");
-                const allPayments = await getAllPayments();
-                console.log(allPayments);
+                // console.log("Getting all payments...");
+                // const allPayments = await getAllPayments();
+                // console.log(allPayments);
 
                 // Test getPaymentById
-                console.log("Getting payment by ID...");
-                const payment = await getPaymentById(1);
-                console.log(payment);
+                // console.log("Getting payment by ID...");
+                // const payment = await getPaymentById(1);
+                // console.log(payment);
 
                 // Test updatePayment
-                console.log("Updating payment with id 1...");
-                const updatedPayment = await updatePayment({
-                    id: 1,
-                    userId: 1,
-                    appointmentId: 1,
-                    amount: 60,
-                    paymentDate: new Date(),
-                    transactionId: "txn_1J2rZG2eZvKYlo2C5SCe2KHS",
-                    status: "Completed",
-                    paymentMethod: "Credit Card"
-                });
-                console.log(updatedPayment);
+                // console.log("Updating payment with id 1...");
+                // const updatedPayment = await updatePayment({
+                //     id: 1,
+                //     userId: 1,
+                //     appointmentId: 1,
+                //     amount: 60,
+                //     paymentDate: new Date(),
+                //     transactionId: "txn_1J2rZG2eZvKYlo2C5SCe2KHS",
+                //     status: "Completed",
+                //     paymentMethod: "Credit Card"
+                // });
+                // console.log(updatedPayment);
+
+        // Test Reviews
+                console.log("---Starting to Test Reviews---");
+
+            // Test getAllReviews
+                console.log("Getting all reviews...");
+                const allReviews = await getAllReviews();
+                console.log("All Reviews:", allReviews);
+
+            // Test getReviewById
+                console.log("Getting review with id 1...");
+                const reviewById = await getReviewById(1);
+                console.log("Review with ID 1:", reviewById);
+
+            // Test updateReview
+                console.log("Updating review with id 1...");
+                const updatedReview = await updateReview({id: 1, rating: 4, content: "Service was good."});
+                console.log("Updated Review:", updatedReview);
+                console.log("---Finished Testing Reviews---");
 
         } catch (error) {
         console.log("Error during testDB!");
