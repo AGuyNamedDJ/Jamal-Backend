@@ -4,6 +4,7 @@ const { client } = require('./index');
 
 // Page Imports
 const { createUser, getAllUsers, getUserById, getUserByUsername, loginUser } = require('./users');
+const { createSuite, getSuiteById, getAllSuites, updateSuite, deleteSuite } = require('./salonSuites');
 
 // Step 2: User Methods
     // Method: dropTables
@@ -100,6 +101,25 @@ const { createUser, getAllUsers, getUserById, getUserByUsername, loginUser } = r
             console.log(error);
         }
     };
+
+    // Method: createInitialSalonSuite:
+    async function createInitialSalonSuite() {
+        try {
+            console.log("Creating initial salon suite...");
+            const initialSuite = await createSuite({
+                user_id: 1, 
+                franchise_location: "Chicago: South Loop",
+                suite_number: "Suite 101",
+                lease_start_date: new Date('2023-07-01'),
+                lease_end_date: new Date('2024-06-30'),
+                monthly_rental_fee: 1000.00
+            });
+            console.log("Initial salon suite created: ", initialSuite);
+        } catch (error) {
+            console.error("Error creating initial salon suite!");
+            console.error(error);
+        }
+    };
     
     // Rebuild DB
     async function rebuildDB() {
@@ -108,6 +128,7 @@ const { createUser, getAllUsers, getUserById, getUserByUsername, loginUser } = r
             await dropTables();
             await createTables();
             await createInitialUsers();
+            await createInitialSalonSuite();
         } catch (error) {
             console.log("Error during rebuildDB!")
             console.log(error.detail);
@@ -121,58 +142,100 @@ const { createUser, getAllUsers, getUserById, getUserByUsername, loginUser } = r
       
           // User Testing
             // Test createUser
-            console.log("Calling createUser...");
-            const usersData = [
-                {
-                username: 'Owner1',
-                password: 'Dalron',
-                email: 'user1@example.com',
-                full_name: 'Dalron J. Robertson',
-                user_role: 'stylist',
-                profile_image: 'url',
-                phone_number: '123-456-7890',
-                },
-                {
-                username: 'Owner2',
-                password: 'Dalron',
-                email: 'user2@example.com',
-                full_name: 'Mrs. Robertson',
-                user_role: 'customer',
-                profile_image: 'url',
-                phone_number: '123-456-7891',
-                },
-            ];
+            // console.log("Calling createUser...");
+            // const usersData = [
+            //     {
+            //     username: 'Owner1',
+            //     password: 'Dalron',
+            //     email: 'user1@example.com',
+            //     full_name: 'Dalron J. Robertson',
+            //     user_role: 'stylist',
+            //     profile_image: 'url',
+            //     phone_number: '123-456-7890',
+            //     },
+            //     {
+            //     username: 'Owner2',
+            //     password: 'Dalron',
+            //     email: 'user2@example.com',
+            //     full_name: 'Mrs. Robertson',
+            //     user_role: 'customer',
+            //     profile_image: 'url',
+            //     phone_number: '123-456-7891',
+            //     },
+            // ];
         
             // Test createUser
-            console.log("Calling createUser...");
-            const createdUsers = [];
-            for (const userData of usersData) {
-              const user = await createUser(userData);
-              createdUsers.push(user);
-              console.log("Created user", user);
-            }
+            // console.log("Calling createUser...");
+            // const createdUsers = [];
+            // for (const userData of usersData) {
+            //   const user = await createUser(userData);
+            //   createdUsers.push(user);
+            //   console.log("Created user", user);
+            // }
 
-            // Test getAllUsers
-            console.log("Calling getAllUsers...");
-            const allUsers = await getAllUsers();
-            console.log("All users", allUsers);
+            // // Test getAllUsers
+            // console.log("Calling getAllUsers...");
+            // const allUsers = await getAllUsers();
+            // console.log("All users", allUsers);
         
-            // Test getUserById
-            console.log("Calling getUserById for the first user...");
-            const singleUserById = await getUserById(createdUsers[1].id);
-            console.log("User by ID", singleUserById);
+            // // Test getUserById
+            // console.log("Calling getUserById for the first user...");
+            // const singleUserById = await getUserById(createdUsers[1].id);
+            // console.log("User by ID", singleUserById);
         
-            // Test getUserByUsername
-            console.log("Calling getUserByUsername for the second user...");
-            const singleUserByUsername = await getUserByUsername(usersData[1].username);
-            console.log("User by Username", singleUserByUsername);
+            // // Test getUserByUsername
+            // console.log("Calling getUserByUsername for the second user...");
+            // const singleUserByUsername = await getUserByUsername(usersData[1].username);
+            // console.log("User by Username", singleUserByUsername);
         
-            console.log("Finished testing database.");
-            } catch (error) {
-            console.log("Error during testDB!");
-            console.log(error);
-            }
-        };
+            // console.log("Finished testing database.");
+
+        // Test Salon Suite
+            console.log("Creating a new suite...");
+            const newSuite = await createSuite({
+                user_id: 1, 
+                franchise_location: "Chicago: South Loop",
+                suite_number: "Suite 101",
+                lease_start_date: new Date('2024-01-01'),
+                lease_end_date: new Date('2024-12-31'),
+                monthly_rental_fee: 1000.00
+            });
+            console.log(newSuite);
+
+            // Test getSuiteById method
+            console.log("Getting suite by id...");
+            const suite = await getSuiteById(newSuite.id);
+            console.log(suite);
+
+            // Test getAllSuites method
+            console.log("Getting all suites...");
+            const allSuites = await getAllSuites();
+            console.log(allSuites);
+
+            // Test updateSuite method
+            console.log("Updating suite...");
+            const updatedSuite = await updateSuite({
+                id: newSuite.id,
+                user_id: newSuite.user_id,
+                franchise_location: "Chicago: South Loop",
+                suite_number: "Suite 102",
+                lease_start_date: new Date('2024-02-01'),
+                lease_end_date: new Date('2024-12-31'),
+                monthly_rental_fee: 1200.00
+            });
+            console.log(updatedSuite);
+
+            // Test deleteSuite method
+            console.log("Deleting suite...");
+            await deleteSuite(updatedSuite.id);
+            console.log("Suite deleted.");
+
+
+        } catch (error) {
+        console.log("Error during testDB!");
+        console.log(error);
+        }
+    };
       
   
    // Final Call
