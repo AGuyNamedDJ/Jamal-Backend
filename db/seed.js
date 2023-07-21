@@ -7,6 +7,7 @@ const { createUser, getAllUsers, getUserById, getUserByUsername, loginUser } = r
 const { createSuite, getSuiteById, getAllSuites, updateSuite, deleteSuite } = require('./salonSuites');
 const { createRenter, getRenterById, getRentersByUserId, getAllRenters, updateRenter, deleteRenter } = require('./salonRenters');
 const { createService, getAllServices, getServiceById, getServicesByUser, updateService, deleteService} = require('./services');
+const { createAppointment, getAppointmentById, getAllAppointments, updateAppointment, deleteAppointment} = require('./appointments');
 
 // Step 2: User Methods
     // Method: dropTables
@@ -75,6 +76,20 @@ const { createService, getAllServices, getServiceById, getServicesByUser, update
                 duration INTEGER,
                 image_link VARCHAR(255)
             );
+            CREATE TABLE IF NOT EXISTS appointments (
+                id SERIAL PRIMARY KEY,
+                user_id INTEGER REFERENCES users(id) NOT NULL, 
+                service_id INTEGER REFERENCES services(id) NOT NULL,
+                renter_id INTEGER REFERENCES salon_renters(id) NOT NULL, 
+                appointment_date TIMESTAMP NOT NULL,
+                appointment_end_date TIMESTAMP NOT NULL,
+                UNIQUE(user_id, service_id, appointment_date),
+                status VARCHAR(255) NOT NULL DEFAULT 'Booked',  -- 'Booked', 'Completed', 'Cancelled', etc.
+                created_at TIMESTAMP DEFAULT NOW(), 
+                updated_at TIMESTAMP DEFAULT NOW()
+            );
+            
+            
             
             
             
@@ -175,6 +190,34 @@ const { createService, getAllServices, getServiceById, getServicesByUser, update
         }
     };
 
+    // Method: createInitialAppointments
+    async function createInitialAppointments() {
+        try {
+            console.log("Creating initial appointments...");
+            const appointment1 = await createAppointment({
+                userId: 1, 
+                serviceId: 1, 
+                renterId: 1, 
+                appointmentDate: new Date('2023-08-01T10:00:00'), 
+                appointmentEndDate: new Date('2023-08-01T11:00:00')
+            });
+            console.log(appointment1);
+            const appointment2 = await createAppointment({
+                userId: 2, 
+                serviceId: 2, 
+                renterId: 2, 
+                appointmentDate: new Date('2023-08-02T12:00:00'), 
+                appointmentEndDate: new Date('2023-08-02T13:00:00')
+            });
+            console.log(appointment2);
+            console.log("Finished creating initial appointments.");
+        } catch(error){
+            console.log("Error creating initial appointments!")
+            console.log(error)
+        }
+    };
+
+
     
 
     
@@ -188,6 +231,7 @@ const { createService, getAllServices, getServiceById, getServicesByUser, update
             await createInitialSalonSuite();
             await createInitialSalonRenter();
             await createInitialService();
+            await createInitialAppointments();
 
 
         } catch (error) {
@@ -337,44 +381,44 @@ const { createService, getAllServices, getServiceById, getServicesByUser, update
 
 
         // Test Services
-            console.log("Creating a new service...");
-            const newService = await createService({
-                user_id: 1, 
-                name: "Hair Styling",
-                description: "Includes hair wash, styling, and finish.", 
-                price: 30.00,
-                duration: 90,
-                image_link: 'www.example.com/image2.jpg'
-            });
-            console.log(newService);
+            // console.log("Creating a new service...");
+            // const newService = await createService({
+            //     user_id: 1, 
+            //     name: "Hair Styling",
+            //     description: "Includes hair wash, styling, and finish.", 
+            //     price: 30.00,
+            //     duration: 90,
+            //     image_link: 'www.example.com/image2.jpg'
+            // });
+            // console.log(newService);
 
             // Test getServiceById 
-            console.log("Getting service by id...");
-            const service = await getServiceById(newService.id);
-            console.log(service);
+            // console.log("Getting service by id...");
+            // const service = await getServiceById(newService.id);
+            // console.log(service);
 
             // Test getAllServices 
-            console.log("Getting all services...");
-            const allServices = await getAllServices();
-            console.log(allServices);
+            // console.log("Getting all services...");
+            // const allServices = await getAllServices();
+            // console.log(allServices);
 
             // Test updateService 
-            console.log("Updating service...");
-            const updatedService = await updateService({
-                id: newService.id,
-                user_id: newService.user_id, 
-                name: "Hair Styling Deluxe",
-                description: "Includes hair wash, deep conditioning, styling, and finish.", 
-                price: 50.00,
-                duration: 120, 
-                image_link: 'www.example.com/image2_deluxe.jpg'
-            });
-            console.log(updatedService);
+            // console.log("Updating service...");
+            // const updatedService = await updateService({
+            //     id: newService.id,
+            //     user_id: newService.user_id, 
+            //     name: "Hair Styling Deluxe",
+            //     description: "Includes hair wash, deep conditioning, styling, and finish.", 
+            //     price: 50.00,
+            //     duration: 120, 
+            //     image_link: 'www.example.com/image2_deluxe.jpg'
+            // });
+            // console.log(updatedService);
 
             // Test deleteService 
-            console.log("Deleting service...");
-            await deleteService(updatedService.id);
-            console.log("Service deleted.");
+            // console.log("Deleting service...");
+            // await deleteService(updatedService.id);
+            // console.log("Service deleted.");
 
 
         } catch (error) {
