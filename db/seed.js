@@ -191,6 +191,7 @@ const { createRenter, getRenterById, getRentersByUserId, getAllRenters, updateRe
             //     },
             // ];
         
+
             // Test createUser
             // console.log("Calling createUser...");
             // const createdUsers = [];
@@ -216,6 +217,7 @@ const { createRenter, getRenterById, getRentersByUserId, getAllRenters, updateRe
             // console.log("User by Username", singleUserByUsername);
         
             // console.log("Finished testing database.");
+
 
         // Test Salon Suite
             // console.log("Creating a new suite...");
@@ -253,6 +255,51 @@ const { createRenter, getRenterById, getRentersByUserId, getAllRenters, updateRe
             // await deleteSuite(updatedSuite.id);
             // console.log("Suite deleted.");
 
+
+        // Test Salon Renter
+            console.log("Creating a new renter...");
+            const newRenter = await createRenter({
+                user_id: 1, 
+                suite_id: 1,
+                rent_start_date: '2023-08-01', 
+                rent_end_date: '2024-08-01', 
+                monthly_rental_fee: 300.00, 
+                lease_contract_link: 'www.example.com/leasecontract.pdf'
+            });
+            console.log(newRenter);
+            
+            // Test getRenterById method
+            console.log("Getting renter by id...");
+            const renter = await getRenterById(newRenter.id);
+            console.log(renter);
+            
+            // Test getRentersByUserId method
+            console.log("Getting renter by user id...");
+            const rentersByUser = await getRentersByUserId(newRenter.user_id);
+            console.log(rentersByUser);
+            
+            // Test getAllRenters method
+            console.log("Getting all renters...");
+            const allRenters = await getAllRenters();
+            console.log(allRenters);
+            
+            // Test updateRenter method
+            console.log("Updating renter...");
+            const updatedRenter = await updateRenter({
+                id: newRenter.id,
+                user_id: newRenter.user_id, 
+                suite_id: newRenter.suite_id,
+                rent_start_date: '2024-08-01', // Notice the column name here
+                rent_end_date: '2025-08-01', 
+                monthly_rental_fee: 350.00, 
+                lease_contract_link: 'www.example.com/new_leasecontract.pdf'
+            });
+            console.log(updatedRenter);
+            
+            // Test deleteRenter method
+            console.log("Deleting renter...");
+            await deleteRenter(updatedRenter.id);
+            console.log("Renter deleted.");
 
         } catch (error) {
         console.log("Error during testDB!");

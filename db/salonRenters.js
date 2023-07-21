@@ -58,19 +58,19 @@ async function getAllRenters() {
 }
 
 // Method: updateRenter
-async function updateRenter({ id, user_id, suite_id, lease_start_date, lease_end_date, monthly_rental_fee, lease_contract_link }) {
+async function updateRenter({ id, user_id, suite_id, rent_start_date, rent_end_date, monthly_rental_fee, lease_contract_link }) {
     try {
         const { rows: [renter] } = await client.query(`
             UPDATE salon_renters
             SET user_id = $1,
                 suite_id = $2,
-                lease_start_date = $3,
-                lease_end_date = $4,
+                rent_start_date = $3,
+                rent_end_date = $4,
                 monthly_rental_fee = $5,
                 lease_contract_link = $6
             WHERE id = $7
             RETURNING *;
-        `, [user_id, suite_id, lease_start_date, lease_end_date, monthly_rental_fee, lease_contract_link, id]);
+        `, [user_id, suite_id, rent_start_date, rent_end_date, monthly_rental_fee, lease_contract_link, id]);
 
         return renter;
     } catch (error) {
