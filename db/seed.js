@@ -191,44 +191,44 @@ const { createSuite, getSuiteById, getAllSuites, updateSuite, deleteSuite } = re
             // console.log("Finished testing database.");
 
         // Test Salon Suite
-            console.log("Creating a new suite...");
-            const newSuite = await createSuite({
-                user_id: 1, 
-                franchise_location: "Chicago: South Loop",
-                suite_number: "Suite 101",
-                lease_start_date: new Date('2024-01-01'),
-                lease_end_date: new Date('2024-12-31'),
-                monthly_rental_fee: 1000.00
-            });
-            console.log(newSuite);
+            // console.log("Creating a new suite...");
+            // const newSuite = await createSuite({
+            //     user_id: 1, 
+            //     franchise_location: "Chicago: South Loop",
+            //     suite_number: "Suite 101",
+            //     lease_start_date: new Date('2024-01-01'),
+            //     lease_end_date: new Date('2024-12-31'),
+            //     monthly_rental_fee: 1000.00
+            // });
+            // console.log(newSuite);
 
-            // Test getSuiteById method
-            console.log("Getting suite by id...");
-            const suite = await getSuiteById(newSuite.id);
-            console.log(suite);
+            // // Test getSuiteById method
+            // console.log("Getting suite by id...");
+            // const suite = await getSuiteById(newSuite.id);
+            // console.log(suite);
 
-            // Test getAllSuites method
-            console.log("Getting all suites...");
-            const allSuites = await getAllSuites();
-            console.log(allSuites);
+            // // Test getAllSuites method
+            // console.log("Getting all suites...");
+            // const allSuites = await getAllSuites();
+            // console.log(allSuites);
 
-            // Test updateSuite method
-            console.log("Updating suite...");
-            const updatedSuite = await updateSuite({
-                id: newSuite.id,
-                user_id: newSuite.user_id,
-                franchise_location: "Chicago: South Loop",
-                suite_number: "Suite 102",
-                lease_start_date: new Date('2024-02-01'),
-                lease_end_date: new Date('2024-12-31'),
-                monthly_rental_fee: 1200.00
-            });
-            console.log(updatedSuite);
+            // // Test updateSuite method
+            // console.log("Updating suite...");
+            // const updatedSuite = await updateSuite({
+            //     id: newSuite.id,
+            //     user_id: newSuite.user_id,
+            //     franchise_location: "Chicago: South Loop",
+            //     suite_number: "Suite 102",
+            //     lease_start_date: new Date('2024-02-01'),
+            //     lease_end_date: new Date('2024-12-31'),
+            //     monthly_rental_fee: 1200.00
+            // });
+            // console.log(updatedSuite);
 
-            // Test deleteSuite method
-            console.log("Deleting suite...");
-            await deleteSuite(updatedSuite.id);
-            console.log("Suite deleted.");
+            // // Test deleteSuite method
+            // console.log("Deleting suite...");
+            // await deleteSuite(updatedSuite.id);
+            // console.log("Suite deleted.");
 
 
         } catch (error) {
