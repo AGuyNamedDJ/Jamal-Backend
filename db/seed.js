@@ -8,6 +8,7 @@ const { createSuite, getSuiteById, getAllSuites, updateSuite, deleteSuite } = re
 const { createRenter, getRenterById, getRentersByUserId, getAllRenters, updateRenter, deleteRenter } = require('./salonRenters');
 const { createService, getAllServices, getServiceById, getServicesByUser, updateService, deleteService} = require('./services');
 const { createAppointment, getAppointmentById, getAllAppointments, updateAppointment, deleteAppointment} = require('./appointments');
+const { createPayment, getPaymentById, getAllPayments, updatePayment, deletePayment } = require('./payments');
 
 // Step 2: User Methods
     // Method: dropTables
@@ -84,10 +85,23 @@ const { createAppointment, getAppointmentById, getAllAppointments, updateAppoint
                 appointment_date TIMESTAMP NOT NULL,
                 appointment_end_date TIMESTAMP NOT NULL,
                 UNIQUE(user_id, service_id, appointment_date),
-                status VARCHAR(255) NOT NULL DEFAULT 'Booked',  -- 'Booked', 'Completed', 'Cancelled', etc.
+                status VARCHAR(255) NOT NULL DEFAULT 'Booked',
                 created_at TIMESTAMP DEFAULT NOW(), 
                 updated_at TIMESTAMP DEFAULT NOW()
             );
+            CREATE TABLE IF NOT EXISTS payments (
+                id SERIAL PRIMARY KEY,
+                user_id INTEGER REFERENCES users(id) NOT NULL, 
+                appointment_id INTEGER REFERENCES appointments(id) NOT NULL,
+                amount DECIMAL(10, 2) NOT NULL,
+                payment_date TIMESTAMP NOT NULL,
+                transaction_id VARCHAR(255),
+                status VARCHAR(255) NOT NULL DEFAULT 'Pending',
+                payment_method VARCHAR(255),
+                created_at TIMESTAMP DEFAULT NOW(), 
+                updated_at TIMESTAMP DEFAULT NOW()
+            );
+            
             
             
             
@@ -207,7 +221,31 @@ const { createAppointment, getAppointmentById, getAllAppointments, updateAppoint
             console.log("Error creating initial appointments!");
             console.log(error);
         }
+    };
+
+    // Method: createInitialPayments
+    async function createInitialPayments() {
+        try {
+            console.log("Creating initial payments...");
+
+            const payment1 = await createPayment({
+                userId: 1,
+                appointmentId: 1,
+                amount: 50,
+                paymentDate: new Date(),
+                transactionId: "txn_1J2rZG2eZvKYlo2C5SCe2KHS",
+                status: "Completed",
+                paymentMethod: "Credit Card"
+            });
+
+            console.log(payment1);
+            console.log("Finished creating initial payments.");
+        } catch (error) {
+            console.log("Error creating initial payments!");
+            console.log(error);
+        }
     }
+
 
 
     
@@ -224,6 +262,7 @@ const { createAppointment, getAppointmentById, getAllAppointments, updateAppoint
             await createInitialSalonRenter();
             await createInitialService();
             await createInitialAppointments();
+            await createInitialPayments();
 
 
         } catch (error) {
@@ -414,32 +453,61 @@ const { createAppointment, getAppointmentById, getAllAppointments, updateAppoint
 
 
         // Test Appointments
-        console.log("\n---Testing Appointments---");
-        console.log("Getting all appointments...");
-        let appointments = await getAllAppointments();
-        console.log(appointments);
-    
-        console.log("\nGetting appointment with id 1...");
-        let appointment = await getAppointmentById(1);
-        console.log(appointment);
-    
-        console.log("\nUpdating appointment with id 1...");
-        let updatedAppointment = await updateAppointment({
-            id: 1,
-            userId: 1, 
-            serviceId: 1, 
-            renterId: 1, 
-            appointmentDate: new Date('2023-08-02T10:00:00'), 
-            appointmentEndDate: new Date('2023-08-02T11:00:00'), 
-            status: 'Completed'
-        });
-        console.log(updatedAppointment);
-    
-        console.log("\nDeleting appointment with id 1...");
-        let result = await deleteAppointment(1);
-        console.log(result);
-    
-        console.log("---Finished Testing Appointments---\n");
+            // Test getAllAppointments
+            // console.log("\n---Testing Appointments---");
+            // console.log("Getting all appointments...");
+            // let appointments = await getAllAppointments();
+            // console.log(appointments);
+        
+            // Test getAppointmentById
+            // console.log("\nGetting appointment with id 1...");
+            // let appointment = await getAppointmentById(1);
+            // console.log(appointment);
+
+            // Test updateAppointment
+            // console.log("\nUpdating appointment with id 1...");
+            // let updatedAppointment = await updateAppointment({
+            //     id: 1,
+            //     userId: 1, 
+            //     serviceId: 1, 
+            //     renterId: 1, 
+            //     appointmentDate: new Date('2023-08-02T10:00:00'), 
+            //     appointmentEndDate: new Date('2023-08-02T11:00:00'), 
+            //     status: 'Completed'
+            // });
+            // console.log(updatedAppointment);
+        
+             // Test deleteAppointment           
+            // console.log("\nDeleting appointment with id 1...");
+            // let result = await deleteAppointment(1);
+            // console.log(result);
+        
+            // console.log("---Finished Testing Appointments---\n");
+
+        // Test Payments
+                // Test getAllPayments
+                console.log("Getting all payments...");
+                const allPayments = await getAllPayments();
+                console.log(allPayments);
+
+                // Test getPaymentById
+                console.log("Getting payment by ID...");
+                const payment = await getPaymentById(1);
+                console.log(payment);
+
+                // Test updatePayment
+                console.log("Updating payment with id 1...");
+                const updatedPayment = await updatePayment({
+                    id: 1,
+                    userId: 1,
+                    appointmentId: 1,
+                    amount: 60,
+                    paymentDate: new Date(),
+                    transactionId: "txn_1J2rZG2eZvKYlo2C5SCe2KHS",
+                    status: "Completed",
+                    paymentMethod: "Credit Card"
+                });
+                console.log(updatedPayment);
 
         } catch (error) {
         console.log("Error during testDB!");
