@@ -195,27 +195,19 @@ const { createAppointment, getAppointmentById, getAllAppointments, updateAppoint
         try {
             console.log("Creating initial appointments...");
             const appointment1 = await createAppointment({
-                userId: 1, 
+                userId: 1,
                 serviceId: 1, 
-                renterId: 1, 
-                appointmentDate: new Date('2023-08-01T10:00:00'), 
+                renterId: 1,
+                appointmentDate: new Date('2023-08-01T10:00:00'),
                 appointmentEndDate: new Date('2023-08-01T11:00:00')
             });
             console.log(appointment1);
-            const appointment2 = await createAppointment({
-                userId: 2, 
-                serviceId: 2, 
-                renterId: 2, 
-                appointmentDate: new Date('2023-08-02T12:00:00'), 
-                appointmentEndDate: new Date('2023-08-02T13:00:00')
-            });
-            console.log(appointment2);
             console.log("Finished creating initial appointments.");
-        } catch(error){
-            console.log("Error creating initial appointments!")
-            console.log(error)
+        } catch (error) {
+            console.log("Error creating initial appointments!");
+            console.log(error);
         }
-    };
+    }
 
 
     
