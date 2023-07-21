@@ -2,15 +2,15 @@
 const { client } = require("./index");
 
 // Method: createSuite
-async function createSuite({ user_id, franchise_location, suite_number, lease_start_date, lease_end_date, monthly_rental_fee }) {
+async function createSuite({ user_id, franchise_location, suite_number, services }) {
     try {
         console.log(`Inserting salon suite ${suite_number} into database`);
 
         const result = await client.query(`
-            INSERT INTO salon_suites(user_id, franchise_location, suite_number, lease_start_date, lease_end_date, monthly_rental_fee) 
-            VALUES($1, $2, $3, $4, $5, $6)
+            INSERT INTO salon_suites(user_id, franchise_location, suite_number, services) 
+            VALUES($1, $2, $3, $4)
             RETURNING *;
-        `, [user_id, franchise_location, suite_number, lease_start_date, lease_end_date, monthly_rental_fee]);
+        `, [user_id, franchise_location, suite_number, services]);
 
         const suite = result.rows[0];
         console.log(`Salon suite ${suite_number} inserted into database`);
@@ -57,7 +57,7 @@ async function getAllSuites() {
 }
 
 // Method: updateSuite
-async function updateSuite({ id, user_id, franchise_location, suite_number, lease_start_date, lease_end_date, monthly_rental_fee }) {
+async function updateSuite({ id, user_id, franchise_location, suite_number, services }) {
     try {
         console.log(`Updating salon suite with ID ${id}`);
         const result = await client.query(`
@@ -65,12 +65,10 @@ async function updateSuite({ id, user_id, franchise_location, suite_number, leas
             SET user_id = $1,
                 franchise_location = $2,
                 suite_number = $3,
-                lease_start_date = $4,
-                lease_end_date = $5,
-                monthly_rental_fee = $6
-            WHERE id = $7
+                services = $4
+            WHERE id = $5
             RETURNING *;
-        `, [user_id, franchise_location, suite_number, lease_start_date, lease_end_date, monthly_rental_fee, id]);
+        `, [user_id, franchise_location, suite_number, services, id]);
 
         const suite = result.rows[0];
         console.log(`Salon suite with ID ${id} updated.`);
