@@ -13,6 +13,7 @@ const { createReview, getReviewById, getAllReviews, updateReview, deleteReview} 
 const { createFranchiseLocation, getAllFranchiseLocations, getFranchiseLocationById, updateFranchiseLocation, getFranchiseLocationByName} = require('./franchiseLocations');
 const { createMessage, getMessagesByUserId, updateMessage, deleteMessage, getAllMessages,} = require('./messages');
 const { createNotification, getAllNotifications, getNotificationById, updateNotification, deleteNotification} = require('./notifications');
+const { createFavorite, getAllFavorites, getFavoriteById, deleteFavorite} = require('./favorites');
 
 // Step 2: User Methods
     // Method: dropTables
@@ -376,6 +377,25 @@ const { createNotification, getAllNotifications, getNotificationById, updateNoti
         }
     };    
 
+    // Method: createInitialFavorites:
+    async function createInitialFavorites() {
+        try {
+            console.log("Creating initial favorites...");
+            const favorite = await createFavorite({
+                user_id: 1,
+                salon_renter_id: 2,
+                service_id: 1
+            });
+    
+            console.log("Initial favorite created: ", favorite);
+            return favorite;
+        } catch (error) {
+            console.error("Error creating initial favorites!");
+            console.error(error);
+        }
+    };
+    
+
     
 
 
@@ -395,6 +415,7 @@ const { createNotification, getAllNotifications, getNotificationById, updateNoti
             await createInitialReviews();
             await createInitialMessages();
             await createInitialNotifications();
+            await createInitialFavorites();
 
 
         } catch (error) {
@@ -698,63 +719,90 @@ const { createNotification, getAllNotifications, getNotificationById, updateNoti
 
 
         // Test Messages
-            // console.log("Testing 'createInitialMessages'...");
-            // await createInitialMessages();
-            
-        // Test getAllMessages
-            // console.log("Getting all messages...");
-            // const allMessages = await getAllMessages();
-            // console.log("All Messages: ", allMessages);
+                // console.log("Testing 'createInitialMessages'...");
+                // await createInitialMessages();
+                
+            // Test getAllMessages
+                // console.log("Getting all messages...");
+                // const allMessages = await getAllMessages();
+                // console.log("All Messages: ", allMessages);
 
-        // Test getMessagesByUserId
-            // console.log("Getting message by id...");
-            // const message = await getMessagesByUserId(allMessages[0].id);
-            // console.log("Message: ", message);
+            // Test getMessagesByUserId
+                // console.log("Getting message by id...");
+                // const message = await getMessagesByUserId(allMessages[0].id);
+                // console.log("Message: ", message);
 
-        // Test updateMessage
-            // console.log("Updating first message...");
-            // const updatedMessage = await updateMessage(allMessages[0].id, {
-            //     content: "This message has been updated."
-            // });
-            // console.log("Updated Message: ", updatedMessage);
+            // Test updateMessage
+                // console.log("Updating first message...");
+                // const updatedMessage = await updateMessage(allMessages[0].id, {
+                //     content: "This message has been updated."
+                // });
+                // console.log("Updated Message: ", updatedMessage);
 
-        // Test deleteMessage
-            // console.log("Deleting first message...");
-            // const deletedMessage = await deleteMessage(allMessages[0].id);
-            // console.log("Deleted Message: ", deletedMessage);
+            // Test deleteMessage
+                // console.log("Deleting first message...");
+                // const deletedMessage = await deleteMessage(allMessages[0].id);
+                // console.log("Deleted Message: ", deletedMessage);
 
-        // Test getAllMessages
-            // console.log("Getting all messages after delete...");
-            // const allMessagesAfterDelete = await getAllMessages();
-            // console.log("All Messages After Delete: ", allMessagesAfterDelete);
+            // Test getAllMessages
+                // console.log("Getting all messages after delete...");
+                // const allMessagesAfterDelete = await getAllMessages();
+                // console.log("All Messages After Delete: ", allMessagesAfterDelete);
 
 
-    // Test Notifications
-            // console.log("Calling createInitialNotifications...");
-            // await createInitialNotifications();
+        // Test Notifications
+                // console.log("Calling createInitialNotifications...");
+                // await createInitialNotifications();
 
-        // Test getAllNotifications
-            // console.log("Calling getAllNotifications...");
-            // const notifications = await getAllNotifications();
-            // console.log("Result:", notifications);
+            // Test getAllNotifications
+                // console.log("Calling getAllNotifications...");
+                // const notifications = await getAllNotifications();
+                // console.log("Result:", notifications);
 
-        // Test getNotificationById
-            // console.log("Calling getNotificationById for the first notification...");
-            // const notification = await getNotificationById(notifications[0].id);
-            // console.log("Result:", notification);
+            // Test getNotificationById
+                // console.log("Calling getNotificationById for the first notification...");
+                // const notification = await getNotificationById(notifications[0].id);
+                // console.log("Result:", notification);
 
-        // Test updateNotification
-            // console.log("Calling updateNotification for the first notification...");
-            // const updatedNotification = await updateNotification(notifications[0].id, {
-            //     content: 'This is an updated content for the notification.',
-            // });
-            // console.log("Result:", updatedNotification);
+            // Test updateNotification
+                // console.log("Calling updateNotification for the first notification...");
+                // const updatedNotification = await updateNotification(notifications[0].id, {
+                //     content: 'This is an updated content for the notification.',
+                // });
+                // console.log("Result:", updatedNotification);
 
-        // Test deleteNotification
-            // console.log("Calling deleteNotification for the first notification...");
-            // const deletedNotification = await deleteNotification(notifications[0].id);
-            // console.log("Result:", deletedNotification);
+            // Test deleteNotification
+                // console.log("Calling deleteNotification for the first notification...");
+                // const deletedNotification = await deleteNotification(notifications[0].id);
+                // console.log("Result:", deletedNotification);
 
+
+        // Test Favorites
+
+            // Test createInitialFavorites
+                // console.log("Creating favorites...");
+                // let favorite1 = await createInitialFavorites();
+                // console.log("Favorite 1: ", favorite1);
+
+            // Test getAllFavorites
+                // console.log("Getting all favorites...");
+                // const allFavorites = await getAllFavorites();
+                // console.log("All favorites: ", allFavorites);
+
+            // Test getFavoriteById
+                // console.log("Getting favorite by ID...");
+                // const favoriteById = await getFavoriteById(favorite1.id);
+                // console.log("Favorite by ID: ", favoriteById);
+
+            // Test deleteFavorite
+                // console.log("Deleting favorite...");
+                // const deletedFavorite = await deleteFavorite(favorite1.id);
+                // console.log("Deleted favorite: ", deletedFavorite);
+
+                // console.log("Getting all favorites after deletion...");
+                // const allFavoritesAfterDeletion = await getAllFavorites();
+                // console.log("All favorites after deletion: ", allFavoritesAfterDeletion);
+        
 
         } catch (error) {
         console.log("Error during testDB!");
