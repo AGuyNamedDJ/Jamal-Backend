@@ -11,6 +11,7 @@ const { createAppointment, getAppointmentById, getAllAppointments, updateAppoint
 const { createPayment, getPaymentById, getAllPayments, updatePayment, deletePayment } = require('./payments');
 const { createReview, getReviewById, getAllReviews, updateReview, deleteReview} = require ('./reviews');
 const { createFranchiseLocation, getAllFranchiseLocations, getFranchiseLocationById, updateFranchiseLocation, getFranchiseLocationByName} = require('./franchiseLocations');
+const { createMessage, getMessagesByUserId, updateMessage, deleteMessage, getAllMessages,} = require('./messages');
 
 // Step 2: User Methods
     // Method: dropTables
@@ -125,6 +126,14 @@ const { createFranchiseLocation, getAllFranchiseLocations, getFranchiseLocationB
                 content TEXT,
                 created_at TIMESTAMP DEFAULT NOW(), 
                 updated_at TIMESTAMP DEFAULT NOW()
+            );
+            CREATE TABLE IF NOT EXISTS messages (
+                id SERIAL PRIMARY KEY,
+                sender_id INTEGER REFERENCES users(id) NOT NULL,
+                receiver_id INTEGER REFERENCES users(id) NOT NULL,
+                content TEXT NOT NULL,
+                created_at TIMESTAMP DEFAULT NOW(),
+                read_status BOOLEAN DEFAULT false
             );
             
             
@@ -310,6 +319,30 @@ const { createFranchiseLocation, getAllFranchiseLocations, getFranchiseLocationB
         }
     };
 
+// Method: createInitialMessages
+async function createInitialMessages() {
+    try {
+        console.log("Creating initial messages...");
+
+        const message1 = await createMessage({
+            sender_id: 1, 
+            receiver_id: 2,
+            content: "Hello! Looking forward to our appointment."
+        });
+        console.log("Message 1 created: ", message1);
+
+        const message2 = await createMessage({
+            sender_id: 2, 
+            receiver_id: 1,
+            content: "Hi, me too! Please confirm the time."
+        });
+        console.log("Message 2 created: ", message2);
+
+    } catch (error) {
+        console.error("Error creating initial messages!");
+        console.error(error);
+    }
+};
 
     
 
@@ -328,6 +361,7 @@ const { createFranchiseLocation, getAllFranchiseLocations, getFranchiseLocationB
             await createInitialAppointments();
             await createInitialPayments();
             await createInitialReviews();
+            await createInitialMessages();
 
 
         } catch (error) {
@@ -395,38 +429,38 @@ const { createFranchiseLocation, getAllFranchiseLocations, getFranchiseLocationB
         // Test Franchise Locations
 
             // Test getAllFranchiseLocations
-            console.log("Calling getAllFranchiseLocations...");
-            const allLocations = await getAllFranchiseLocations();
-            console.log("All locations", allLocations);
+            // console.log("Calling getAllFranchiseLocations...");
+            // const allLocations = await getAllFranchiseLocations();
+            // console.log("All locations", allLocations);
 
             // Test getFranchiseLocationById
-            console.log("Calling getFranchiseLocationById for the first location...");
-            const singleLocationById = await getFranchiseLocationById(allLocations[0].id);
-            console.log("Location by ID", singleLocationById);
+            // console.log("Calling getFranchiseLocationById for the first location...");
+            // const singleLocationById = await getFranchiseLocationById(allLocations[0].id);
+            // console.log("Location by ID", singleLocationById);
 
             // Test getFranchiseLocationByName
-            console.log("Calling getFranchiseLocationByName...");
-            const singleLocationByName = await getFranchiseLocationByName(allLocations[0].name);
-            console.log("Location by name", singleLocationByName);
+            // console.log("Calling getFranchiseLocationByName...");
+            // const singleLocationByName = await getFranchiseLocationByName(allLocations[0].name);
+            // console.log("Location by name", singleLocationByName);
 
             // Test updateFranchiseLocation
-            console.log("Calling updateFranchiseLocation for the first location...");
-            const updatedLocationData = {
-                name: "Updated Name",
-                address: "Updated Address",
-                city: "Updated City",
-                state: "Updated State",
-                zip_code: "60605",
-                country: "Updated Country",
-                phone_number: "13124995648",
-                business_hours: "Updated Business Hours",
-                email: "Updated Email",
-                additional_info: "Updated Additional Info"
-            };
-            const updatedLocation = await updateFranchiseLocation(allLocations[0].id, updatedLocationData);
-            console.log("Updated Location", updatedLocation);
+            // console.log("Calling updateFranchiseLocation for the first location...");
+            // const updatedLocationData = {
+            //     name: "Updated Name",
+            //     address: "Updated Address",
+            //     city: "Updated City",
+            //     state: "Updated State",
+            //     zip_code: "60605",
+            //     country: "Updated Country",
+            //     phone_number: "13124995648",
+            //     business_hours: "Updated Business Hours",
+            //     email: "Updated Email",
+            //     additional_info: "Updated Additional Info"
+            // };
+            // const updatedLocation = await updateFranchiseLocation(allLocations[0].id, updatedLocationData);
+            // console.log("Updated Location", updatedLocation);
 
-            console.log("Finished testing franchise locations database.");
+            // console.log("Finished testing franchise locations database.");
 
 
         // Test Salon Suite
@@ -628,6 +662,39 @@ const { createFranchiseLocation, getAllFranchiseLocations, getFranchiseLocationB
                 // const updatedReview = await updateReview({id: 1, rating: 4, content: "Service was good."});
                 // console.log("Updated Review:", updatedReview);
                 // console.log("---Finished Testing Reviews---");
+
+
+        // Test Messages
+
+            console.log("Testing 'createInitialMessages'...");
+            await createInitialMessages();
+            
+        // Test getAllMessages
+            console.log("Getting all messages...");
+            const allMessages = await getAllMessages();
+            console.log("All Messages: ", allMessages);
+
+        // Test getMessagesByUserId
+            console.log("Getting message by id...");
+            const message = await getMessagesByUserId(allMessages[0].id);
+            console.log("Message: ", message);
+
+        // Test updateMessage
+            console.log("Updating first message...");
+            const updatedMessage = await updateMessage(allMessages[0].id, {
+                content: "This message has been updated."
+            });
+            console.log("Updated Message: ", updatedMessage);
+
+        // Test deleteMessage
+            console.log("Deleting first message...");
+            const deletedMessage = await deleteMessage(allMessages[0].id);
+            console.log("Deleted Message: ", deletedMessage);
+
+        // Test getAllMessages
+            console.log("Getting all messages after delete...");
+            const allMessagesAfterDelete = await getAllMessages();
+            console.log("All Messages After Delete: ", allMessagesAfterDelete);
 
         } catch (error) {
         console.log("Error during testDB!");
