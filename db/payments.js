@@ -16,7 +16,7 @@ async function createPayment({ userId, appointmentId, amount, paymentDate, trans
         console.log(error);
         throw error;
     }
-}
+};
 
 // Method: getPaymentById
 async function getPaymentById(id) {
@@ -33,7 +33,8 @@ async function getPaymentById(id) {
         console.log(error);
         throw error;
     }
-}
+};
+
 // Method: getAllPayments
 async function getAllPayments() {
     try {
@@ -48,7 +49,7 @@ async function getAllPayments() {
         console.log(error);
         throw error;
     }
-}
+};
 
 // Method: updatePayment
 async function updatePayment({ id, userId, appointmentId, amount, paymentDate, transactionId, status, paymentMethod }) {
@@ -72,7 +73,7 @@ async function updatePayment({ id, userId, appointmentId, amount, paymentDate, t
         console.log(error);
         throw error;
     }
-}
+};
 
 // Method: deletePayment
 async function deletePayment(id) {
@@ -88,7 +89,8 @@ async function deletePayment(id) {
         console.log(error);
         throw error;
     }
-}
+};
+
 module.exports = {
     createPayment,
     getPaymentById,

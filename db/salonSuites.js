@@ -20,7 +20,7 @@ async function createSuite({ user_id, franchise_location_id, suite_number, servi
         console.error("Error details: ", error);
         throw error;
     }
-}
+};
 
 // Method: getSuiteById
 async function getSuiteById(id) {
@@ -39,7 +39,7 @@ async function getSuiteById(id) {
         console.error(error);
         throw error;
     }
-}
+};
 
 // Method: getAllSuites
 async function getAllSuites() {
@@ -54,7 +54,7 @@ async function getAllSuites() {
         console.error(error);
         throw error;
     }
-}
+};
 
 // Method: updateSuite
 async function updateSuite({ id, user_id, franchise_location_id, suite_number, services }) {
@@ -78,7 +78,7 @@ async function updateSuite({ id, user_id, franchise_location_id, suite_number, s
         console.error("Error details: ", error);
         throw error;
     }
-}
+};
 
 // Method: deleteSuite
 async function deleteSuite(id) {
@@ -95,7 +95,7 @@ async function deleteSuite(id) {
         console.error("Error details: ", error);
         throw error;
     }
-}
+};
 
 module.exports = {
     createSuite,

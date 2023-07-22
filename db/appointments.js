@@ -16,7 +16,7 @@ async function createAppointment({ userId, serviceId, renterId, appointmentDate,
         console.log(error);
         throw error;
     }
-}
+};
 
 // Method: getAllAppointments
 async function getAllAppointments() {
@@ -32,7 +32,7 @@ async function getAllAppointments() {
         console.log(error);
         throw error;
     }
-}
+};
 
 // Method: getAppointmentById
 async function getAppointmentById(id) {
@@ -49,7 +49,7 @@ async function getAppointmentById(id) {
         console.log(error);
         throw error;
     }
-}
+};
 
 // Method: updateAppointment
 async function updateAppointment({ id, userId, serviceId, renterId, appointmentDate, appointmentEndDate, status }) {
@@ -72,7 +72,7 @@ async function updateAppointment({ id, userId, serviceId, renterId, appointmentD
         console.log(error);
         throw error;
     }
-}
+};
 
 // Method: deleteAppointment
 async function deleteAppointment(id) {
@@ -88,7 +88,7 @@ async function deleteAppointment(id) {
         console.log(error);
         throw error;
     }
-}
+};
 
 module.exports = {
     createAppointment,

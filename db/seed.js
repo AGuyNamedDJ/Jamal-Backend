@@ -14,6 +14,7 @@ const { createFranchiseLocation, getAllFranchiseLocations, getFranchiseLocationB
 const { createMessage, getMessagesByUserId, updateMessage, deleteMessage, getAllMessages,} = require('./messages');
 const { createNotification, getAllNotifications, getNotificationById, updateNotification, deleteNotification} = require('./notifications');
 const { createFavorite, getAllFavorites, getFavoriteById, deleteFavorite} = require('./favorites');
+const { createPromotion, getAllPromotions, getPromotionById, updatePromotion, deletePromotion} = require('./promotions');
 
 // Step 2: User Methods
     // Method: dropTables
@@ -154,10 +155,20 @@ const { createFavorite, getAllFavorites, getFavoriteById, deleteFavorite} = requ
                 updated_at TIMESTAMP DEFAULT NOW()
             );
             
-            
-                       
-            
-            
+            CREATE TABLE promotions (
+                id SERIAL PRIMARY KEY,
+                salon_renter_id INTEGER REFERENCES salon_renters(id),
+                service_id INTEGER REFERENCES services(id),
+                title VARCHAR(255) NOT NULL,
+                description TEXT NOT NULL,
+                start_date DATE NOT NULL,
+                end_date DATE NOT NULL,
+                    promo_code VARCHAR(255), 
+                discount_type VARCHAR(50),
+                discount_value DECIMAL(7, 2),
+                created_at TIMESTAMP DEFAULT NOW(),
+                updated_at TIMESTAMP DEFAULT NOW()
+            );
         `);
         console.log('Finished building tables.');
         } catch (error) {
@@ -395,8 +406,25 @@ const { createFavorite, getAllFavorites, getFavoriteById, deleteFavorite} = requ
         }
     };
     
+    // Method: createInitialPromotions:
+    async function createInitialPromotions() {
+        try {
+            console.log("Creating initial promotions...");
 
-    
+            const promotion = await createPromotion({
+                title: "Summer Special",
+                description: "10% off any service.",
+                start_date: new Date(),
+                end_date: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
+                promo_code: "SUMMER10"
+            });
+
+            console.log("Initial promotion created: ", promotion);
+        } catch (error) {
+            console.error("Error creating initial promotions!");
+            console.error(error);
+        }
+    };
 
 
     // Rebuild DB
@@ -416,7 +444,7 @@ const { createFavorite, getAllFavorites, getFavoriteById, deleteFavorite} = requ
             await createInitialMessages();
             await createInitialNotifications();
             await createInitialFavorites();
-
+            await createInitialPromotions();
 
         } catch (error) {
             console.log("Error during rebuildDB!")
@@ -803,6 +831,41 @@ const { createFavorite, getAllFavorites, getFavoriteById, deleteFavorite} = requ
                 // const allFavoritesAfterDeletion = await getAllFavorites();
                 // console.log("All favorites after deletion: ", allFavoritesAfterDeletion);
         
+
+        // Test Promotions
+
+            // Test getAllPromotions
+            //     console.log("Getting all promotions...");
+            //     const allPromotions = await getAllPromotions();
+            //     console.log("All promotions: ", allPromotions);
+            
+            // // Test getPromotionById
+            //     if (allPromotions.length > 0) {
+            //         const promotionId = allPromotions[0].id;
+            //         console.log(`Getting promotion with ID ${promotionId}...`);
+            //         const promotion = await getPromotionById(promotionId);
+            //         console.log("Promotion: ", promotion);
+            
+            // // Test updatePromotion
+            //         console.log(`Updating promotion with ID ${promotionId}...`);
+            //         const updatedPromotion = await updatePromotion(promotionId, {
+            //             title: "Summer Special Updated",
+            //             description: "15% off any service.",
+            //             promo_code: "SUMMER15"
+            //         });
+            //         console.log("Updated promotion: ", updatedPromotion);
+            
+            // // Test deletePromotion
+            //         console.log(`Deleting promotion with ID ${promotionId}...`);
+            //         await deletePromotion(promotionId);
+            //     }
+            
+            // // Test Promotions
+            //     console.log("Getting all promotions after delete...");
+            //     const allPromotionsAfterDelete = await getAllPromotions();
+            //     console.log("All promotions after delete: ", allPromotionsAfterDelete);
+            
+            //     console.log("Finished testing promotions.");
 
         } catch (error) {
         console.log("Error during testDB!");

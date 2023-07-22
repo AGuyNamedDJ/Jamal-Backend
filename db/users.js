@@ -25,7 +25,7 @@ async function createUser({ username, password, email, full_name, user_role, pro
       console.error("Error details: ", error);
       throw error;
     }
-  }
+};
  
 // getAllUsers
 async function getAllUsers() {
@@ -41,7 +41,7 @@ async function getAllUsers() {
         console.log(error);
         throw error;
     }
-}
+};
 
 // getUserById
 // getUserById function
@@ -79,8 +79,7 @@ async function getUserByUsername(username) {
         console.error(error);
         throw error;
     }
-}
-  
+};  
 
 // loginUser
 async function loginUser({ username, password }) {
@@ -113,7 +112,7 @@ async function loginUser({ username, password }) {
         console.error(error);
         throw error;
     }
-}
+};
 
 module.exports = {
     createUser,

@@ -16,7 +16,7 @@ async function createReview({ userId, serviceId, rating, content }) {
         console.log(error);
         throw error;
     }
-}
+};
 
 // Method: getAllReviews
 async function getAllReviews() {
@@ -32,7 +32,7 @@ async function getAllReviews() {
         console.log(error);
         throw error;
     }
-}
+};
 
 // Method: getReviewById
 async function getReviewById(id) {
@@ -49,7 +49,7 @@ async function getReviewById(id) {
         console.log(error);
         throw error;
     }
-}
+};
 
 // Method: updateReview
 async function updateReview({ id, rating, content }) {
@@ -68,7 +68,7 @@ async function updateReview({ id, rating, content }) {
         console.log(error);
         throw error;
     }
-}
+};
 
 // Method: deleteReview
 async function deleteReview(id) {
@@ -84,7 +84,7 @@ async function deleteReview(id) {
         console.log(error);
         throw error;
     }
-}
+};
 
 module.exports = {
     createReview,

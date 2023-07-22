@@ -16,7 +16,7 @@ async function createService({ user_id, name, description, price, duration, imag
         console.log(error);
         throw error;
     }
-}
+};
 
 // Method: getAllServices
 async function getAllServices() {
@@ -31,7 +31,7 @@ async function getAllServices() {
         console.log(error);
         throw error;
     }
-}
+};
 
 // Method: getServiceById
 async function getServiceById(id) {
@@ -48,7 +48,7 @@ async function getServiceById(id) {
         console.log(error);
         throw error;
     }
-}
+};
 
 // Method: getServicesByUser
 async function getServicesByUser(userId) {
@@ -65,7 +65,7 @@ async function getServicesByUser(userId) {
         console.log(error);
         throw error;
     }
-}
+};
 
 // Method: updateService
 async function updateService({ id, name, description, price, duration, image_link }) {
@@ -83,7 +83,7 @@ async function updateService({ id, name, description, price, duration, image_lin
         console.log(error);
         throw error;
     }
-}
+};
 
 // Method: deleteService
 async function deleteService(id) {
@@ -100,7 +100,7 @@ async function deleteService(id) {
         console.log(error);
         throw error;
     }
-}
+};
 
 module.exports = {
     createService,
@@ -109,4 +109,4 @@ module.exports = {
     getServicesByUser,
     updateService,
     deleteService
-}
+};

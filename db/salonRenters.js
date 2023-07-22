@@ -14,7 +14,7 @@ async function createRenter({ user_id, suite_id, rent_start_date, rent_end_date,
     } catch (error) {
         throw error;
     }
-}
+};
 
 // Method: getRenterById
 async function getRenterById(id) {
@@ -28,7 +28,7 @@ async function getRenterById(id) {
     } catch (error) {
         throw error;
     }
-}
+};
 
 // Method: getRentersByUserId
 async function getRentersByUserId(user_id) {
@@ -42,7 +42,7 @@ async function getRentersByUserId(user_id) {
     } catch (error) {
         throw error;
     }
-}
+};
 
 // Method: getAllRenters
 async function getAllRenters() {
@@ -55,7 +55,7 @@ async function getAllRenters() {
     } catch (error) {
         throw error;
     }
-}
+};
 
 // Method: updateRenter
 async function updateRenter({ id, user_id, suite_id, rent_start_date, rent_end_date, monthly_rental_fee, lease_contract_link }) {
@@ -76,7 +76,7 @@ async function updateRenter({ id, user_id, suite_id, rent_start_date, rent_end_d
     } catch (error) {
         throw error;
     }
-}
+};
 
 // Method: deleteRenter
 async function deleteRenter(id) {
@@ -88,7 +88,7 @@ async function deleteRenter(id) {
     } catch (error) {
         throw error;
     }
-}
+};
 
 module.exports = {
     createRenter,
