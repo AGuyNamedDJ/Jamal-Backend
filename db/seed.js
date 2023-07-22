@@ -12,6 +12,7 @@ const { createPayment, getPaymentById, getAllPayments, updatePayment, deletePaym
 const { createReview, getReviewById, getAllReviews, updateReview, deleteReview} = require ('./reviews');
 const { createFranchiseLocation, getAllFranchiseLocations, getFranchiseLocationById, updateFranchiseLocation, getFranchiseLocationByName} = require('./franchiseLocations');
 const { createMessage, getMessagesByUserId, updateMessage, deleteMessage, getAllMessages,} = require('./messages');
+const { createNotification, getAllNotifications, getNotificationById, updateNotification, deleteNotification} = require('./notifications');
 
 // Step 2: User Methods
     // Method: dropTables
@@ -30,7 +31,6 @@ const { createMessage, getMessagesByUserId, updateMessage, deleteMessage, getAll
             DROP TABLE IF EXISTS services CASCADE;
             DROP TABLE IF EXISTS users CASCADE;
             DROP TABLE IF EXISTS promotions CASCADE;
-            DROP TABLE IF EXISTS business_hours CASCADE;
             DROP TABLE IF EXISTS franchise_locations CASCADE;
         `);
             console.log("Finished dropping tables.")
@@ -135,7 +135,23 @@ const { createMessage, getMessagesByUserId, updateMessage, deleteMessage, getAll
                 created_at TIMESTAMP DEFAULT NOW(),
                 read_status BOOLEAN DEFAULT false
             );
-            
+            CREATE TABLE IF NOT EXISTS notifications (
+                id SERIAL PRIMARY KEY,
+                user_id INTEGER REFERENCES users(id) NOT NULL,
+                type VARCHAR(255) NOT NULL,
+                content TEXT NOT NULL,
+                status VARCHAR(255) NOT NULL DEFAULT 'Unread',
+                created_at TIMESTAMP DEFAULT NOW(),
+                updated_at TIMESTAMP DEFAULT NOW()
+            );
+            CREATE TABLE favorites(
+                id SERIAL PRIMARY KEY,
+                user_id INTEGER REFERENCES users(id),
+                service_id INTEGER REFERENCES services(id),
+                renter_id INTEGER REFERENCES salon_renters(id),
+                created_at TIMESTAMP DEFAULT NOW(), 
+                updated_at TIMESTAMP DEFAULT NOW()
+            );
             
             
                        
@@ -319,34 +335,50 @@ const { createMessage, getMessagesByUserId, updateMessage, deleteMessage, getAll
         }
     };
 
-// Method: createInitialMessages
-async function createInitialMessages() {
-    try {
-        console.log("Creating initial messages...");
+    // Method: createInitialMessages
+    async function createInitialMessages() {
+        try {
+            console.log("Creating initial messages...");
 
-        const message1 = await createMessage({
-            sender_id: 1, 
-            receiver_id: 2,
-            content: "Hello! Looking forward to our appointment."
-        });
-        console.log("Message 1 created: ", message1);
+            const message1 = await createMessage({
+                sender_id: 1, 
+                receiver_id: 2,
+                content: "Hello! Looking forward to our appointment."
+            });
+            console.log("Message 1 created: ", message1);
 
-        const message2 = await createMessage({
-            sender_id: 2, 
-            receiver_id: 1,
-            content: "Hi, me too! Please confirm the time."
-        });
-        console.log("Message 2 created: ", message2);
+            const message2 = await createMessage({
+                sender_id: 2, 
+                receiver_id: 1,
+                content: "Hi, me too! Please confirm the time."
+            });
+            console.log("Message 2 created: ", message2);
 
-    } catch (error) {
-        console.error("Error creating initial messages!");
-        console.error(error);
-    }
-};
+        } catch (error) {
+            console.error("Error creating initial messages!");
+            console.error(error);
+        }
+    };
+
+    // Method: createInitialNotifications
+    async function createInitialNotifications() {
+        try {
+            console.log("Creating initial notification...");
+            const notification = await createNotification({
+                userId: 1,
+                type: 'system',
+                content: 'Welcome to our platform! We are happy to have you here.',
+            });
+            console.log("Initial notification created: ", notification);
+        } catch (error) {
+            console.error("Error creating initial notification!");
+            console.error(error);
+        }
+    };    
 
     
 
-    
+
     // Rebuild DB
     async function rebuildDB() {
         try {
@@ -362,6 +394,7 @@ async function createInitialMessages() {
             await createInitialPayments();
             await createInitialReviews();
             await createInitialMessages();
+            await createInitialNotifications();
 
 
         } catch (error) {
@@ -665,36 +698,63 @@ async function createInitialMessages() {
 
 
         // Test Messages
-
-            console.log("Testing 'createInitialMessages'...");
-            await createInitialMessages();
+            // console.log("Testing 'createInitialMessages'...");
+            // await createInitialMessages();
             
         // Test getAllMessages
-            console.log("Getting all messages...");
-            const allMessages = await getAllMessages();
-            console.log("All Messages: ", allMessages);
+            // console.log("Getting all messages...");
+            // const allMessages = await getAllMessages();
+            // console.log("All Messages: ", allMessages);
 
         // Test getMessagesByUserId
-            console.log("Getting message by id...");
-            const message = await getMessagesByUserId(allMessages[0].id);
-            console.log("Message: ", message);
+            // console.log("Getting message by id...");
+            // const message = await getMessagesByUserId(allMessages[0].id);
+            // console.log("Message: ", message);
 
         // Test updateMessage
-            console.log("Updating first message...");
-            const updatedMessage = await updateMessage(allMessages[0].id, {
-                content: "This message has been updated."
-            });
-            console.log("Updated Message: ", updatedMessage);
+            // console.log("Updating first message...");
+            // const updatedMessage = await updateMessage(allMessages[0].id, {
+            //     content: "This message has been updated."
+            // });
+            // console.log("Updated Message: ", updatedMessage);
 
         // Test deleteMessage
-            console.log("Deleting first message...");
-            const deletedMessage = await deleteMessage(allMessages[0].id);
-            console.log("Deleted Message: ", deletedMessage);
+            // console.log("Deleting first message...");
+            // const deletedMessage = await deleteMessage(allMessages[0].id);
+            // console.log("Deleted Message: ", deletedMessage);
 
         // Test getAllMessages
-            console.log("Getting all messages after delete...");
-            const allMessagesAfterDelete = await getAllMessages();
-            console.log("All Messages After Delete: ", allMessagesAfterDelete);
+            // console.log("Getting all messages after delete...");
+            // const allMessagesAfterDelete = await getAllMessages();
+            // console.log("All Messages After Delete: ", allMessagesAfterDelete);
+
+
+    // Test Notifications
+            // console.log("Calling createInitialNotifications...");
+            // await createInitialNotifications();
+
+        // Test getAllNotifications
+            // console.log("Calling getAllNotifications...");
+            // const notifications = await getAllNotifications();
+            // console.log("Result:", notifications);
+
+        // Test getNotificationById
+            // console.log("Calling getNotificationById for the first notification...");
+            // const notification = await getNotificationById(notifications[0].id);
+            // console.log("Result:", notification);
+
+        // Test updateNotification
+            // console.log("Calling updateNotification for the first notification...");
+            // const updatedNotification = await updateNotification(notifications[0].id, {
+            //     content: 'This is an updated content for the notification.',
+            // });
+            // console.log("Result:", updatedNotification);
+
+        // Test deleteNotification
+            // console.log("Calling deleteNotification for the first notification...");
+            // const deletedNotification = await deleteNotification(notifications[0].id);
+            // console.log("Result:", deletedNotification);
+
 
         } catch (error) {
         console.log("Error during testDB!");
