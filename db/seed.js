@@ -3,7 +3,7 @@ const { create } = require('domain');
 const { client } = require('./index');
 
 // Page Imports
-const { createUser, getAllUsers, getUserById, getUserByUsername, loginUser } = require('./users');
+const { createUser, getAllUsers, getUserById, getUserByUsername, loginUser, deleteUser } = require('./users');
 const { createSuite, getSuiteById, getAllSuites, updateSuite, deleteSuite } = require('./salonSuites');
 const { createRenter, getRenterById, getRentersByUserId, getAllRenters, updateRenter, deleteRenter } = require('./salonRenters');
 const { createService, getAllServices, getServiceById, getServicesByUser, updateService, deleteService} = require('./services');

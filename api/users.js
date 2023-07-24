@@ -116,8 +116,8 @@ const usersRouter = express.Router();
     });
 
     // Profile
-    usersRouter.get('/profile', async (req, res, next) => {
-        const { username } = req.body;
+    usersRouter.get('/profile/:username', async (req, res, next) => {
+        const { username } = req.params;
         try {
             const myUserInfo = await getUserByUsername(username);
             if (myUserInfo) {

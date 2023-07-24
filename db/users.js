@@ -114,10 +114,53 @@ async function loginUser({ username, password }) {
     }
 };
 
+// deleteUser
+async function deleteUser(username) {
+    try {
+        // start a transaction
+        await client.query('BEGIN');
+
+        // delete rows from the salon_renters table that reference the salon suite owned by the user
+        await client.query(`
+            DELETE FROM salon_renters WHERE suite_id IN (
+                SELECT id FROM salon_suites WHERE user_id = (
+                    SELECT id FROM users WHERE username = $1
+                )
+            )
+        `, [username]);
+
+        // delete or update rows from the referencing table
+        await client.query(`
+            DELETE FROM salon_suites WHERE user_id = (
+                SELECT id FROM users WHERE username = $1
+            )
+        `, [username]);
+
+        // delete from the users table
+        const result = await client.query(`
+            DELETE FROM users WHERE username = $1 RETURNING *
+        `, [username]);
+
+        // commit the transaction
+        await client.query('COMMIT');
+
+        return result.rows[0];
+    } catch (error) {
+        // rollback the transaction in case of error
+        await client.query('ROLLBACK');
+
+        // log the error and throw
+        console.error(`Could not delete user ${username}`);
+        console.error(error);
+        throw error;
+    }
+};
+
 module.exports = {
     createUser,
     getAllUsers,
     getUserById,
     getUserByUsername,
-    loginUser
+    loginUser,
+    deleteUser
 };
