@@ -34,12 +34,15 @@ try {
 
 // Port
 const PORT = process.env.PORT || 3001
-app.listen(PORT, () => {
-    console.log(`Now running on port ${PORT}`)
-});
+if (process.env.NODE_ENV !== 'test') {
+    app.listen(PORT, () => {
+        console.log(`Now running on port ${PORT}`)
+    });
+};
 
 // Export
 module.exports = {
+    app,
     client,
     jwt,
     bcrypt

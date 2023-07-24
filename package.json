@@ -4,12 +4,15 @@
   "description": "Test",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "seed": "nodemon ./db/Seed.js",
     "seed:dev": "nodemon ./db/Seed.js",
     "start": "node server.js",
     "start:dev": "nodemon server.js",
     "start-seed": "node ./db/Seed.js && node server.js"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "repository": {
     "type": "git",
@@ -32,6 +35,8 @@
     "pg": "^8.11.1"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "jest": "^29.6.1",
+    "nodemon": "^3.0.1",
+    "supertest": "^6.3.3"
   }
 }

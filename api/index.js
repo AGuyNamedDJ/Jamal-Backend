@@ -36,6 +36,7 @@ apiRouter.use(async (req, res, next) => {
         } catch (error) {
             console.log(error);
         }
+
     // Auth header does not start with 'Bearer '
     } else {
         next({
@@ -45,15 +46,20 @@ apiRouter.use(async (req, res, next) => {
     }
 });
 
-// Routers
-const {usersRouter} = require('./users');
-apiRouter.use('/users', usersRouter);
+// Handle GET request to '/api'
+apiRouter.get("/", (req, res) => {
+    res.json({message: 'API is running'});
+});
 
 // General error handling
 apiRouter.use((error, req, res, next) => {
     console.error(error);
     res.status(500).send({ message: error.message });
 });
+
+// Routers
+const {usersRouter} = require('./users');
+apiRouter.use('/users', usersRouter);
 
 // Export
 module.exports = { apiRouter }
