@@ -28,9 +28,16 @@ app.use('/api', apiRouter)
 try {
     client.connect();
 } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Unable to connect to database." });
+    console.error("Unable to connect to database.", error);
+    process.exit(1);
 };
+
+
+// Close the database connection when the server stops
+process.on('exit', () => {
+    console.log('Closing database connection');
+    client.end();
+});
 
 // Port
 const PORT = process.env.PORT || 3001

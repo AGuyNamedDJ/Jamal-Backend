@@ -19,119 +19,107 @@ const bcrypt = require('bcrypt');
 const usersRouter = express.Router();
 
 // Router Handlers
-    // Initial usersRouter
-    usersRouter.use((req,res,next) => {
-        console.log("A request is being made to /users...");
-        next();
-    });
+usersRouter.use((req, res, next) => {
+    console.log("A request is being made to /users...");
+    next();
+});
 
-    // getAllUsers
-    usersRouter.get('/', async (req, res, next) => {
-        try {
-            const users = await getAllUsers();
-            res.send({users});
-        } catch(error) {
-            next(error);
-        }
-    });
+usersRouter.get('/', async (req, res, next) => {
+    try {
+        const users = await getAllUsers();
+        res.send({ users });
+    } catch (error) {
+        next(error);
+    }
+});
 
-    // Register
-    usersRouter.post('/register', async (req, res, next) => {
-        const { username, password, email, full_name, user_role, profile_image, phone_number } = req.body;
+usersRouter.post('/register', async (req, res, next) => {
+    const { username, password, email, full_name, user_role, profile_image, phone_number } = req.body;
 
-        try {
-            const _user = await getUserByUsername(username);
+    try {
+        const _user = await getUserByUsername(username);
 
-            // Existing User
-            if (_user) {
-                res.status(409).send({
-                    name: "UserExistsError",
-                    message: "A user by that name already exists",
-                    status: 409
+        if (_user) {
+            res.status(409).send({
+                name: "UserExistsError",
+                message: "A user by that name already exists",
+                status: 409
+            });
+        } else { 
+            const newUser = await createUser({
+                username,
+                password,
+                email,
+                full_name,
+                user_role,
+                profile_image,
+                phone_number
+            });
+
+            const { password: hashedPassword, ...secureUser } = newUser;
+
+            const token = jwt.sign(
+                {
+                    id: secureUser.id,
+                    username
+                }, JWT_SECRET, {
+                    expiresIn: "1w",
                 });
 
-            // New User
-            } else { 
-                const newUser = await createUser({
-                    username,
-                    password,
-                    email,
-                    full_name,
-                    user_role,
-                    profile_image,
-                    phone_number
-                });
-
-                // Create JWT
-                const token = jwt.sign(
-                    {
-                        id: newUser.id,
-                        username
-                    }, JWT_SECRET, {
-                        expiresIn: "1w",
-                    });
-
-                res.status(201).send({
-                    message: "Thank you for signing up.",
-                    newUser,
-                    token
-                });
-            }
-        } catch (error) {
-            next(error);
-        }
-    });
-
-    // Login
-    usersRouter.post('/login', async (req, res, next) => {
-        const { username, password } = req.body;
-
-        // Invalid username/password
-        if (!username || !password) {
-            next({
-                name: "MissingCredentialsError",
-                message: "Please supply both a username and password."
+            res.status(201).send({
+                message: "Thank you for signing up.",
+                user: secureUser,
+                token
             });
         }
+    } catch (error) {
+        next(error);
+    }
+});
 
-        try {
-            const user = await loginUser({ username, password });
+usersRouter.post('/login', async (req, res, next) => {
+    const { username, password } = req.body;
 
-            // Verified user
-            if (user) {
-                // Create Token & print
-                const newToken = jwt.sign({ id: user.id, username }, JWT_SECRET, { expiresIn: "1w" });
-                res.send({ message: "You're logged in!", token: newToken, success: true });
+    if (!username || !password) {
+        next({
+            name: "MissingCredentialsError",
+            message: "Please supply both a username and password."
+        });
+    }
 
-            // Unverified user
-            } else {
-                next({ 
-                    name: 'IncorrectCredentialsError', 
-                    message: 'Username &/or password is incorrect!'
-                });
-            }
-        } catch(error) {
-            next(error);
+    try {
+        const user = await loginUser({ username, password });
+
+        if (user) {
+            const newToken = jwt.sign({ id: user.id, username }, JWT_SECRET, { expiresIn: "1w" });
+            res.send({ message: "You're logged in!", token: newToken, success: true });
+        } else {
+            next({ 
+                name: 'IncorrectCredentialsError', 
+                message: 'Username &/or password is incorrect!'
+            });
         }
-    });
+    } catch (error) {
+        next(error);
+    }
+});
 
-    // Profile
-    usersRouter.get('/profile/:username', async (req, res, next) => {
-        const { username } = req.params;
-        try {
-            const myUserInfo = await getUserByUsername(username);
-            if (myUserInfo) {
-                res.send({ myUserInfo });
-            } else {
-                next({
-                    name: 'UserNotFoundError',
-                    message: 'Could not find user with provided username'
-                });
-            }
-        } catch (error) {
-            next(error);
+usersRouter.get('/profile/:username', async (req, res, next) => {
+    const { username } = req.params;
+    try {
+        const myUserInfo = await getUserByUsername(username);
+        if (myUserInfo) {
+            res.send({ myUserInfo });
+        } else {
+            next({
+                name: 'UserNotFoundError',
+                message: 'Could not find user with provided username'
+            });
         }
-    });
+    } catch (error) {
+        next(error);
+    }
+});
 
 module.exports = {
     usersRouter

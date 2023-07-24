@@ -2,7 +2,7 @@
 const { client } = require("./index");
 const bcrypt = require('bcrypt')
 
-// createUsers
+// createUser
 async function createUser({ username, password, email, full_name, user_role, profile_image, phone_number }) {
     try {
       console.log(`Hashing password for ${username}`);
@@ -19,7 +19,7 @@ async function createUser({ username, password, email, full_name, user_role, pro
       `, [username, hashedPassword, email, full_name, user_role, profile_image, phone_number]);
   
       console.log(`User ${username} inserted into database`);
-      return result.rows;
+      return result.rows[0];
     } catch (error) {
       console.error(`Could not create user ${username}`);
       console.error("Error details: ", error);
@@ -44,21 +44,21 @@ async function getAllUsers() {
 };
 
 // getUserById
-// getUserById function
 async function getUserById(id) {
     try {
-        const { rows: [ users ] } = await client.query(`
+        const { rows: [ user ] } = await client.query(`
         SELECT id, username
         FROM users
         WHERE id= $1;
         `,[id]);
 
-        if (!users) {
+        if (!user) {
             return null
         }
-        return users;
+        return user;
     } catch (error) {
         console.log(error)
+        throw error;
     }
 };
 
@@ -84,7 +84,6 @@ async function getUserByUsername(username) {
 // loginUser
 async function loginUser({ username, password }) {
     try {
-        // Fetchh user from DB
         const result = await client.query(`
             SELECT * FROM users 
             WHERE username = $1;
@@ -93,19 +92,15 @@ async function loginUser({ username, password }) {
         const user = result.rows[0];
 
         if (!user) {
-            // Handle UNF
             throw new Error('User not found');
         }
 
-        // Check if hashed.p = BN.p
         const isPasswordValid = await bcrypt.compare(password, user.password);
 
         if (!isPasswordValid) {
-            // Handle invalid password
             throw new Error('Invalid password');
         }
 
-        // Login successful
         return user;
     } catch (error) {
         console.error(`Could not log in user ${username}`);
@@ -117,10 +112,8 @@ async function loginUser({ username, password }) {
 // deleteUser
 async function deleteUser(username) {
     try {
-        // start a transaction
         await client.query('BEGIN');
 
-        // delete rows from the salon_renters table that reference the salon suite owned by the user
         await client.query(`
             DELETE FROM salon_renters WHERE suite_id IN (
                 SELECT id FROM salon_suites WHERE user_id = (
@@ -129,27 +122,22 @@ async function deleteUser(username) {
             )
         `, [username]);
 
-        // delete or update rows from the referencing table
         await client.query(`
             DELETE FROM salon_suites WHERE user_id = (
                 SELECT id FROM users WHERE username = $1
             )
         `, [username]);
 
-        // delete from the users table
         const result = await client.query(`
             DELETE FROM users WHERE username = $1 RETURNING *
         `, [username]);
 
-        // commit the transaction
         await client.query('COMMIT');
 
         return result.rows[0];
     } catch (error) {
-        // rollback the transaction in case of error
         await client.query('ROLLBACK');
 
-        // log the error and throw
         console.error(`Could not delete user ${username}`);
         console.error(error);
         throw error;

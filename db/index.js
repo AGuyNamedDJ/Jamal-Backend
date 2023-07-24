@@ -1,5 +1,4 @@
 // 1) Imports 
-// const { Client } = require('pg');
 require('dotenv').config();
 const pg = require('pg');
 
