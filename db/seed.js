@@ -1,4 +1,4 @@
-// Step 1: Import Client & Exports
+// Step 1: Import Client & Exports;
 const { create } = require('domain');
 const { client } = require('./index');
 
