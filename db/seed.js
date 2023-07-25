@@ -6,15 +6,15 @@ const { client } = require('./index');
 const { createUser, getAllUsers, getUserById, getUserByUsername, loginUser, deleteUser } = require('./users');
 const { createSuite, getSuiteById, getAllSuites, updateSuite, deleteSuite } = require('./salonSuites');
 const { createRenter, getRenterById, getRentersByUserId, getAllRenters, updateRenter, deleteRenter } = require('./salonRenters');
-const { createService, getAllServices, getServiceById, getServicesByUser, updateService, deleteService} = require('./services');
+const { createService, getAllServices, getServiceById, getServicesByUser, updateService, deleteService } = require('./services');
 const { createAppointment, getAppointmentById, getAllAppointments, updateAppointment, deleteAppointment} = require('./appointments');
 const { createPayment, getPaymentById, getAllPayments, updatePayment, deletePayment } = require('./payments');
 const { createReview, getReviewById, getAllReviews, updateReview, deleteReview} = require ('./reviews');
-const { createFranchiseLocation, getAllFranchiseLocations, getFranchiseLocationById, updateFranchiseLocation, getFranchiseLocationByName} = require('./franchiseLocations');
+const { createFranchiseLocation, getAllFranchiseLocations, getFranchiseLocationById, updateFranchiseLocation, getFranchiseLocationByName, deleteFranchiseLocation } = require('./franchiseLocations');
 const { createMessage, getMessagesByUserId, updateMessage, deleteMessage, getAllMessages,} = require('./messages');
-const { createNotification, getAllNotifications, getNotificationById, updateNotification, deleteNotification} = require('./notifications');
+const { createNotification, getAllNotifications, getNotificationById, updateNotification, deleteNotification } = require('./notifications');
 const { createFavorite, getAllFavorites, getFavoriteById, deleteFavorite} = require('./favorites');
-const { createPromotion, getAllPromotions, getPromotionById, updatePromotion, deletePromotion} = require('./promotions');
+const { createPromotion, getAllPromotions, getPromotionById, updatePromotion, deletePromotion } = require('./promotions');
 
 // Step 2: User Methods
     // Method: dropTables

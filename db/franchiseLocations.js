@@ -86,10 +86,26 @@ async function updateFranchiseLocation(id, fields = {}) {
     }
 };
 
+// Method: deleteFranchiseLocation
+async function deleteFranchiseLocation(id) {
+    try {
+        const { rows: [location] } = await client.query(`
+            DELETE FROM franchise_locations
+            WHERE id=$1
+            RETURNING *;
+        `, [id]);
+
+        return location;
+    } catch (error) {
+        throw error;
+    }
+};
+
 module.exports = {
     createFranchiseLocation,
     getAllFranchiseLocations,
     getFranchiseLocationById,
     updateFranchiseLocation,
-    getFranchiseLocationByName
+    getFranchiseLocationByName,
+    deleteFranchiseLocation
 };
