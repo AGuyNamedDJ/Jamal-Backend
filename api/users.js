@@ -5,7 +5,8 @@ const {
     getAllUsers,
     getUserById,
     getUserByUsername,
-    loginUser } = require('../db/users');
+    loginUser,
+    updateUser } = require('../db/users');
 
 // JWT & DOTENV
 const jwt = require("jsonwebtoken");
@@ -17,6 +18,25 @@ const bcrypt = require('bcrypt');
 
 // Router Middleware
 const usersRouter = express.Router();
+
+// Authenticate Middleware
+const authenticateUser = (req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+
+    if (!token) {
+        return res.sendStatus(401); // Unauthorized
+    }
+
+    jwt.verify(token, JWT_SECRET, (err, user) => {
+        if (err) {
+            return res.sendStatus(403); // Forbidden
+        }
+
+        req.user = user;
+        next();
+    });
+};
 
 // Router Handlers
 usersRouter.use((req, res, next) => {
@@ -114,6 +134,40 @@ usersRouter.get('/profile/:username', async (req, res, next) => {
             next({
                 name: 'UserNotFoundError',
                 message: 'Could not find user with provided username'
+            });
+        }
+    } catch (error) {
+        next(error);
+    }
+});
+
+usersRouter.put('/update/:username', authenticateUser, async (req, res, next) => {
+    const { password, email, full_name, user_role, profile_image, phone_number } = req.body;
+    const { username } = req.params; 
+
+    try {
+        const user = await getUserByUsername(username); 
+
+        if (!user) {
+            res.status(404).send({
+                name: "UserNotFoundError",
+                message: "Could not find user with provided username"
+            });
+        } else {
+            const updatedUser = await updateUser(username, {
+                password,
+                email,
+                full_name,
+                user_role,
+                profile_image,
+                phone_number
+            });
+
+            const { password: hashedPassword, ...secureUpdatedUser } = updatedUser;
+
+            res.status(200).send({
+                message: "User updated successfully.",
+                user: secureUpdatedUser
             });
         }
     } catch (error) {

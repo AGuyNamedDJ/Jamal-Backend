@@ -101,6 +101,9 @@ async function loginUser({ username, password }) {
             throw new Error('Invalid password');
         }
 
+        // Removes password from the user object before returning
+        delete user.password;
+
         return user;
     } catch (error) {
         console.error(`Could not log in user ${username}`);
@@ -108,6 +111,7 @@ async function loginUser({ username, password }) {
         throw error;
     }
 };
+
 
 // deleteUser
 async function deleteUser(username) {
@@ -144,11 +148,48 @@ async function deleteUser(username) {
     }
 };
 
+// updateUser
+async function updateUser(username, fields = {}) {
+    // Generate the SET clause of the SQL statement
+    const setString = Object.keys(fields).map(
+        (key, index) => `"${key}"=$${index + 1}`
+    ).join(', ');
+
+    // Check if there are fields to update
+    if (setString.length === 0) {
+        return;
+    }
+
+    // Check if the 'password' field is present
+    // If it is, hash the new password before updating
+    if ('password' in fields) {
+        const SALT_COUNT = 10;
+        fields.password = await bcrypt.hash(fields.password, SALT_COUNT);
+    }
+
+    // Execute the update query
+    try {
+        const { rows: [user] } = await client.query(`
+            UPDATE users
+            SET ${setString}
+            WHERE username=$${Object.keys(fields).length + 1}
+            RETURNING *;
+        `, Object.values(fields).concat(username));
+
+        return user;
+    } catch (error) {
+        console.error("Could not update user.");
+        console.error("Error details: ", error);
+        throw error;
+    }
+};
+
 module.exports = {
     createUser,
     getAllUsers,
     getUserById,
     getUserByUsername,
     loginUser,
-    deleteUser
+    deleteUser,
+    updateUser
 };
