@@ -553,17 +553,17 @@ const { createPromotion, getAllPromotions, getPromotionById, updatePromotion, de
             // });
             // console.log(newSuite);
 
-            // Test getSuiteById 
+            // // Test getSuiteById 
             // console.log("Getting suite by id...");
             // const suite = await getSuiteById(newSuite.id);
             // console.log(suite);
 
-            // Test getAllSuites 
+            // // Test getAllSuites 
             // console.log("Getting all suites...");
             // const allSuites = await getAllSuites();
             // console.log(allSuites);
 
-            // Test updateSuite 
+            // // Test updateSuite 
             // console.log("Updating suite...");
             // const updatedSuite = await updateSuite({
             //     id: newSuite.id,
@@ -574,7 +574,7 @@ const { createPromotion, getAllPromotions, getPromotionById, updatePromotion, de
             // });
             // console.log(updatedSuite);
 
-            // Test deleteSuite 
+            // // Test deleteSuite 
             // console.log("Deleting suite...");
             // await deleteSuite(updatedSuite.id);
             // console.log("Suite deleted.");
