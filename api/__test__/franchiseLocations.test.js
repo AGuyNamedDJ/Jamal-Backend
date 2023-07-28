@@ -74,5 +74,4 @@ describe('Franchise Locations API', () => {
         const deletedLocation = await getFranchiseLocationById(testLocation.id);
         expect(deletedLocation).toBeUndefined();
     });
-    
 });

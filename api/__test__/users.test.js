@@ -56,49 +56,49 @@ describe('User API', () => {
     describe('PUT /api/users/update/:username', () => {
         it('should update an existing user', async () => {
           // Create a unique user
-          const uniqueUsername = 'TestUser' + Date.now();
-          const newUser = {
-            username: uniqueUsername,
-            password: 'TestPassword1',
-            email: uniqueUsername + '@example.com',
-            full_name: 'Test User',
-            user_role: 'user',
-            profile_image: 'test-image.jpg',
-            phone_number: '987-654-3210'
-          };
+            const uniqueUsername = 'TestUser' + Date.now();
+            const newUser = {
+                username: uniqueUsername,
+                password: 'TestPassword1',
+                email: uniqueUsername + '@example.com',
+                full_name: 'Test User',
+                user_role: 'user',
+                profile_image: 'test-image.jpg',
+                phone_number: '987-654-3210'
+            };
       
-          const userRes = await request(app)
-            .post('/api/users/register')
-            .send(newUser);
+            const userRes = await request(app)
+                .post('/api/users/register')
+                .send(newUser);
       
-          const user = userRes.body.user;
-          const token = jwt.sign({ id: user.id, username: user.username }, JWT_SECRET, { expiresIn: "1w" });
+            const user = userRes.body.user;
+            const token = jwt.sign({ id: user.id, username: user.username }, JWT_SECRET, { expiresIn: "1w" });
       
           // Update the user
-          const res = await request(app)
+            const res = await request(app)
             .put(`/api/users/update/${uniqueUsername}`)
             .set('Authorization', `Bearer ${token}`)
             .send({
-              password: 'NewPassword', 
-              email: 'updated@test.com', 
-              full_name: 'Updated User', 
-              user_role: 'admin', 
-              profile_image: 'updated-image.jpg', 
-              phone_number: '123-456-7890'
+                password: 'NewPassword', 
+                email: 'updated@test.com', 
+                full_name: 'Updated User', 
+                user_role: 'admin', 
+                profile_image: 'updated-image.jpg', 
+                phone_number: '123-456-7890'
             });
       
-          expect(res.statusCode).toEqual(200);
+            expect(res.statusCode).toEqual(200);
       
-          const updatedUser = res.body.user;
-          expect(updatedUser.password).not.toEqual('NewPassword'); 
-          expect(updatedUser.email).toEqual('updated@test.com');
-          expect(updatedUser.full_name).toEqual('Updated User');
-          expect(updatedUser.user_role).toEqual('admin');
-          expect(updatedUser.profile_image).toEqual('updated-image.jpg');
-          expect(updatedUser.phone_number).toEqual('123-456-7890');
-          console.log(res.body)
+            const updatedUser = res.body.user;
+            expect(updatedUser.password).not.toEqual('NewPassword'); 
+            expect(updatedUser.email).toEqual('updated@test.com');
+            expect(updatedUser.full_name).toEqual('Updated User');
+            expect(updatedUser.user_role).toEqual('admin');
+            expect(updatedUser.profile_image).toEqual('updated-image.jpg');
+            expect(updatedUser.phone_number).toEqual('123-456-7890');
+            console.log(res.body)
         });
-      });
+    });
       
 
     describe('GET /api/users', () => {

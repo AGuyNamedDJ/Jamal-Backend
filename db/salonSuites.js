@@ -57,24 +57,43 @@ async function getAllSuites() {
 };
 
 // Method: updateSuite
-async function updateSuite({ id, user_id, franchise_location_id, suite_number, services }) {
+async function updateSuite(suite) {
     try {
-        console.log(`Updating salon suite with ID ${id}`);
-        const result = await client.query(`
-            UPDATE salon_suites
-            SET user_id = $1,
-                franchise_location_id = $2,
-                suite_number = $3,
-                services = $4
-            WHERE id = $5
-            RETURNING *;
-        `, [user_id, franchise_location_id, suite_number, services, id]);
+        console.log(`Updating salon suite with ID ${suite.id}`);
 
-        const suite = result.rows[0];
-        console.log(`Salon suite with ID ${id} updated.`);
-        return suite;
+        let setClause = "";
+        const values = [];
+        let count = 1;
+
+        // Dynamically create the SET clause based on the properties in the suite object
+        for (let prop in suite) {
+            if (suite.hasOwnProperty(prop) && prop !== 'id') {
+                setClause += `${prop} = $${count}, `;
+                values.push(suite[prop]);
+                count++;
+            }
+        }
+
+        // Remove trailing comma and space
+        setClause = setClause.slice(0, -2);
+
+        const query = `
+            UPDATE salon_suites
+            SET ${setClause}
+            WHERE id = $${count}
+            RETURNING *;
+        `;
+
+        values.push(suite.id);
+
+        const result = await client.query(query, values);
+        
+        const updatedSuite = result.rows[0];
+        console.log(`Salon suite with ID ${suite.id} updated.`);
+        return updatedSuite;
+
     } catch (error) {
-        console.error(`Could not update salon suite with ID ${id}`);
+        console.error(`Could not update salon suite with ID ${suite.id}`);
         console.error("Error details: ", error);
         throw error;
     }
