@@ -1,8 +1,31 @@
 // Requires
 const request = require('supertest');
 const { app } = require('../../server');
-const { createFranchiseLocation, getAllFranchiseLocations } = require('../../db/franchiseLocations');
+const {     createFranchiseLocation,
+    getAllFranchiseLocations,
+    getFranchiseLocationById,
+    updateFranchiseLocation,
+    getFranchiseLocationByName,
+    deleteFranchiseLocation} = require('../../db/franchiseLocations');
+
 describe('Franchise Locations API', () => {
+    let testLocation;
+
+    beforeAll(async () => {
+        testLocation = await createFranchiseLocation({
+            name: 'Test Salon',
+            address: '123 Test St',
+            city: 'Test City',
+            state: 'TS',
+            zip_code: '10000',
+            country: 'USA',
+            phone_number: '111-222-3333',
+            business_hours: '9 AM - 5 PM',
+            email: 'testsalon@test.com',
+            additional_info: 'Test info here'
+        });
+    });
+
     it('GET /api/locations - should return all locations', async () => {
         const response = await request(app).get('/api/locations');
         expect(response.status).toEqual(200);
@@ -27,5 +50,29 @@ describe('Franchise Locations API', () => {
         expect(response.status).toEqual(200);
         expect(response.body).toMatchObject(newLocation);
     });
-    // Add more tests for GET /api/locations/:id, PATCH /api/locations/:id, and DELETE /api/locations/:id as needed
+
+    it('GET /api/locations/:id - should return the location with the given id', async () => {
+        const response = await request(app).get(`/api/locations/${testLocation.id}`);
+        expect(response.status).toEqual(200);
+        expect(response.body).toMatchObject(testLocation);
+    });
+
+    it('PATCH /api/locations/:id - should update the location with the given id', async () => {
+        const updates = { name: 'Updated Salon' };
+        const response = await request(app).patch(`/api/locations/${testLocation.id}`).send(updates);
+        expect(response.status).toEqual(200);
+        expect(response.body.name).toEqual(updates.name);
+    
+        // Update the testLocation object with the updated name
+        testLocation.name = updates.name;
+    });
+    
+    it('DELETE /api/locations/:id - should delete the location with the given id', async () => {
+        const response = await request(app).delete(`/api/locations/${testLocation.id}`);
+        expect(response.status).toEqual(200);
+        expect(response.body).toMatchObject(testLocation);
+        const deletedLocation = await getFranchiseLocationById(testLocation.id);
+        expect(deletedLocation).toBeUndefined();
+    });
+    
 });
