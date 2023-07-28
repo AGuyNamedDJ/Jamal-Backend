@@ -59,6 +59,8 @@ apiRouter.use((error, req, res, next) => {
 
 // Routers
 const {usersRouter} = require('./users');
+const {franchiseLocationsRouter} = require('./franchiseLocations');
+apiRouter.use('/locations', franchiseLocationsRouter);
 apiRouter.use('/users', usersRouter);
 
 // Export

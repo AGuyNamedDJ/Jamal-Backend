@@ -508,22 +508,22 @@ const { createPromotion, getAllPromotions, getPromotionById, updatePromotion, de
 
         // Test Franchise Locations
 
-            // Test getAllFranchiseLocations
+            // // Test getAllFranchiseLocations
             // console.log("Calling getAllFranchiseLocations...");
             // const allLocations = await getAllFranchiseLocations();
             // console.log("All locations", allLocations);
 
-            // Test getFranchiseLocationById
+            // // Test getFranchiseLocationById
             // console.log("Calling getFranchiseLocationById for the first location...");
             // const singleLocationById = await getFranchiseLocationById(allLocations[0].id);
             // console.log("Location by ID", singleLocationById);
 
-            // Test getFranchiseLocationByName
+            // // Test getFranchiseLocationByName
             // console.log("Calling getFranchiseLocationByName...");
             // const singleLocationByName = await getFranchiseLocationByName(allLocations[0].name);
             // console.log("Location by name", singleLocationByName);
 
-            // Test updateFranchiseLocation
+            // // Test updateFranchiseLocation
             // console.log("Calling updateFranchiseLocation for the first location...");
             // const updatedLocationData = {
             //     name: "Updated Name",
