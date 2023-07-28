@@ -30,7 +30,7 @@ async function setupDatabase() {
 // Function for cleaning up database
 async function cleanupDatabase() {
     await updateUser('TestOwner1', { 
-        password: 'UpdatedPassword1',  
+        password: 'TestPassword1',  
         email: 'testowner1@example.com', 
         full_name: 'Test Robertson1', 
         user_role: 'stylist', 
@@ -38,7 +38,7 @@ async function cleanupDatabase() {
         phone_number: '987-654-3210' 
     });
     await updateUser('TestOwner2', { 
-        password: 'UpdatedPassword2', 
+        password: 'TestPassword2', 
         email: 'testowner2@example.com', 
         full_name: 'Test Robertson2', 
         user_role: 'customer', 
@@ -154,7 +154,7 @@ describe('User API', () => {
                 .post('/api/users/login')
                 .send({
                     username: 'TestOwner1', 
-                    password: 'UpdatedPassword1'
+                    password: 'TestPassword1' // use original password
                 });
             expect(res.statusCode).toEqual(200);
             expect(res.body).toHaveProperty('token');

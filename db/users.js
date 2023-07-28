@@ -184,6 +184,7 @@ async function updateUser(username, fields = {}) {
     }
 };
 
+
 module.exports = {
     createUser,
     getAllUsers,
