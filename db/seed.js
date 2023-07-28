@@ -129,6 +129,28 @@ const { createPromotion, getAllPromotions, getPromotionById, updatePromotion, de
                 created_at TIMESTAMP DEFAULT NOW(), 
                 updated_at TIMESTAMP DEFAULT NOW()
             );
+            CREATE TABLE favorites(
+                id SERIAL PRIMARY KEY,
+                user_id INTEGER REFERENCES users(id),
+                service_id INTEGER REFERENCES services(id),
+                renter_id INTEGER REFERENCES salon_renters(id),
+                created_at TIMESTAMP DEFAULT NOW(), 
+                updated_at TIMESTAMP DEFAULT NOW()
+            );
+            CREATE TABLE promotions (
+                id SERIAL PRIMARY KEY,
+                salon_renter_id INTEGER REFERENCES salon_renters(id),
+                service_id INTEGER REFERENCES services(id),
+                title VARCHAR(255) NOT NULL,
+                description TEXT NOT NULL,
+                start_date DATE NOT NULL,
+                end_date DATE NOT NULL,
+                promo_code VARCHAR(255), 
+                discount_type VARCHAR(50),
+                discount_value DECIMAL(7, 2),
+                created_at TIMESTAMP DEFAULT NOW(),
+                updated_at TIMESTAMP DEFAULT NOW()
+            );
             CREATE TABLE IF NOT EXISTS messages (
                 id SERIAL PRIMARY KEY,
                 sender_id INTEGER REFERENCES users(id) NOT NULL,
@@ -145,30 +167,7 @@ const { createPromotion, getAllPromotions, getPromotionById, updatePromotion, de
                 status VARCHAR(255) NOT NULL DEFAULT 'Unread',
                 created_at TIMESTAMP DEFAULT NOW(),
                 updated_at TIMESTAMP DEFAULT NOW()
-            );
-            CREATE TABLE favorites(
-                id SERIAL PRIMARY KEY,
-                user_id INTEGER REFERENCES users(id),
-                service_id INTEGER REFERENCES services(id),
-                renter_id INTEGER REFERENCES salon_renters(id),
-                created_at TIMESTAMP DEFAULT NOW(), 
-                updated_at TIMESTAMP DEFAULT NOW()
-            );
-            
-            CREATE TABLE promotions (
-                id SERIAL PRIMARY KEY,
-                salon_renter_id INTEGER REFERENCES salon_renters(id),
-                service_id INTEGER REFERENCES services(id),
-                title VARCHAR(255) NOT NULL,
-                description TEXT NOT NULL,
-                start_date DATE NOT NULL,
-                end_date DATE NOT NULL,
-                    promo_code VARCHAR(255), 
-                discount_type VARCHAR(50),
-                discount_value DECIMAL(7, 2),
-                created_at TIMESTAMP DEFAULT NOW(),
-                updated_at TIMESTAMP DEFAULT NOW()
-            );
+            );            
         `);
         console.log('Finished building tables.');
         } catch (error) {
@@ -347,6 +346,44 @@ const { createPromotion, getAllPromotions, getPromotionById, updatePromotion, de
         }
     };
 
+    // Method: createInitialFavorites:
+    async function createInitialFavorites() {
+        try {
+            console.log("Creating initial favorites...");
+            const favorite = await createFavorite({
+                user_id: 1,
+                salon_renter_id: 2,
+                service_id: 1
+            });
+    
+            console.log("Initial favorite created: ", favorite);
+            return favorite;
+        } catch (error) {
+            console.error("Error creating initial favorites!");
+            console.error(error);
+        }
+    };
+    
+    // Method: createInitialPromotions:
+    async function createInitialPromotions() {
+        try {
+            console.log("Creating initial promotions...");
+
+            const promotion = await createPromotion({
+                title: "Summer Special",
+                description: "10% off any service.",
+                start_date: new Date(),
+                end_date: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
+                promo_code: "SUMMER10"
+            });
+
+            console.log("Initial promotion created: ", promotion);
+        } catch (error) {
+            console.error("Error creating initial promotions!");
+            console.error(error);
+        }
+    };
+
     // Method: createInitialMessages
     async function createInitialMessages() {
         try {
@@ -388,45 +425,6 @@ const { createPromotion, getAllPromotions, getPromotionById, updatePromotion, de
         }
     };    
 
-    // Method: createInitialFavorites:
-    async function createInitialFavorites() {
-        try {
-            console.log("Creating initial favorites...");
-            const favorite = await createFavorite({
-                user_id: 1,
-                salon_renter_id: 2,
-                service_id: 1
-            });
-    
-            console.log("Initial favorite created: ", favorite);
-            return favorite;
-        } catch (error) {
-            console.error("Error creating initial favorites!");
-            console.error(error);
-        }
-    };
-    
-    // Method: createInitialPromotions:
-    async function createInitialPromotions() {
-        try {
-            console.log("Creating initial promotions...");
-
-            const promotion = await createPromotion({
-                title: "Summer Special",
-                description: "10% off any service.",
-                start_date: new Date(),
-                end_date: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
-                promo_code: "SUMMER10"
-            });
-
-            console.log("Initial promotion created: ", promotion);
-        } catch (error) {
-            console.error("Error creating initial promotions!");
-            console.error(error);
-        }
-    };
-
-
     // Rebuild DB
     async function rebuildDB() {
         try {
@@ -441,10 +439,10 @@ const { createPromotion, getAllPromotions, getPromotionById, updatePromotion, de
             await createInitialAppointments();
             await createInitialPayments();
             await createInitialReviews();
-            await createInitialMessages();
-            await createInitialNotifications();
             await createInitialFavorites();
             await createInitialPromotions();
+            await createInitialMessages();
+            await createInitialNotifications();
 
         } catch (error) {
             console.log("Error during rebuildDB!")
