@@ -12,10 +12,11 @@ async function createRenter({ user_id, suite_id, rent_start_date, rent_end_date,
 
         return renter;
     } catch (error) {
+        console.error(`Could not create renter for user ID ${user_id} in suite ID ${suite_id}`);
+        console.error("Error details: ", error);
         throw error;
     }
 };
-
 // Method: getRenterById
 async function getRenterById(id) {
     try {
@@ -26,6 +27,8 @@ async function getRenterById(id) {
 
         return renter;
     } catch (error) {
+        console.error(`Could not get renter with ID ${id}`);
+        console.error("Error details: ", error);
         throw error;
     }
 };
@@ -40,6 +43,8 @@ async function getRentersByUserId(user_id) {
 
         return renters;
     } catch (error) {
+        console.error(`Could not get renters for user ID ${user_id}`);
+        console.error("Error details: ", error);
         throw error;
     }
 };
@@ -53,6 +58,8 @@ async function getAllRenters() {
 
         return renters;
     } catch (error) {
+        console.error("Could not get all renters.");
+        console.error("Error details: ", error);
         throw error;
     }
 };
@@ -74,6 +81,8 @@ async function updateRenter({ id, user_id, suite_id, rent_start_date, rent_end_d
 
         return renter;
     } catch (error) {
+        console.error(`Could not update renter with ID ${id}`);
+        console.error("Error details: ", error);
         throw error;
     }
 };
@@ -86,6 +95,8 @@ async function deleteRenter(id) {
             WHERE id = $1;
         `, [id]);
     } catch (error) {
+        console.error(`Could not delete renter with ID ${id}`);
+        console.error("Error details: ", error);
         throw error;
     }
 };

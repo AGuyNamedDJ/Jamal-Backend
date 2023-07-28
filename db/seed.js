@@ -581,49 +581,49 @@ const { createPromotion, getAllPromotions, getPromotionById, updatePromotion, de
 
 
         // Test Salon Renter
-            // console.log("Creating a new renter...");
-            // const newRenter = await createRenter({
-            //     user_id: 1, 
-            //     suite_id: 1,
-            //     rent_start_date: '2023-08-01', 
-            //     rent_end_date: '2024-08-01', 
-            //     monthly_rental_fee: 300.00, 
-            //     lease_contract_link: 'www.example.com/leasecontract.pdf'
-            // });
-            // console.log(newRenter);
+            console.log("Creating a new renter...");
+            const newRenter = await createRenter({
+                user_id: 1, 
+                suite_id: 1,
+                rent_start_date: '2023-08-01', 
+                rent_end_date: '2024-08-01', 
+                monthly_rental_fee: 300.00, 
+                lease_contract_link: 'www.example.com/leasecontract.pdf'
+            });
+            console.log(newRenter);
             
             // Test getRenterById 
-            // console.log("Getting renter by id...");
-            // const renter = await getRenterById(newRenter.id);
-            // console.log(renter);
+            console.log("Getting renter by id...");
+            const renter = await getRenterById(newRenter.id);
+            console.log(renter);
             
             // Test getRentersByUserId 
-            // console.log("Getting renter by user id...");
-            // const rentersByUser = await getRentersByUserId(newRenter.user_id);
-            // console.log(rentersByUser);
+            console.log("Getting renter by user id...");
+            const rentersByUser = await getRentersByUserId(newRenter.user_id);
+            console.log(rentersByUser);
             
             // Test getAllRenters 
-            // console.log("Getting all renters...");
-            // const allRenters = await getAllRenters();
-            // console.log(allRenters);
+            console.log("Getting all renters...");
+            const allRenters = await getAllRenters();
+            console.log(allRenters);
             
             // Test updateRenter 
-            // console.log("Updating renter...");
-            // const updatedRenter = await updateRenter({
-            //     id: newRenter.id,
-            //     user_id: newRenter.user_id, 
-            //     suite_id: newRenter.suite_id,
-            //     rent_start_date: '2024-08-01', // Notice the column name here
-            //     rent_end_date: '2025-08-01', 
-            //     monthly_rental_fee: 350.00, 
-            //     lease_contract_link: 'www.example.com/new_leasecontract.pdf'
-            // });
-            // console.log(updatedRenter);
+            console.log("Updating renter...");
+            const updatedRenter = await updateRenter({
+                id: newRenter.id,
+                user_id: newRenter.user_id, 
+                suite_id: newRenter.suite_id,
+                rent_start_date: '2024-08-01', // Notice the column name here
+                rent_end_date: '2025-08-01', 
+                monthly_rental_fee: 350.00, 
+                lease_contract_link: 'www.example.com/new_leasecontract.pdf'
+            });
+            console.log(updatedRenter);
            
             // Test deleteRenter 
-            // console.log("Deleting renter...");
-            // await deleteRenter(updatedRenter.id);
-            // console.log("Renter deleted.");
+            console.log("Deleting renter...");
+            await deleteRenter(updatedRenter.id);
+            console.log("Renter deleted.");
 
 
         // Test Services
