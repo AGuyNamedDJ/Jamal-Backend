@@ -54,17 +54,48 @@ async function getAppointmentById(id) {
 // Method: updateAppointment
 async function updateAppointment({ id, userId, serviceId, renterId, appointmentDate, appointmentEndDate, status }) {
     try {
+        const updateFields = [];
+        const updateValues = [];
+
+        if (userId !== undefined) {
+            updateFields.push(`user_id = $${updateValues.length + 1}`);
+            updateValues.push(userId);
+        }
+
+        if (serviceId !== undefined) {
+            updateFields.push(`service_id = $${updateValues.length + 1}`);
+            updateValues.push(serviceId);
+        }
+
+        if (renterId !== undefined) {
+            updateFields.push(`renter_id = $${updateValues.length + 1}`);
+            updateValues.push(renterId);
+        }
+
+        if (appointmentDate !== undefined) {
+            updateFields.push(`appointment_date = $${updateValues.length + 1}`);
+            updateValues.push(appointmentDate);
+        }
+
+        if (appointmentEndDate !== undefined) {
+            updateFields.push(`appointment_end_date = $${updateValues.length + 1}`);
+            updateValues.push(appointmentEndDate);
+        }
+
+        if (status !== undefined) {
+            updateFields.push(`status = $${updateValues.length + 1}`);
+            updateValues.push(status);
+        }
+
+        // Always push id at the end, because it's used in the WHERE clause
+        updateValues.push(id);
+
         const { rows: [appointment] } = await client.query(`
             UPDATE appointments
-            SET user_id = $1,
-                service_id = $2,
-                renter_id = $3,
-                appointment_date = $4,
-                appointment_end_date = $5,
-                status = $6
-            WHERE id = $7
+            SET ${updateFields.join(", ")}
+            WHERE id = $${updateValues.length}
             RETURNING *;
-        `, [userId, serviceId, renterId, appointmentDate, appointmentEndDate, status, id]);
+        `, updateValues);
 
         return appointment;
     } catch (error) {
@@ -73,6 +104,7 @@ async function updateAppointment({ id, userId, serviceId, renterId, appointmentD
         throw error;
     }
 };
+
 
 // Method: deleteAppointment
 async function deleteAppointment(id) {

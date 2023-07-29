@@ -23,11 +23,16 @@ appointmentsRouter.get('/', async (req, res, next) => {
 appointmentsRouter.get('/:id', async (req, res, next) => {
     try {
         const appointment = await getAppointmentById(req.params.id);
+        if (!appointment) {
+            // If the appointment doesn't exist, return a 404 status code
+            return res.status(404).send({ message: 'Appointment not found.' });
+        }
         res.send(appointment);
     } catch (error) {
         next(error);
     }
 });
+
 
 // Endpoint to create a new appointment
 appointmentsRouter.post('/', async (req, res, next) => {
