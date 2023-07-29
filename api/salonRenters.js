@@ -43,7 +43,7 @@ salonRentersRouter.post('/', async (req, res, next) => {
 });
 
 // Route to update a renter
-salonRentersRouter.put('/:id', async (req, res, next) => {
+salonRentersRouter.patch('/:id', async (req, res, next) => {
     try {
         const updatedRenter = await updateRenter({ id: req.params.id, ...req.body });
         res.send(updatedRenter);
@@ -51,6 +51,7 @@ salonRentersRouter.put('/:id', async (req, res, next) => {
         next(error);
     }
 });
+
 
 // Route to delete a renter
 salonRentersRouter.delete('/:id', async (req, res, next) => {
