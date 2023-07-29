@@ -66,7 +66,7 @@ const {usersRouter} = require('./users');
 apiRouter.use('/locations', franchiseLocationsRouter);
 apiRouter.use('/renter', salonRentersRouter);
 apiRouter.use('/suites', salonSuitesRouter);
-app.use('/services', servicesRouter);
+apiRouter.use('/services', servicesRouter);
 apiRouter.use('/users', usersRouter);
 
 // Export

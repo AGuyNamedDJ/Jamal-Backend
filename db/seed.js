@@ -111,7 +111,7 @@ const { createPromotion, getAllPromotions, getPromotionById, updatePromotion, de
             CREATE TABLE IF NOT EXISTS payments (
                 id SERIAL PRIMARY KEY,
                 user_id INTEGER REFERENCES users(id) NOT NULL, 
-                appointment_id INTEGER REFERENCES appointments(id) NOT NULL,
+                appointment_id INTEGER REFERENCES appointments(id) ON DELETE CASCADE NOT NULL,
                 amount DECIMAL(10, 2) NOT NULL,
                 payment_date TIMESTAMP NOT NULL,
                 transaction_id VARCHAR(255),
@@ -668,18 +668,18 @@ const { createPromotion, getAllPromotions, getPromotionById, updatePromotion, de
 
 
         // Test Appointments
-            // Test getAllAppointments
+            // // Test getAllAppointments
             // console.log("\n---Testing Appointments---");
             // console.log("Getting all appointments...");
             // let appointments = await getAllAppointments();
             // console.log(appointments);
         
-            // Test getAppointmentById
+            // // Test getAppointmentById
             // console.log("\nGetting appointment with id 1...");
             // let appointment = await getAppointmentById(1);
             // console.log(appointment);
 
-            // Test updateAppointment
+            // // Test updateAppointment
             // console.log("\nUpdating appointment with id 1...");
             // let updatedAppointment = await updateAppointment({
             //     id: 1,
@@ -692,7 +692,7 @@ const { createPromotion, getAllPromotions, getPromotionById, updatePromotion, de
             // });
             // console.log(updatedAppointment);
         
-             // Test deleteAppointment           
+            // //  Test deleteAppointment           
             // console.log("\nDeleting appointment with id 1...");
             // let result = await deleteAppointment(1);
             // console.log(result);
