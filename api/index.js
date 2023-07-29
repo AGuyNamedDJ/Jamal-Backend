@@ -60,8 +60,10 @@ apiRouter.use((error, req, res, next) => {
 // Routers
 const {usersRouter} = require('./users');
 const {franchiseLocationsRouter} = require('./franchiseLocations');
+const {salonRentersRouter} = require('./salonRenters');
 const {salonSuitesRouter} = require('./salonSuites');
 apiRouter.use('/locations', franchiseLocationsRouter);
+apiRouter.use('/renter', salonRentersRouter);
 apiRouter.use('/suites', salonSuitesRouter);
 apiRouter.use('/users', usersRouter);
 
