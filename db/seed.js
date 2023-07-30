@@ -725,23 +725,23 @@ const { createPromotion, getAllPromotions, getPromotionById, updatePromotion, de
                 // console.log(updatedPayment);
 
         // Test Reviews
-                // console.log("---Starting to Test Reviews---");
+            //     console.log("---Starting to Test Reviews---");
 
-            // Test getAllReviews
-                // console.log("Getting all reviews...");
-                // const allReviews = await getAllReviews();
-                // console.log("All Reviews:", allReviews);
+            // // Test getAllReviews
+            //     console.log("Getting all reviews...");
+            //     const allReviews = await getAllReviews();
+            //     console.log("All Reviews:", allReviews);
 
-            // Test getReviewById
-                // console.log("Getting review with id 1...");
-                // const reviewById = await getReviewById(1);
-                // console.log("Review with ID 1:", reviewById);
+            // // Test getReviewById
+            //     console.log("Getting review with id 1...");
+            //     const reviewById = await getReviewById(1);
+            //     console.log("Review with ID 1:", reviewById);
 
-            // Test updateReview
-                // console.log("Updating review with id 1...");
-                // const updatedReview = await updateReview({id: 1, rating: 4, content: "Service was good."});
-                // console.log("Updated Review:", updatedReview);
-                // console.log("---Finished Testing Reviews---");
+            // // Test updateReview
+            //     console.log("Updating review with id 1...");
+            //     const updatedReview = await updateReview({id: 1, rating: 4, content: "Service was good."});
+            //     console.log("Updated Review:", updatedReview);
+            //     console.log("---Finished Testing Reviews---");
 
 
         // Test Messages
