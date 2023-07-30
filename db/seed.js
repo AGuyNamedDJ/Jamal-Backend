@@ -805,29 +805,29 @@ const { createPromotion, getAllPromotions, getPromotionById, updatePromotion, de
 
         // Test Favorites
 
-            // Test createInitialFavorites
-                // console.log("Creating favorites...");
-                // let favorite1 = await createInitialFavorites();
-                // console.log("Favorite 1: ", favorite1);
+            // // Test createInitialFavorites
+            //     console.log("Creating favorites...");
+            //     let favorite1 = await createInitialFavorites();
+            //     console.log("Favorite 1: ", favorite1);
 
-            // Test getAllFavorites
-                // console.log("Getting all favorites...");
-                // const allFavorites = await getAllFavorites();
-                // console.log("All favorites: ", allFavorites);
+            // // Test getAllFavorites
+            //     console.log("Getting all favorites...");
+            //     const allFavorites = await getAllFavorites();
+            //     console.log("All favorites: ", allFavorites);
 
-            // Test getFavoriteById
-                // console.log("Getting favorite by ID...");
-                // const favoriteById = await getFavoriteById(favorite1.id);
-                // console.log("Favorite by ID: ", favoriteById);
+            // // Test getFavoriteById
+            //     console.log("Getting favorite by ID...");
+            //     const favoriteById = await getFavoriteById(favorite1.id);
+            //     console.log("Favorite by ID: ", favoriteById);
 
-            // Test deleteFavorite
-                // console.log("Deleting favorite...");
-                // const deletedFavorite = await deleteFavorite(favorite1.id);
-                // console.log("Deleted favorite: ", deletedFavorite);
+            // // Test deleteFavorite
+            //     console.log("Deleting favorite...");
+            //     const deletedFavorite = await deleteFavorite(favorite1.id);
+            //     console.log("Deleted favorite: ", deletedFavorite);
 
-                // console.log("Getting all favorites after deletion...");
-                // const allFavoritesAfterDeletion = await getAllFavorites();
-                // console.log("All favorites after deletion: ", allFavoritesAfterDeletion);
+            //     console.log("Getting all favorites after deletion...");
+            //     const allFavoritesAfterDeletion = await getAllFavorites();
+            //     console.log("All favorites after deletion: ", allFavoritesAfterDeletion);
         
 
         // Test Promotions

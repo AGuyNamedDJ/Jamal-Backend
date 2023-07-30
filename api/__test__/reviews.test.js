@@ -16,13 +16,12 @@ describe("Test the reviews routes", () => {
         });
     });
 
-// Clean up after each test by deleting the test review
+// Clean up 
 afterEach(async () => {
     if(testReview) {
         await deleteReview(testReview.id);
     }
 });
-
 
     test("should respond to the GET method", async () => {
         const response = await request(app).get(`/api/reviews/${testReview.id}`);
@@ -46,7 +45,7 @@ afterEach(async () => {
         expect(response.body).toHaveProperty('review');
         expect(response.body.review).toHaveProperty('rating', newReviewData.rating);
 
-        // Clean up by deleting the review created in this test
+        // Clean up by deleting the review
         await deleteReview(response.body.review.id);
     });
 
