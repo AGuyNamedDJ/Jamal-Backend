@@ -705,12 +705,12 @@ const { createPromotion, getAllPromotions, getPromotionById, updatePromotion, de
                 // const allPayments = await getAllPayments();
                 // console.log(allPayments);
 
-                // Test getPaymentById
+                // // Test getPaymentById
                 // console.log("Getting payment by ID...");
                 // const payment = await getPaymentById(1);
                 // console.log(payment);
 
-                // Test updatePayment
+                // // Test updatePayment
                 // console.log("Updating payment with id 1...");
                 // const updatedPayment = await updatePayment({
                 //     id: 1,
