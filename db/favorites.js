@@ -2,13 +2,13 @@
 const { client } = require('./index');
 
 // Method: createFavorite
-async function createFavorite({ userId, serviceId, renterId }) {
+async function createFavorite({ user_id, service_id, renter_id }) {
     try {
         const { rows: [favorite] } = await client.query(`
             INSERT INTO favorites(user_id, service_id, renter_id)
             VALUES($1, $2, $3)
             RETURNING *;
-        `, [userId, serviceId, renterId]);
+        `, [user_id, service_id, renter_id]);
 
         return favorite;
     } catch (error) {

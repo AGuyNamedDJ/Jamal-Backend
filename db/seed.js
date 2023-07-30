@@ -352,10 +352,10 @@ const { createPromotion, getAllPromotions, getPromotionById, updatePromotion, de
             console.log("Creating initial favorites...");
             const favorite = await createFavorite({
                 user_id: 1,
-                salon_renter_id: 2,
+                renter_id: 1,
                 service_id: 1
             });
-    
+
             console.log("Initial favorite created: ", favorite);
             return favorite;
         } catch (error) {
