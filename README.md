@@ -100,93 +100,161 @@ Please refer to the API documentation for detailed information on how to interac
 
 This directory contains all the routes for the application. It's divided into subdirectories based on functionality, e.g., auth, appointments, clients, staff, etc.
 
--- **test**/
+    -- **test**/
 
-    -- appointments.test.js
+        -- appointments.test.js
 
-    -- favorites.test.js
+        -- favorites.test.js
 
-    -- franchiseLocations.test.js
+        -- franchiseLocations.test.js
 
-    -- index.test.js
+        -- index.test.js
 
-    -- messages.test.js
+        -- messages.test.js
 
-    -- notifications.test.js
+        -- notifications.test.js
 
-    -- payments.test.js
+        -- payments.test.js
 
-    -- promotions.test.js
+        -- promotions.test.js
 
-    -- review.test.js
+        -- review.test.js
 
-    -- salonRenters.test.js
+        -- salonRenters.test.js
 
-    -- salonSuites.test.js
+        -- salonSuites.test.js
 
-    -- services.test.js
+        -- services.test.js
 
-    -- users.test.js
+        -- users.test.js
 
--- appointments.js
+    -- appointments.js
 
--- favorites.js
+    -- favorites.js
 
--- franchiseLocations.js
+    -- franchiseLocations.js
 
--- index.js
+    -- index.js
 
--- messages.js
+    -- messages.js
 
--- notifications.js
+    -- notifications.js
 
--- payments.js
+    -- payments.js
 
--- promotions.js
+    -- promotions.js
 
--- review.js
+    -- review.js
 
--- salonRenters.js
+    -- salonRenters.js
 
--- salonSuites.js
+    -- salonSuites.js
 
--- seed.js
+    -- seed.js
 
--- services.js
+    -- services.js
 
--- users.js
+    -- users.js
 
 ### /db <a name="db"></a>
 
 This directory includes all the files related to the database. It contains the database configuration files and SQL scripts for creating and seeding the database.
 
--- appointments.js
+    -- appointments.js
 
--- favorites.js
+    -- favorites.js
 
--- franchiseLocations.js
+    -- franchiseLocations.js
 
--- index.js
+    -- index.js
 
--- messages.js
+    -- messages.js
 
--- notifications.js
+    -- notifications.js
 
--- payments.js
+    -- payments.js
 
--- promotions.js
+    -- promotions.js
 
--- review.js
+    -- review.js
 
--- salonRenters.js
+    -- salonRenters.js
 
--- salonSuites.js
+    -- salonSuites.js
 
--- seed.js
+    -- seed.js
+        1. Imports
+            - The block imports several functions from multiple modules, which includes operations related to users, salon suites, renters, services, appointments, payments, reviews, franchise locations, messages, notifications, favorites, and promotions.
+        2. dropTables Method
+            - The dropTables function drops all tables from the database, if they exist. It's primarily used for resetting the database.
+        3. createTables Method
+            - The createTables function creates several tables in the database. Each table corresponds to different entities such as users, franchise locations, salon suites, salon renters, services, appointments, payments, reviews, favorites, promotions, messages, and notifications. Each table includes specific attributes, constraints, and references as defined in the respective SQL commands.
+        4. createInitialUsers
+            - This function initializes two user profiles - a stylist and a customer.
+        5. createInitialFranchiseLocations
+            - This function creates an initial location for a franchise in Chicago.
+        6. createInitialSalonSuite:
+            - This function establishes an initial salon suite offering haircut, coloring, and styling services.
+        7. createInitialSalonRenter
+            - This function initializes a salon renter with a one-year lease.
+        8. createInitialService
+            - This function adds a "Haircut" service, including its details like price, duration, and image.
+        9. createInitialAppointments
+            - This function schedules an initial appointment.
+        10. createInitialPayments
+            - This function creates an initial payment related to the appointment made.
+        11. createInitialReviews
+            - This function adds a positive review for a service.
+        12. createInitialFavorites
+            - This function sets an initial favorite, marking a renter and service as favorites for a user.
+        13. createInitialPromotions
+            - This function launches an initial promotion offering a discount for a service.
+        14. createInitialMessages
+            - This function sends initial messages between two users.
+        15. createInitialNotifications
+            - This function triggers an initial system notification welcoming a new user to the platform.
+        16. Rebuild DB
+            - Initializes the database. Drops and recreates tables, then populates them with initial data like users, locations, suites, services, appointments, payments, reviews, favorites, promotions, messages, and notifications.
+        17. Test DB
+            - Calls the rebuildDB function to initialize the database and test its functionality.
 
--- services.js
+    -- services.js
+        1. Imports and Requires
+            - The block imports necessary dependencies, particularly the database client from the db module.
+        2. createService Method
+            - The createService function adds a new service to the 'services' database table. It accepts an object that includes service-related details, including user_id, name, description, price, duration, and image_link.
+        3. getAllServices Method
+            - The getAllServices function retrieves all services from the 'services' database table.
+        4. getServiceById Method
+            - The getServiceById function retrieves a specific service from the 'services' table using the provided service ID.
+        5. getServicesByUser Method
+            - The getServicesByUser function retrieves all services related to a particular user from the 'services' database table. The user is identified using the provided userId.
+        6. updateService Method
+            - The updateService function updates a service's details in the 'services' database table. It accepts an object that includes the service's ID and the fields to be updated, such as name, description, price, duration, and image_link.
+        7. deleteService Method
+            - The deleteService function deletes a specific service from the 'services' database table based on the provided service ID.
+        8. Exports
+            - The module exports all the service-related functions for use in other parts of the application.
 
--- users.js 1. **Imports and Requires** - This block of code requires dependencies and files used throughout the module. It includes the client from the index file (which should be a PostgreSQL client based on the usage) and the bcrypt library used for password hashing and comparison. 2. createUser Function - This function takes an object with various properties (username, password, email, full_name, user_role, profile_image, phone_number) as an argument, hashes the password, and inserts a new user into the 'users' table in the database. If a user with the same username already exists, nothing will happen due to ON CONFLICT (username) DO NOTHING. 3. getAllUsers Function - The function retrieves all users from the 'users' table in the database, excluding their passwords for security reasons. 4. getUserById Function - This function accepts a user's ID as an argument and retrieves the corresponding user from the database, returning only the ID and username. 5. getUserByUsername Function - The function accepts a username as an argument and retrieves the corresponding user from the database. It returns the user's full profile except for the password. 6. loginUser Function - This function accepts an object containing a username and password, and attempts to log the user in. If the user is not found or the password does not match, an error is thrown. The password is deleted from the returned user object for security reasons. 7. deleteUser Function - This function deletes a user from the database based on their username. It performs a cascading delete, removing related data from the 'salon_renters' and 'salon_suites' tables before deleting the user from the 'users' table. It uses SQL transactions to ensure data consistency. 8. updateUser Function - This function updates a user's profile based on the fields provided. It takes a username and an object of fields to update. If the 'password' field is included, it will be hashed before being stored. It returns the updated user object. 9. Exports - The module exports all the user-related functions for use in other parts of the application.
+    -- users.js
+        1. Imports and Requires
+            - This block of code requires dependencies and files used throughout the module. It includes the client from the index file (which should be a PostgreSQL client based on the usage) and the bcrypt library used for password hashing and comparison.
+        2. createUser Function
+            - This function takes an object with various properties (username, password, email, full_name, user_role, profile_image, phone_number) as an argument, hashes the password, and inserts a new user into the 'users' table in the database. If a user with the same username already exists, nothing will happen due to ON CONFLICT (username) DO NOTHING.
+        3. getAllUsers Function
+            - The function retrieves all users from the 'users' table in the database, excluding their passwords for security reasons.
+        4. getUserById Function
+            - This function accepts a user's ID as an argument and retrieves the corresponding user from the database, returning only the ID and username.
+        5. getUserByUsername Function
+            - The function accepts a username as an argument and retrieves the corresponding user from the database. It returns the user's full profile except for the password.
+        6. loginUser Function
+            - This function accepts an object containing a username and password, and attempts to log the user in. If the user is not found or the password does not match, an error is thrown. The password is deleted from the returned user object for security reasons.
+        7. deleteUser Function
+            - This function deletes a user from the database based on their username. It performs a cascading delete, removing related data from the 'salon_renters' and 'salon_suites' tables before deleting the user from the 'users' table. It uses SQL transactions to ensure data consistency.
+        8. updateUser Function
+            - This function updates a user's profile based on the fields provided. It takes a username and an object of fields to update. If the 'password' field is included, it will be hashed before being stored. It returns the updated user object.
+        9. Exports
+            - The module exports all the user-related functions for use in other parts of the application.
 
 ### server.js <a name="server"></a>
 
