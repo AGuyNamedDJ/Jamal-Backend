@@ -102,30 +102,83 @@ This directory contains all the routes for the application. It's divided into su
 
     -- __test__/
         -- appointments.test.js
+            1. Requires:
+                - Modules like request, app from the server file, and several functions from the services database file are required.
+            2. Test:
 
         -- favorites.test.js
+            1. Requires:
+                - Modules like request, app from the server file, and several functions from the services database file are required.
+            2. Test:
 
         -- franchiseLocations.test.js
+            1. Requires:
+                - Modules like request, app from the server file, and several functions from the services database file are required.
+            2. Test:
 
         -- index.test.js
 
         -- messages.test.js
+            1. Requires:
+                - Modules like request, app from the server file, and several functions from the services database file are required.
+            2. Test:
 
         -- notifications.test.js
+            1. Requires:
+                - Modules like request, app from the server file, and several functions from the services database file are required.
+            2. Test:
 
         -- payments.test.js
+            1. Requires:
+                - Modules like request, app from the server file, and several functions from the services database file are required.
+            2. Test:
 
         -- promotions.test.js
+            1. Requires:
+                - Modules like request, app from the server file, and several functions from the services database file are required.
+            2. Test:
 
         -- review.test.js
+            1. Requires:
+                - Modules like request, app from the server file, and several functions from the services database file are required.
+            2. Test:
 
         -- salonRenters.test.js
+            1. Requires:
+                - Modules like request, app from the server file, and several functions from the services database file are required.
+            2. Test:
 
         -- salonSuites.test.js
+            1. Requires:
+                - Modules like request, app from the server file, and several functions from the services database file are required.
+                2. Test:
+                    - GET /api/suites: This test verifies that all suites can be retrieved. It checks that the server responds with a 200 status and an array of suites.
+                    - POST /api/suites: This test creates a new suite and checks that the server responds with a 200 status and the information of the created suite.
+                    - GET /api/suites/:id: This test retrieves a specific suite by id. A suite is created directly in the database using createSuite function. Then the test attempts to retrieve this suite by its id and checks that the server responds with a 200 status and the information of the suite.
+                    - PATCH /api/suites/:id: This test updates a suite's information and checks that the server responds with a 200 status and the updated information. A suite is created, updated with a PATCH request, and then the response is checked for the updated information.
+                    - DELETE /api/suites/:id: This test deletes a suite and checks that the server responds with a 204 status and that the suite no longer exists in the database. A suite is created and then deleted with a DELETE request. The suite is then attempted to be retrieved again to check it has indeed been deleted.
+
 
         -- services.test.js
+            1. Requires:
+                - Modules like request, app from the server file, and several functions from the services database file are required.
+            2. Tests:
+                - POST /api/services and GET /api/services/:id: This test case verifies that a new service can be created and then retrieved using its id. A new service is created, the response is checked for the correct status code and service information. The id of the created service is stored in the createdServiceId variable for use in other tests.
+                - GET /api/services/:id: This test case verifies that the created service can be retrieved using its id. The response is checked for the correct status code and that the id in the response matches the createdServiceId.
+                - PATCH /api/services/:id: This test case verifies that the service can be updated. The service identified by createdServiceId is updated and the response is checked for the correct status code and that the updated information matches the updates sent in the request.
+                - DELETE /api/services/:id: This test case verifies that the service can be deleted. The service identified by createdServiceId is deleted, the response is checked for the correct status code, and then the service is attempted to be retrieved again to ensure it has been deleted.
 
         -- users.test.js
+            1. Requires:
+                - Modules like request, app from the server file, functions from the users database file, jsonwebtoken and the JWT_SECRET from environment variables are required.
+            2. Setup and Cleanup Database Functions:
+                - Two users are created in the setupDatabase function, and these users are updated in the cleanupDatabase function.
+            3. Tests:
+                - PUT /api/users/update/:username: This test case verifies that a user can be updated. A unique user is created, a token is generated for that user, and then the user is updated with new data.
+                - GET /api/users: This test case verifies that all users can be fetched.
+                - GET /api/users/profile/:username: This test case verifies that a specific user's profile can be fetched. The user is identified by their username.
+                - POST /api/users/register: This test case verifies that a new user can be registered. A unique user is created and the response is checked for the correct status code and user information.
+                - POST /api/users/login: This test case verifies that an existing user can log in. The response is checked for the correct status code and presence of a token.
 
     -- appointments.js
         1. Imports:
