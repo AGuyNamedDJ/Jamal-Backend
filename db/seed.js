@@ -832,7 +832,7 @@ const { createPromotion, getAllPromotions, getPromotionById, updatePromotion, de
 
         // Test Promotions
 
-            // Test getAllPromotions
+            // // Test getAllPromotions
             //     console.log("Getting all promotions...");
             //     const allPromotions = await getAllPromotions();
             //     console.log("All promotions: ", allPromotions);
