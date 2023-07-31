@@ -105,48 +105,89 @@ This directory contains all the routes for the application. It's divided into su
             1. Requires:
                 - Modules like request, app from the server file, and several functions from the services database file are required.
             2. Test:
+                - GET /api/appointments/:id: This test checks if a GET request to this endpoint returns the correct appointment item.
+                - PATCH /api/appointments/:id: This test verifies if a PATCH request correctly updates an existing appointment. The date comparison takes into account the possibility of slight discrepancies, allowing for a difference of less than one day.
+                - DELETE /api/appointments/:id: This test ensures that a DELETE request correctly removes an appointment. It also verifies that a subsequent GET request for the same appointment returns a 404 status code, indicating that the appointment no longer exists.
 
         -- favorites.test.js
             1. Requires:
                 - Modules like request, app from the server file, and several functions from the services database file are required.
             2. Test:
+                - GET /api/favorites/:id: This test verifies if a GET request to this endpoint returns the correct favorite item.
+                - POST /api/favorites: This test checks if a POST request correctly creates a new favorite item.
+                - DELETE /api/favorites/:id: This test ensures that a DELETE request correctly removes a favorite item.
 
         -- franchiseLocations.test.js
             1. Requires:
                 - Modules like request, app from the server file, and several functions from the services database file are required.
             2. Test:
+                - GET /api/locations: This test case sends a GET request to /api/locations, expecting a 200 status code in response and the response body to be an array containing at least one object (a franchise location).
+                - POST /api/locations: This test case sends a POST request to /api/locations with the information of a new franchise location. It expects a 200 status code in response and the response body to match the new location object that was sent.
+                - GET /api/locations/:id: This test case sends a GET request to /api/locations with a specific location's ID. It expects a 200 status code in response and the response body to match the previously created testLocation object.
+                - PATCH /api/locations/:id: This test case sends a PATCH request to /api/locations with a specific location's ID and a payload containing the updated data (in this case, the name of the location). It expects a 200 status code in response and the name of the location in the response body to match the new name.
+                - DELETE /api/locations/:id: This test case sends a DELETE request to /api/locations with a specific location's ID. It expects a 200 status code in response and the response body to match the testLocation object. After deleting, it retrieves the location using its ID to ensure it has indeed been deleted
 
         -- index.test.js
+            1. Imports:
+                - Import functions
+            2. Test:
+                - Server Running Test
+                    - Checks if the server is running by accessing the root route /. Since it's not defined, it expects a 404 status code.
+                - API Route Test
+                    - Accesses the /api route and checks if it's working correctly. It expects a 200 status code and a message API is running.
+                - Get All Users Test
+                    - Sends a GET request to /api/users. It expects a 200 status code and an array of users.
 
         -- messages.test.js
             1. Requires:
                 - Modules like request, app from the server file, and several functions from the services database file are required.
             2. Test:
+                - GET /api/messages: Checks that the endpoint correctly returns a list of messages.
+                - POST /api/messages: Tests the creation of a new message and subsequently deletes it.
+                - DELETE /api/messages/:id: Validates the deletion of a specific message.
 
         -- notifications.test.js
             1. Requires:
                 - Modules like request, app from the server file, and several functions from the services database file are required.
             2. Test:
+                - POST /api/notifications: Validates the creation of a new notification.
+                - GET /api/notifications/:id: Confirms a specific notification can be fetched using its id.
+                - PUT /api/notifications/:id: Checks whether a specific notification can be updated.
+                - DELETE /api/notifications/:id: Tests the deletion of a specific notification.
 
         -- payments.test.js
             1. Requires:
                 - Modules like request, app from the server file, and several functions from the services database file are required.
             2. Test:
+                - GET /api/payments/:id: Checks if a payment can be fetched using its id.
+                - PATCH /api/payments/:id: Tests whether the payment details can be updated.
+                - DELETE /api/payments/:id: Validates if a payment can be deleted successfully.
 
         -- promotions.test.js
             1. Requires:
                 - Modules like request, app from the server file, and several functions from the services database file are required.
             2. Test:
+                - GET /api/promotions/:id: Validates a promotion can be retrieved by its id.
+                - POST /api/promotions: Tests the creation of a new promotion.
+                - DELETE /api/promotions/:id: Ensures a promotion can be successfully deleted.
 
         -- review.test.js
             1. Requires:
                 - Modules like request, app from the server file, and several functions from the services database file are required.
             2. Test:
+                - GET /api/reviews/:id: Verifies a review can be fetched by its id.
+                - POST /api/reviews: Tests the creation of a new review.
+                - PATCH /api/reviews/:id: Updates a review and validates the change.
+                - DELETE /api/reviews/:id: Checks if a review can be successfully deleted.
 
         -- salonRenters.test.js
             1. Requires:
                 - Modules like request, app from the server file, and several functions from the services database file are required.
             2. Test:
+                - POST /api/renter and GET /api/renter/:id: Tests the creation of a new renter and retrieves the same using its id.
+                - GET /api/renter/:id: Checks if a renter with a specific id can be retrieved.
+                - PATCH /api/renter/:id: Updates the monthly rental fee of a renter and verifies the change.
+                - DELETE /api/renter/:id: Checks if a renter can be successfully deleted.
 
         -- salonSuites.test.js
             1. Requires:
