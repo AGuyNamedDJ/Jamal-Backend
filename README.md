@@ -100,8 +100,7 @@ Please refer to the API documentation for detailed information on how to interac
 
 This directory contains all the routes for the application. It's divided into subdirectories based on functionality, e.g., auth, appointments, clients, staff, etc.
 
-    -- **test**/
-
+    -- __test__/
         -- appointments.test.js
 
         -- favorites.test.js
@@ -143,18 +142,118 @@ This directory contains all the routes for the application. It's divided into su
     -- payments.js
 
     -- promotions.js
+        1. Imports:
+            - The required modules and functions are imported. The express module is imported to create the server and a router is created to handle requests to the 'promotions' endpoints. Various functions from the 'promotions' database file are imported.
+        2. Middleware:
+            - There is a middleware function that logs a message whenever a request is made to the '/promotions' route.
+        3. Endpoint to getAllPromotions:
+            - A GET request to the root of the 'promotions' path retrieves all promotions from the database.
+        4. Endpoint to getPromotionById:
+            - A GET request to '/:id' retrieves a specific promotion by its id from the database.
+        5. Endpoint to createPromotion:
+            - A POST request to the root of the 'promotions' path creates a new promotion in the database. The details for the new promotion are provided in the body of the request.
+        6. Endpoint to updatePromotion:
+            - A PATCH request to '/:id' updates a specific promotion, identified by its id. The new details for the promotion are included in the body of the request.
+        7. Endpoint to deletePromotion:
+            - A DELETE request to '/:id' removes a specific promotion, identified by its id, from the database.
+        8. Exports:
+            - Finally, 'promotionsRouter' is exported so that it can be used in other parts of the application.
 
     -- review.js
+        1. Imports:
+            - Imported modules and functions, such as Express for creating the server, and various functions from the 'reviews' database file.
+        2. Endpoint to getAllReviews:
+            - A GET request to the root of the 'reviews' path retrieves all reviews from the database.
+        3. Endpoint to getReviewById:
+            - A GET request to '/:reviewId' retrieves a specific review by its id from the database.
+        4. Endpoint to createReview:
+            - A POST request to the root of the 'reviews' path creates a new review in the database. The details for the new review are provided in the body of the request.
+        5. Endpoint to updateReview:
+            - A PATCH request to '/:reviewId' updates a specific review, identified by its id. The new details for the review are included in the body of the request.
+        6. Endpoint to deleteReview:
+            - A DELETE request to '/:reviewId' removes a specific review, identified by its id, from the database.
+        7. Exports:
+            - Exported 'reviewsRouter' so that it can be used in other parts of your application.
 
     -- salonRenters.js
+        1. Imports:
+            - Imported Express for creating the server and various functions from the 'salonRenters' database file. Also created a router using Express to handle requests to the 'salonRenters' endpoints.
+        2. Endpoint to getAllRenters:
+            - A GET request to the root of the 'salonRenters' path retrieves all renters from the database.
+        3. Endpoint to getRenterById:
+            - A GET request to '/:id' retrieves a specific renter by their id from the database.
+        4. Endpoint to getRentersByUserId:
+            - A GET request to '/user/:userId' fetches all renters associated with a specific user, identified by their user id.
+        5. Endpoint to createRenter:
+            - A POST request to the root of the 'salonRenters' path creates a new renter in the database. The details for the new renter are provided in the body of the request.
+        6. Endpoint to updateRenter:
+            - A PATCH request to '/:id' updates a specific renter, identified by their id. The new details for the renter are included in the body of the request.
+        7. Endpoint to deleteRenter:
+            - A DELETE request to '/:id' removes a specific renter, identified by their id, from the database.
+        8. Exports:
+            - Exported 'salonRentersRouter' so that it can be used in other parts of your application.
 
     -- salonSuites.js
-
-    -- seed.js
+        1. Imports:
+            - The Express server and the functions from the services database file are imported.
+        2. Router Middleware:
+            - The router for handling services' endpoints is created.
+        3. Endpoint to createService:
+            - A POST request to create a new service in the database is handled. The service details are sent in the body of the request.
+        4. Endpoint to getAllServices:
+            - A GET request to fetch all the services from the database is handled.
+        5. Endpoint to getServiceById:
+            - A GET request to fetch a specific service by its id from the database is handled.
+        6. Endpoint to getServicesByUser:
+            - A GET request to fetch all the services offered by a specific user is handled.
+        7. Endpoint to updateService:
+            - A PATCH request to update the details of a service in the database is handled. The id of the service to be updated is sent in the parameters, and the new details are sent in the body of the request.
+        8. Endpoint to deleteService:
+            - A DELETE request to remove a service from the database is handled. The id of the service to be deleted is sent in the parameters.
+        9. Exports:
+            - The servicesRouter is exported for use in other modules.
 
     -- services.js
+        1. Imports:
+            - The Express server and the functions from the services database file are imported.
+        2. Router Middleware:
+            - The router for handling services' endpoints is created.
+        3. Endpoint to createService:
+            - A POST request to create a new service in the database is handled. The service details are sent in the body of the request.
+        4. Endpoint to getAllServices:
+            - A GET request to fetch all the services from the database is handled.
+        5. Endpoint to getServiceById:
+            - A GET request to fetch a specific service by its id from the database is handled.
+        6. Endpoint to getServicesByUser:
+            - A GET request to fetch all the services offered by a specific user is handled.
+        7. Endpoint to updateService:
+            - A PATCH request to update the details of a service in the database is handled. The id of the service to be updated is sent in the parameters, and the new details are sent in the body of the request.
+        8. Endpoint to deleteService:
+            - A DELETE request to remove a service from the database is handled. The id of the service to be deleted is sent in the parameters.
+        9. Exports:
+            - The servicesRouter is exporte
 
     -- users.js
+        1. Imports:
+            - The express server, database methods, jwt for authentication, dotenv for environment variables, and bcrypt for password hashing are all imported.
+        2. Router Middleware:
+            - The router for handling users' endpoints is set up.
+        3. Authenticate Middleware:
+            - A middleware function is created to authenticate users by verifying the JWT passed in the authorization header of the request.
+        4. Router Handlers:
+            - The server logs a message whenever a request is made to the users' route.
+        5. Endpoint to getAllUsers:
+            - Retrieves all users from the database and sends the response.
+        6. Endpoint to register:
+            - Allows a new user to register. The function first checks whether the username already exists. If not, it creates a new user and returns a signed JWT along with the new user data.
+        7. Endpoint to login:
+            - Logs in a user. The function checks whether the provided username and password are valid, signs a new JWT, and sends it in the response.
+        8. Endpoint to getUserByUsername:
+            - Fetches a user by their username and sends the response.
+        9. Endpoint to authenticateUser:
+            - Updates a user's data. The function first authenticates the user, then updates their data in the database and sends the response.
+        10. Exports:
+            - The usersRouter is exported for use in other modules.
 
 ### /db <a name="db"></a>
 
