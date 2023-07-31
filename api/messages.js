@@ -1,7 +1,8 @@
 // Requires
 const express = require('express');
 const messagesRouter = express.Router();
-const { createMessage, getMessagesByUserId, updateMessage, deleteMessage, getAllMessages } = require('../db/messages');
+const { createMessage, getMessagesByUserId, updateMessage,
+    deleteMessage, getAllMessages } = require('../db/messages');
 
 // Logging Middleware
 messagesRouter.use((req, res, next) => {
@@ -59,6 +60,7 @@ messagesRouter.delete('/:id', async (req, res, next) => {
     }
 });
 
+// Exports
 module.exports = {
     messagesRouter
 };

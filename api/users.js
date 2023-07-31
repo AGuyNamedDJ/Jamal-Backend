@@ -44,6 +44,7 @@ usersRouter.use((req, res, next) => {
     next();
 });
 
+// Endpoint to getAllUsers
 usersRouter.get('/', async (req, res, next) => {
     try {
         const users = await getAllUsers();
@@ -53,6 +54,7 @@ usersRouter.get('/', async (req, res, next) => {
     }
 });
 
+// Endpoint to register
 usersRouter.post('/register', async (req, res, next) => {
     const { username, password, email, full_name, user_role, profile_image, phone_number } = req.body;
 
@@ -77,7 +79,6 @@ usersRouter.post('/register', async (req, res, next) => {
             });
 
             const { password: hashedPassword, ...secureUser } = newUser;
-
             const token = jwt.sign(
                 {
                     id: secureUser.id,
@@ -97,6 +98,7 @@ usersRouter.post('/register', async (req, res, next) => {
     }
 });
 
+// Endpoint to login
 usersRouter.post('/login', async (req, res, next) => {
     const { username, password } = req.body;
 
@@ -124,6 +126,7 @@ usersRouter.post('/login', async (req, res, next) => {
     }
 });
 
+// Endpoint to getUserByUsername
 usersRouter.get('/profile/:username', async (req, res, next) => {
     const { username } = req.params;
     try {
@@ -141,6 +144,7 @@ usersRouter.get('/profile/:username', async (req, res, next) => {
     }
 });
 
+// Endpoint to authenticateUser
 usersRouter.put('/update/:username', authenticateUser, async (req, res, next) => {
     const { password, email, full_name, user_role, profile_image, phone_number } = req.body;
     const { username } = req.params; 
@@ -175,6 +179,7 @@ usersRouter.put('/update/:username', authenticateUser, async (req, res, next) =>
     }
 });
 
+// Exports
 module.exports = {
     usersRouter
 };

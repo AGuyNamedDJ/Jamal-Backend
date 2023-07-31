@@ -1,13 +1,8 @@
 // Requires
 const express = require('express');
 const salonSuitesRouter = express.Router();
-const {
-    createSuite,
-    getSuiteById,
-    getAllSuites,
-    updateSuite,
-    deleteSuite
-} = require('../db/salonSuites');
+const { createSuite, getSuiteById, getAllSuites,
+    updateSuite, deleteSuite } = require('../db/salonSuites');
 
 // Route to get all suites
 salonSuitesRouter.get('/', async (req, res, next) => {
@@ -71,6 +66,7 @@ salonSuitesRouter.delete('/:id', async (req, res, next) => {
     }
 });
 
+// Exports
 module.exports = {
     salonSuitesRouter
 };

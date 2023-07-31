@@ -2,16 +2,10 @@
 const express = require('express');
 const servicesRouter = express.Router();
 
-const {
-    createService,
-    getAllServices,
-    getServiceById,
-    getServicesByUser,
-    updateService,
-    deleteService
-} = require('../db/services');
+const { createService, getAllServices, getServiceById,
+    getServicesByUser, updateService,deleteService } = require('../db/services');
 
-// createService
+// Endpoint to createService
 servicesRouter.post('/', async (req, res, next) => {
     try {
         const service = await createService(req.body);
@@ -21,7 +15,7 @@ servicesRouter.post('/', async (req, res, next) => {
     }
 });
 
-// getAllServices
+// Endpoint to getAllServices
 servicesRouter.get('/', async (req, res, next) => {
     try {
         const services = await getAllServices();
@@ -31,7 +25,7 @@ servicesRouter.get('/', async (req, res, next) => {
     }
 });
 
-// getServiceById
+// Endpoint to getServiceById
 servicesRouter.get('/:id', async (req, res, next) => {
     try {
         const service = await getServiceById(req.params.id);
@@ -41,7 +35,7 @@ servicesRouter.get('/:id', async (req, res, next) => {
     }
 });
 
-// getServicesByUser
+// Endpoint to getServicesByUser
 servicesRouter.get('/user/:userId', async (req, res, next) => {
     try {
         const services = await getServicesByUser(req.params.userId);
@@ -51,7 +45,7 @@ servicesRouter.get('/user/:userId', async (req, res, next) => {
     }
 });
 
-// updateService
+// Endpoint to updateService
 servicesRouter.patch('/:id', async (req, res, next) => {
     try {
         const updatedService = await updateService({...req.body, id: req.params.id});
@@ -61,7 +55,7 @@ servicesRouter.patch('/:id', async (req, res, next) => {
     }
 });
 
-// deleteService
+// Endpoint to deleteService
 servicesRouter.delete('/:id', async (req, res, next) => {
     try {
         const deletedService = await deleteService(req.params.id);
@@ -71,6 +65,7 @@ servicesRouter.delete('/:id', async (req, res, next) => {
     }
 });
 
+// Exports
 module.exports = {
     servicesRouter
 };

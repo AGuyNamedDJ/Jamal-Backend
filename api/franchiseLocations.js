@@ -1,15 +1,8 @@
 // Requires
 const express = require('express');
 const franchiseLocationsRouter = express.Router();
-
-const {
-    createFranchiseLocation,
-    getAllFranchiseLocations,
-    getFranchiseLocationById,
-    updateFranchiseLocation,
-    getFranchiseLocationByName,
-    deleteFranchiseLocation
-} = require('../db/franchiseLocations');
+const { createFranchiseLocation, getAllFranchiseLocations, getFranchiseLocationById,
+    updateFranchiseLocation, getFranchiseLocationByName, deleteFranchiseLocation } = require('../db/franchiseLocations');
 
 // Route to get all locations
 franchiseLocationsRouter.get('/', async (req, res, next) => {
@@ -53,7 +46,8 @@ franchiseLocationsRouter.post('/', async (req, res, next) => {
 // Route to update a location
 franchiseLocationsRouter.patch('/:id', async (req, res, next) => {
     const { id } = req.params;
-    const { name, address, city, state, zip_code, country, phone_number, business_hours, email, additional_info } = req.body;
+    const { name, address, city, state, zip_code, country,
+        phone_number, business_hours, email, additional_info } = req.body;
 
     const updateFields = {};
 
@@ -87,6 +81,7 @@ franchiseLocationsRouter.delete('/:id', async (req, res, next) => {
     }
 });
 
+// Exports
 module.exports = {
     franchiseLocationsRouter
 };

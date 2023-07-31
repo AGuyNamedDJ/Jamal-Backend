@@ -1,20 +1,17 @@
 // Requires
 const express = require('express');
 const favoritesRouter = express.Router();
-const {
-    createFavorite,
-    getAllFavorites,
-    getFavoriteById,
-    deleteFavorite
-} = require('../db/favorites');
+const { createFavorite, getAllFavorites,
+    getFavoriteById,deleteFavorite } = require('../db/favorites');
 
+// Endpoint to get all
 favoritesRouter.use((req, res, next) => {
     console.log("A request is being made to /favorites");
 
     next();
 });
 
-// createFavorite
+// Endpoint to createFavorite
 favoritesRouter.post('/', async (req, res, next) => {
     try {
         const favorite = await createFavorite(req.body);
@@ -24,7 +21,7 @@ favoritesRouter.post('/', async (req, res, next) => {
     }
 });
 
-// getAllFavorites
+// Endpoint to getAllFavorites
 favoritesRouter.get('/', async (req, res, next) => {
     try {
         const favorites = await getAllFavorites();
@@ -34,7 +31,7 @@ favoritesRouter.get('/', async (req, res, next) => {
     }
 });
 
-// getFavoriteById
+// Endpoint to getFavoriteById
 favoritesRouter.get('/:id', async (req, res, next) => {
     try {
         const favorite = await getFavoriteById(req.params.id);
@@ -44,7 +41,7 @@ favoritesRouter.get('/:id', async (req, res, next) => {
     }
 });
 
-// deleteFavorite
+// Endpoint to deleteFavorite
 favoritesRouter.delete('/:id', async (req, res, next) => {
     try {
         const favorite = await deleteFavorite(req.params.id);
@@ -54,6 +51,7 @@ favoritesRouter.delete('/:id', async (req, res, next) => {
     }
 });
 
+// Exports
 module.exports = {
     favoritesRouter
 };

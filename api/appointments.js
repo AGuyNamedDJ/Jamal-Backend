@@ -1,13 +1,8 @@
 // Requires
 const express = require('express');
 const appointmentsRouter = express.Router();
-const { 
-    createAppointment, 
-    getAllAppointments, 
-    getAppointmentById, 
-    updateAppointment, 
-    deleteAppointment 
-} = require('../db/appointments');
+const { createAppointment, getAllAppointments, getAppointmentById, 
+    updateAppointment, deleteAppointment } = require('../db/appointments');
 
 // Endpoint to get all appointments
 appointmentsRouter.get('/', async (req, res, next) => {
@@ -32,7 +27,6 @@ appointmentsRouter.get('/:id', async (req, res, next) => {
         next(error);
     }
 });
-
 
 // Endpoint to create a new appointment
 appointmentsRouter.post('/', async (req, res, next) => {
@@ -64,6 +58,7 @@ appointmentsRouter.delete('/:id', async (req, res, next) => {
     }
 });
 
+// Exports
 module.exports = {
     appointmentsRouter
 };

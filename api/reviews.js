@@ -1,7 +1,8 @@
 // Requires
 const express = require('express');
 const reviewsRouter = express.Router();
-const { createReview, getAllReviews, getReviewById, updateReview, deleteReview } = require('../db/reviews');
+const { createReview, getAllReviews, getReviewById,
+    updateReview, deleteReview } = require('../db/reviews');
 
 // Route: Get all reviews
 reviewsRouter.get('/', async (req, res, next) => {
@@ -73,6 +74,7 @@ reviewsRouter.delete('/:reviewId', async (req, res, next) => {
     }
 });
 
+// Exports
 module.exports = {
     reviewsRouter
 };

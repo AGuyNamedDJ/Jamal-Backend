@@ -1,15 +1,10 @@
 // Requires
 const express = require('express');
 const paymentsRouter = express.Router();
-const { 
-    createPayment, 
-    getPaymentById, 
-    getAllPayments, 
-    updatePayment, 
-    deletePayment 
-} = require('../db/payments');
+const { createPayment, getPaymentById, getAllPayments,
+    updatePayment, deletePayment } = require('../db/payments');
 
-// createPayment
+// Endpoint to createPayment
 paymentsRouter.post('/', async (req, res, next) => {
     const payment = req.body;
     try {
@@ -20,7 +15,7 @@ paymentsRouter.post('/', async (req, res, next) => {
     }
 });
 
-// getAllPayments
+// Endpoint to getAllPayments
 paymentsRouter.get('/', async (req, res, next) => {
     try {
         const payments = await getAllPayments();
@@ -30,7 +25,7 @@ paymentsRouter.get('/', async (req, res, next) => {
     }
 });
 
-// getPaymentById
+// Endpoint to getPaymentById
 paymentsRouter.get('/:id', async (req, res, next) => {
     const { id } = req.params;
     try {
@@ -44,7 +39,7 @@ paymentsRouter.get('/:id', async (req, res, next) => {
     }
 });
 
-// updatePayment
+// Endpoint to updatePayment
 paymentsRouter.patch('/:id', async (req, res, next) => {
     const { id } = req.params;
     const payment = req.body;
@@ -60,7 +55,7 @@ paymentsRouter.patch('/:id', async (req, res, next) => {
     }
 });
 
-// deletePayment
+// Endpoint to deletePayment
 paymentsRouter.delete('/:id', async (req, res, next) => {
     const { id } = req.params;
     try {
@@ -71,6 +66,7 @@ paymentsRouter.delete('/:id', async (req, res, next) => {
     }
 });
 
+// Exports
 module.exports = {
     paymentsRouter
 };

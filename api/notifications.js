@@ -1,7 +1,8 @@
 // Requires
 const express = require('express');
 const notificationsRouter = express.Router();
-const { createNotification, getAllNotifications, getNotificationById, updateNotification, deleteNotification } = require('../db/notifications');
+const { createNotification, getAllNotifications, getNotificationById,
+    updateNotification, deleteNotification } = require('../db/notifications');
 
 // Route to Get All Notifications
 notificationsRouter.get('/', async (req, res, next) => {
@@ -74,6 +75,7 @@ notificationsRouter.delete('/:id', async (req, res, next) => {
     }
 });
 
+// Exports
 module.exports = {
     notificationsRouter
 };

@@ -1,12 +1,13 @@
 // Requires
 const express = require('express');
 const promotionsRouter = express.Router();
-const { createPromotion, getAllPromotions, getPromotionById, updatePromotion, deletePromotion } = require('../db/promotions');
+const { createPromotion, getAllPromotions, getPromotionById,
+    updatePromotion, deletePromotion } = require('../db/promotions');
 
 promotionsRouter.use((req, res, next) => {
     console.log("A request is being made to /promotions");
 
-    next(); // passes the request to the next middleware in the queue
+    next(); 
 });
 
 // GET /api/promotions
@@ -59,6 +60,7 @@ promotionsRouter.delete('/:id', async (req, res, next) => {
     }
 });
 
+// Exports
 module.exports = {
     promotionsRouter
 };

@@ -1,5 +1,6 @@
 const express = require('express');
-const { createRenter, getRenterById, getRentersByUserId, getAllRenters, updateRenter, deleteRenter } = require('../db/salonRenters');
+const { createRenter, getRenterById, getRentersByUserId, getAllRenters,
+    updateRenter, deleteRenter } = require('../db/salonRenters');
 const salonRentersRouter = express.Router();
 
 // Route to get all renters
@@ -63,6 +64,7 @@ salonRentersRouter.delete('/:id', async (req, res, next) => {
     }
 });
 
+// Exports
 module.exports = {
     salonRentersRouter
 };
