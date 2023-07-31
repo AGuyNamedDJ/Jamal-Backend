@@ -171,16 +171,102 @@ This directory includes all the files related to the database. It contains the d
     -- messages.js
 
     -- notifications.js
+        1. Requires:
+            - Imports the client from the index module.
+        2. Method: createNotification:
+            - Asynchronously creates a new notification.
+        3. Method: getAllNotifications:
+            - Retrieves all notifications from the database.
+        4. Method: getNotificationById:
+            - Fetches a notification using its ID.
+        5. Method: updateNotification:
+            - Updates a specified notification in the database.
+        6. Method: deleteNotification:
+            - Removes a specific notification from the database using its ID.
+        7. Exports:
+            - The script exports the functions for managing notifications in the database.
 
     -- payments.js
+        1. Requires:
+            - The script imports the client from the index module.
+        2. Method: createPayment:
+            - This asynchronous function creates a new payment in the payments table. It takes as parameters the user's ID, appointment ID, amount, payment date, transaction ID, status, and payment method, and returns the created payment object.
+       3.  Method: getPaymentById:
+            - This function retrieves a specific payment from the payments table in the database using the payment's ID. It returns the payment object if found, else it throws an error.
+        4. Method: getAllPayments:
+            - This function retrieves all the payments from the payments table in the database. It returns an array of payment objects, or throws an error if the operation fails.
+        5. Method: updatePayment:
+            - This function updates a specific payment in the payments table in the database. It uses the payment ID to find the specific payment and updates the fields specified in the parameters. It returns the updated payment object, or throws an error if the operation fails.
+        6. Method: deletePayment:
+            - This function deletes a specific payment from the payments table in the database using the payment's ID. It returns the result of the delete operation, or throws an error if the operation fails.
+        7. Exports:
+            - The script exports the createPayment, getPaymentById, getAllPayments, updatePayment, and deletePayment functions so they can be used in other parts of the application.
 
     -- promotions.js
+        1. Requires:
+            - The script imports the client from the index module.
+        2. Method: createPromotion:
+            - This function creates a new promotion, associating it with a specific salon renter and service. It inserts the promotion details, including the title, description, start date, end date, promo code, discount type, and discount value, into the database.
+        3. Method: getAllPromotions:
+            - This function retrieves all promotions from the database.
+        4. Method: getPromotionById:
+            - This function fetches a specific promotion from the database using its ID.
+        5. Method: updatePromotion:
+            - This function updates specific fields of a promotion in the database using the promotion's ID.
+        6. Method: deletePromotion:
+            - This function deletes a specific promotion from the database using its ID.
+        7. Exports:
+            - The module exports the functions for creating, retrieving, updating, and deleting promotions.
 
     -- review.js
+        1. Requires
+            - Description: The script imports the client from the index module.
+        2. Method: createReview
+            - Description: This function creates a new review with a specified user ID, service ID, rating, and content, and adds it into the database.
+        3. Method: getAllReviews
+            - Description: This function fetches all the reviews present in the database.
+        4. Method: getReviewById
+            - Description: This function retrieves a review by its ID from the database.
+        5. Method: updateReview
+            - Description: This function updates a specific review's rating and content in the database using the review's ID.
+        6. Method: deleteReview
+            - Description: This function removes a specific review from the database using its ID.
+        7. Exports
+            - Description: The module exports the functions for creating, retrieving, updating, and deleting reviews.
 
     -- salonRenters.js
+        1. Requires
+            - Loads the client from the index.
+        2. Method: createRenter
+            - Inserts a new renter into the salon_renters database table.
+        3. Method: getRenterById
+            - Fetches a renter from the database by their ID.
+        4. Method: getRentersByUserId
+            - Fetches all renters from the database who are associated with a specific user ID.
+        5. Method: getAllRenters
+            - Retrieves all renters from the database.
+        6. Method: updateRenter
+            - Updates a renter's information in the database.
+        7. Method: deleteRenter
+            - Deletes a renter from the database using their ID.
+        8. Exports
+            - Exports the methods for creating, retrieving, updating, and deleting renters.
 
     -- salonSuites.js
+        1. Requires
+            - Loads the client from the index.
+        2. Method: createSuite
+            - Inserts a new salon suite into the database.
+        3. Method: getSuiteById
+            - Fetches a salon suite from the database by its ID.
+        4. Method: getAllSuites
+            - Retrieves all salon suites from the database.
+        5. Method: updateSuite
+            - Updates a salon suite in the database.
+        6. Method: deleteSuite
+            - Deletes a salon suite from the database using its ID.
+        7. Exports
+            - Exports the methods for creating, retrieving, updating, and deleting salon suites.
 
     -- seed.js
         1. Imports
