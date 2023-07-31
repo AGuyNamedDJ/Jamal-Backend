@@ -344,7 +344,7 @@ This directory contains all the routes for the application. It's divided into su
         6. Endpoint to deleteReview:
             - A DELETE request to '/:reviewId' removes a specific review, identified by its id, from the database.
         7. Exports:
-            - Exported 'reviewsRouter' so that it can be used in other parts of your application.
+            - Exported 'reviewsRouter' so that it can be used in other parts of the application.
 
     -- salonRenters.js
         1. Imports:
@@ -362,7 +362,7 @@ This directory contains all the routes for the application. It's divided into su
         7. Endpoint to deleteRenter:
             - A DELETE request to '/:id' removes a specific renter, identified by their id, from the database.
         8. Exports:
-            - Exported 'salonRentersRouter' so that it can be used in other parts of your application.
+            - Exported 'salonRentersRouter' so that it can be used in other parts of the application.
 
     -- salonSuites.js
         1. Imports:
