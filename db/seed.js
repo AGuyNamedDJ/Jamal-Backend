@@ -781,30 +781,30 @@ const { createPromotion, getAllPromotions, getPromotionById, updatePromotion, de
 
 
         // Test Notifications
-                // console.log("Calling createInitialNotifications...");
-                // await createInitialNotifications();
+            //     console.log("Calling createInitialNotifications...");
+            //     await createInitialNotifications();
 
-            // Test getAllNotifications
-                // console.log("Calling getAllNotifications...");
-                // const notifications = await getAllNotifications();
-                // console.log("Result:", notifications);
+            // // Test getAllNotifications
+            //     console.log("Calling getAllNotifications...");
+            //     const notifications = await getAllNotifications();
+            //     console.log("Result:", notifications);
 
-            // Test getNotificationById
-                // console.log("Calling getNotificationById for the first notification...");
-                // const notification = await getNotificationById(notifications[0].id);
-                // console.log("Result:", notification);
+            // // Test getNotificationById
+            //     console.log("Calling getNotificationById for the first notification...");
+            //     const notification = await getNotificationById(notifications[0].id);
+            //     console.log("Result:", notification);
 
-            // Test updateNotification
-                // console.log("Calling updateNotification for the first notification...");
-                // const updatedNotification = await updateNotification(notifications[0].id, {
-                //     content: 'This is an updated content for the notification.',
-                // });
-                // console.log("Result:", updatedNotification);
+            // // Test updateNotification
+            //     console.log("Calling updateNotification for the first notification...");
+            //     const updatedNotification = await updateNotification(notifications[0].id, {
+            //         content: 'This is an updated content for the notification.',
+            //     });
+            //     console.log("Result:", updatedNotification);
 
-            // Test deleteNotification
-                // console.log("Calling deleteNotification for the first notification...");
-                // const deletedNotification = await deleteNotification(notifications[0].id);
-                // console.log("Result:", deletedNotification);
+            // // Test deleteNotification
+            //     console.log("Calling deleteNotification for the first notification...");
+            //     const deletedNotification = await deleteNotification(notifications[0].id);
+            //     console.log("Result:", deletedNotification);
 
 
         // Test Favorites
