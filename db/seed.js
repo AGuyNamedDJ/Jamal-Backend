@@ -370,11 +370,15 @@ const { createPromotion, getAllPromotions, getPromotionById, updatePromotion, de
             console.log("Creating initial promotions...");
 
             const promotion = await createPromotion({
+                salon_renter_id: 1,
+                service_id: 1,
                 title: "Summer Special",
                 description: "10% off any service.",
                 start_date: new Date(),
                 end_date: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
-                promo_code: "SUMMER10"
+                promo_code: "SUMMER10",
+                discount_type: "percentage",
+                discount_value: 10
             });
 
             console.log("Initial promotion created: ", promotion);
