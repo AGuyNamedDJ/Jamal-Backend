@@ -128,18 +128,95 @@ This directory contains all the routes for the application. It's divided into su
         -- users.test.js
 
     -- appointments.js
+        1. Imports:
+            - Express, appointmentsRouter, and a collection of methods from the appointments database file are imported.
+        2. Endpoints:
+            - GET /: Returns all appointments.
+            - GET /:id: Returns a specific appointment identified by its ID. If the appointment doesn't exist, a 404 status code and a 'not found' message are sent.
+            - POST /: Creates a new appointment with the data in the request body.
+            - PATCH /:id: Updates a specific appointment identified by its ID with the data in the request body.
+            - DELETE /:id: Deletes a specific appointment identified by its ID. Sends a 'deleted' message upon success.
+        3. Exports:
+            - Exports appointmentsRouter for use elsewhere in the application.
 
     -- favorites.js
+        1. Imports:
+            - Express, favoritesRouter, and a collection of methods from the favorites database file are imported.
+        2. Endpoints:
+            - POST /: Creates a new favorite with the data in the request body.
+            - GET /: Returns all favorites.
+            - GET /:id: Returns a specific favorite identified by its ID.
+            - DELETE /:id: Deletes a specific favorite identified by its ID.
+        3. Logging Middleware:
+            - Logs a console message whenever a request is made to any /favorites endpoint.
+        4. Exports:
+            - Exports favoritesRouter for use elsewhere in the application.
 
     -- franchiseLocations.js
+        1. Imports:
+            - The express and franchiseLocationsRouter are imported, as well as several functions from the franchiseLocations database file.
+        2. Endpoints:
+            - GET /: Fetches and returns all franchise locations.
+            - GET /:id: Fetches a specific franchise location by its ID and returns it. If the location isn't found, an error message is returned.
+            - POST /: Creates a new franchise location with the data in the request body and returns the created location.
+            - PATCH /:id: Updates a specific franchise location with data provided in the request body. Only fields provided in the request body will be updated.
+            - DELETE /:id: Deletes a specific franchise location by its ID and returns the deleted location.
+        3. Exports:
+            - The franchiseLocationsRouter is exported for use in other parts of the application.
 
     -- index.js
+        1. Imports:
+            - The dotenv module, express, express router, JSON Web Token (JWT), a function from a users database file, and a secret JWT key from environment variables are imported.
+        2. JWT Middleware:
+            - This middleware checks the 'Authorization' header of each incoming request. If it starts with 'Bearer', it takes the following token and tries to verify it. If it is a valid JWT, the user associated with it is retrieved from the database and added to the request object. If the 'Authorization' header is not present or doesn't start with 'Bearer', the middleware just calls the next middleware/route handler.
+        3. Endpoints:
+            - GET /: Returns a simple JSON message.
+        4. Error Handling Middleware:
+            - This middleware handles all the errors that might occur in the preceding routes. It logs the error and sends a response with a status code of 500 and the error message.
+        5. Child Routers:
+            - The child routers for different endpoints like appointments, favorites, locations, messages, etc., are imported and attached to the main apiRouter.
+        6. Exports:
+            - The apiRouter is exported for use in other parts of the application.
 
     -- messages.js
+        1. Imports:
+            - The express module, express router, and several functions from the 'messages' database file are imported.
+        2. Endpoints:
+            - GET /: Retrieves all messages.
+            - GET /:userId: Retrieves messages associated with a specific user ID.
+            - POST /: Creates a new message with the provided details in the request body.
+            - PUT /:id: Updates a specific message by its ID with the provided details in the request body.
+            - DELETE /:id: Deletes a specific message by its ID.
+        3. Exports:
+            - The 'messagesRouter' is exported for use in other parts of the application.
 
     -- notifications.js
+        1. Imports:
+            - Express and a router for 'notifications' endpoints are imported, along with several functions from the 'notifications' database file.
+        2. Endpoints:
+            - GET /: Fetches all notifications.
+            - GET /:id: Fetches a specific notification by its ID. If not found, it returns a 404 status.
+            - POST /: Creates a new notification with details provided in the request body.
+            - PUT /:id: Updates a specific notification identified by its ID. If not found, it returns a 404 status.
+            - DELETE /:id: Deletes a specific notification identified by its ID. If not found, it returns a 404 status.
+        3. Exports:
+            - The 'notificationsRouter' is exported for use in other parts of the application.
 
     -- payments.js
+        1. Imports:
+            - The necessary modules are imported, which include Express for setting up the server, a router for handling requests to 'payments' endpoints, and several functions from the 'payments' database file.
+        2. Endpoint to createPayment:
+            - A POST request to the root of the 'payments' route creates a new payment in the database. The details of the payment are provided in the request body. A HTTP status of 201 (Created) is returned along with the newly created payment.
+        3. Endpoint to getAllPayments:
+            - A GET request to the root of the 'payments' route retrieves all payments from the database. The payments are sent back as a JSON response.
+        4. Endpoint to getPaymentById:
+            - A GET request to '/:id' fetches a specific payment by its ID from the database. If the payment doesn't exist, a HTTP 404 (Not Found) status is returned. Otherwise, the payment is returned as a JSON response.
+        5. Endpoint to updatePayment:
+            - A PATCH request to '/:id' updates a specific payment identified by its ID. The new details for the payment are provided in the body of the request. If the payment doesn't exist, a HTTP 404 (Not Found) status is returned. Otherwise, the updated payment is sent back as a JSON response.
+        6. Endpoint to deletePayment:
+            - A DELETE request to '/:id' deletes a specific payment identified by its ID from the database. If the operation is successful, a HTTP 204 (No Content) status is returned.
+        7. Exports:
+            - The 'paymentsRouter' is exported to be used in other parts of the application.
 
     -- promotions.js
         1. Imports:
