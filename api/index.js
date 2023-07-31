@@ -61,6 +61,7 @@ apiRouter.use((error, req, res, next) => {
 const {appointmentsRouter} = require('./appointments');
 const {favoritesRouter} = require('./favorites');
 const {franchiseLocationsRouter} = require('./franchiseLocations');
+const {messagesRouter} = require('./messages');
 const {paymentsRouter} = require('./payments');
 const {promotionsRouter} = require('./promotions');
 const {reviewsRouter} = require('./reviews');
@@ -71,6 +72,7 @@ const {usersRouter} = require('./users');
 apiRouter.use('/appointments', appointmentsRouter);
 apiRouter.use('/favorites', favoritesRouter);
 apiRouter.use('/locations', franchiseLocationsRouter);
+apiRouter.use('/messages', messagesRouter);
 apiRouter.use('/payments', paymentsRouter);
 apiRouter.use('/promotions', promotionsRouter);
 apiRouter.use('/renter', salonRentersRouter);
