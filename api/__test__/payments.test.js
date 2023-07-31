@@ -1,11 +1,8 @@
 // Requires
 const request = require('supertest');
 const { app } = require('../../server');
-const {
-    createPayment,
-    getPaymentById,
-    deletePayment
-} = require('../../db/payments'); 
+const { createPayment, getPaymentById,
+    deletePayment } = require('../../db/payments'); 
 
 describe('Test the payments routes', () => {
     let testPayment;
@@ -36,8 +33,8 @@ describe('Test the payments routes', () => {
 
     test('should respond to the PATCH method', async () => {
         const newPaymentData = {
-            userId: testPayment.user_id, // Modified
-            appointmentId: testPayment.appointment_id, // Modified
+            userId: testPayment.user_id,
+            appointmentId: testPayment.appointment_id,
             amount: 120.00,
             paymentDate: new Date(),
             transactionId: '123abc',
@@ -49,9 +46,8 @@ describe('Test the payments routes', () => {
     
         const response = await request(app).patch(`/api/payments/${testPayment.id}`).send(newPaymentData);
         expect(response.statusCode).toBe(200);
-        expect(parseFloat(response.body.amount)).toBe(newPaymentData.amount); // Changed this line
+        expect(parseFloat(response.body.amount)).toBe(newPaymentData.amount); 
     });  
-    
     
     test('should respond to the DELETE method', async () => {
         const response = await request(app).delete(`/api/payments/${testPayment.id}`);

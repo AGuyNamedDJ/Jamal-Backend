@@ -16,7 +16,7 @@ describe('Test the notifications routes', () => {
         const response = await request(app).post('/api/notifications').send(newNotificationData);
         expect(response.statusCode).toBe(200);
         expect(response.body).toHaveProperty('id');
-        // Store the id of created notification to use in other tests
+        // Store the id of created notification 
         createdNotificationId = response.body.id;
     });
 

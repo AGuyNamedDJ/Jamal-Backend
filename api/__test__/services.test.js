@@ -1,11 +1,7 @@
 const request = require('supertest');
 const { app } = require('../../server');
-const {
-    createService,
-    getServiceById,
-    updateService,
-    deleteService
-} = require('../../db/services');
+const { createService, getServiceById,
+    updateService, deleteService } = require('../../db/services');
 
 describe('Services API', () => {
     it('POST /api/services and GET /api/services/:id', async () => {
@@ -28,7 +24,6 @@ describe('Services API', () => {
         };
 
         expect(response.body).toMatchObject(expectedResponse);
-
         createdServiceId = response.body.id;
     });
 
@@ -48,7 +43,6 @@ describe('Services API', () => {
         expect(response.body.name).toEqual(updates.name);
         expect(response.body.price).toEqual(updates.price);
     });
-   
 
     it('DELETE /api/services/:id - should delete the service with the given id', async () => {
         const response = await request(app).delete(`/api/services/${createdServiceId}`);

@@ -1,11 +1,10 @@
 // Requires
 const request = require('supertest');
 const { app } = require('../../server');
-const { createUser, updateUser, getUserByUsername } = require('../../db/users');  // import updateUser
+const { createUser, updateUser, getUserByUsername } = require('../../db/users');
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = process.env;
 
-// Function for setting up database
 async function setupDatabase() {
     await createUser({
         username: 'TestOwner1', 
@@ -25,9 +24,8 @@ async function setupDatabase() {
         profile_image: 'url', 
         phone_number: '987-654-3211'
     });
-}
+};
 
-// Function for cleaning up database
 async function cleanupDatabase() {
     await updateUser('TestOwner1', { 
         password: 'TestPassword1',  
@@ -45,7 +43,7 @@ async function cleanupDatabase() {
         profile_image: 'url', 
         phone_number: '987-654-3211' 
     });
-}
+};
 
 describe('User API', () => {
     // Run the setup function before tests
@@ -99,7 +97,6 @@ describe('User API', () => {
             console.log(res.body)
         });
     });
-      
 
     describe('GET /api/users', () => {
         it('should show all users', async () => {
@@ -147,14 +144,13 @@ describe('User API', () => {
         });
     });
     
-
     describe('POST /api/users/login', () => {
         it('should login an existing user', async () => {
             const res = await request(app)
                 .post('/api/users/login')
                 .send({
                     username: 'TestOwner1', 
-                    password: 'TestPassword1' // use original password
+                    password: 'TestPassword1'
                 });
             expect(res.statusCode).toEqual(200);
             expect(res.body).toHaveProperty('token');

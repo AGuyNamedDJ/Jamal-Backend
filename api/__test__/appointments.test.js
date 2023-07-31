@@ -1,11 +1,8 @@
 // Requires
 const request = require('supertest');
 const { app } = require('../../server');
-const {
-    createAppointment,
-    getAppointmentById,
-    deleteAppointment
-} = require('../../db/appointments'); 
+const { createAppointment, getAppointmentById,
+    deleteAppointment } = require('../../db/appointments'); 
 
 describe('Test the appointment routes', () => {
     let testAppointment;
@@ -47,8 +44,6 @@ describe('Test the appointment routes', () => {
         // Check that the difference is less than one day
         expect(diff).toBeLessThanOrEqual(24 * 60 * 60 * 1000);
     });
-    
-   
     
     test('should respond to the DELETE method', async () => {
         const response = await request(app).delete(`/api/appointments/${testAppointment.id}`);

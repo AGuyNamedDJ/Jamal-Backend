@@ -1,11 +1,7 @@
 const request = require('supertest');
 const { app } = require('../../server');
-const {
-    createRenter,
-    getRenterById,
-    updateRenter,
-    deleteRenter
-} = require('../../db/salonRenters');
+const { createRenter, getRenterById,
+    updateRenter, deleteRenter } = require('../../db/salonRenters');
 
 describe('Salon Renters API', () => {
     it('POST /api/renter and GET /api/renter/:id', async () => {
@@ -30,7 +26,6 @@ describe('Salon Renters API', () => {
         };
         
         expect(response.body).toMatchObject(expectedResponse);
-
         createdRenterId = response.body.id;
     });
 
@@ -47,7 +42,6 @@ describe('Salon Renters API', () => {
         expect(response.status).toEqual(200);
         expect(response.body.monthly_rental_fee).toEqual("1200.00");
     });
-    
 
     it('DELETE /api/renter/:id - should delete the renter with the given id', async () => {
         const response = await request(app).delete(`/api/renter/${createdRenterId}`);
@@ -57,5 +51,3 @@ describe('Salon Renters API', () => {
         expect(deletedRenter).toBeUndefined();
     });
 });
-
-

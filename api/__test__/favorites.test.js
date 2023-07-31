@@ -33,7 +33,6 @@ describe('Test the favorites routes', () => {
         expect(response.statusCode).toBe(200);
         expect(response.body).toHaveProperty('user_id', newFavoriteData.user_id);
     });
-    
 
     test('should respond to the DELETE method', async () => {
         const response = await request(app).delete(`/api/favorites/${testFavorite.id}`);

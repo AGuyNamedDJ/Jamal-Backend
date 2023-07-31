@@ -1,12 +1,8 @@
 // Requires
 const request = require('supertest');
 const { app } = require('../../server');
-const {     createFranchiseLocation,
-    getAllFranchiseLocations,
-    getFranchiseLocationById,
-    updateFranchiseLocation,
-    getFranchiseLocationByName,
-    deleteFranchiseLocation} = require('../../db/franchiseLocations');
+const {     createFranchiseLocation, getAllFranchiseLocations, getFranchiseLocationById,
+    updateFranchiseLocation, getFranchiseLocationByName, deleteFranchiseLocation} = require('../../db/franchiseLocations');
 
 describe('Franchise Locations API', () => {
     let testLocation;
