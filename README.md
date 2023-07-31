@@ -161,14 +161,78 @@ This directory contains all the routes for the application. It's divided into su
 This directory includes all the files related to the database. It contains the database configuration files and SQL scripts for creating and seeding the database.
 
     -- appointments.js
+        1. Imports:
+            - The PostgreSQL database client is imported from the index file.
+        2. Create Appointment:
+            - Inserts a new appointment into the database using userId, serviceId, renterId, appointmentDate, and appointmentEndDate.
+        3. Get All Appointments:
+            - Retrieves all appointments present in the database.
+        4. Get Appointment by ID:
+            - Fetches a particular appointment using its ID.
+        5. Update Appointment:
+            - Updates a specific appointment in the database using id, userId, serviceId, renterId, appointmentDate, appointmentEndDate, and status.
+        6. Delete Appointment:
+            - Removes a specific appointment from the database using its ID.
+        7. Exports:
+            - The functions are exported for use in other modules.
 
     -- favorites.js
+        1. Imports:
+            - Client for PostgreSQL database interaction is imported from the index file.
+        2. Create Favorite:
+            - Adds a new favorite to the database using user_id, service_id, and renter_id.
+        3. Get All Favorites:
+            - Fetches all the favorites from the database.
+        4. Get Favorite by ID:
+            - Retrieves a specific favorite using its ID.
+        5. Delete Favorite:
+            - Deletes a specific favorite from the database using its ID.
+        6. Exports:
+            - Exports all the functions for use in other modules.
 
     -- franchiseLocations.js
+        1. Imports:
+            - Imports the client from the index file for PostgreSQL database interaction.
+        2. Create Franchise Location:
+            - Creates a new franchise location in the database with information including name, address, city, state, zip code, country, phone number, business hours, email, and additional info.
+        3. Get All Franchise Locations:
+            - Fetches all franchise locations from the database.
+        4. Get Franchise Location by ID:
+            - Fetches a specific franchise location from the database using its ID.
+        5. Get Franchise Location by Name:
+            - Fetches a specific franchise location from the database using its name.
+        6. Update Franchise Location:
+            - Updates a specific franchise location in the database using its ID and the fields to be updated.
+        7. Delete Franchise Location:
+            - Deletes a specific franchise location from the database using its ID.
+        8. Exports:
+            - Exports all the functions to be used in other modules.
 
     -- index.js
+        1. Imports:
+            - Incorporates the dotenv module for environment variable management and the pg module for PostgreSQL interactions.
+
+        2. Establish a client/DB connection:
+            - Sets up a new PostgreSQL client using either the database URL from the environment variables or a default local URL.
+
+        3. Exports:
+            - Exports the PostgreSQL client for use in other modules.
 
     -- messages.js
+        1. Requires:
+            - Imports the client from the index module.
+        2. Method: createMessage:
+            - Asynchronously creates a new message.
+        3. Method: getAllMessages:
+            - Retrieves all messages from the database.
+        4. Method: getMessagesByUserId:
+            - Fetches all messages associated with a specific user ID.
+        5. Method: updateMessage:
+            - Updates a specified message in the database.
+        6. Method: deleteMessage:
+            - Removes a specific message from the database using its ID.
+        7. Exports:
+            - The script exports the functions for creating, retrieving, updating, and deleting messages.
 
     -- notifications.js
         1. Requires:
