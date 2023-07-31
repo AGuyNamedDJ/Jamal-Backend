@@ -84,6 +84,7 @@ async function deleteMessage(id) {
     }
 };
 
+// Exports
 module.exports = {
     createMessage,
     getMessagesByUserId,

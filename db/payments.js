@@ -91,6 +91,7 @@ async function deletePayment(id) {
     }
 };
 
+// Exports
 module.exports = {
     createPayment,
     getPaymentById,

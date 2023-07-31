@@ -78,8 +78,7 @@ async function updateRenter(renter) {
     const result = await client.query(query, [...Object.values(fieldsToUpdate), id]);
   
     return result.rows[0];
-  }
-  
+};  
 
 // Method: deleteRenter
 async function deleteRenter(id) {
@@ -95,6 +94,7 @@ async function deleteRenter(id) {
     }
 };
 
+// Exports
 module.exports = {
     createRenter,
     getRenterById,

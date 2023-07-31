@@ -74,7 +74,7 @@ async function updateSuite(suite) {
             }
         }
 
-        // Remove trailing comma and space
+        // Remove trailing comma + space
         setClause = setClause.slice(0, -2);
 
         const query = `
@@ -116,6 +116,7 @@ async function deleteSuite(id) {
     }
 };
 
+// Exports
 module.exports = {
     createSuite,
     getSuiteById,

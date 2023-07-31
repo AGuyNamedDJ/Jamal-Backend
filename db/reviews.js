@@ -86,6 +86,7 @@ async function deleteReview(id) {
     }
 };
 
+// Exports
 module.exports = {
     createReview,
     getReviewById,

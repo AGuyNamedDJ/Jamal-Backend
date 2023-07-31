@@ -84,7 +84,7 @@ async function deletePromotion(id) {
     }
 };
 
-
+// Exports
 module.exports = {
     createPromotion,
     getAllPromotions,

@@ -60,6 +60,7 @@ async function deleteFavorite(id) {
     }
 };
 
+// Exports
 module.exports = {
     createFavorite,
     getAllFavorites,

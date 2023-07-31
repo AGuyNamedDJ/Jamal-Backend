@@ -105,7 +105,6 @@ async function updateAppointment({ id, userId, serviceId, renterId, appointmentD
     }
 };
 
-
 // Method: deleteAppointment
 async function deleteAppointment(id) {
     try {
@@ -122,6 +121,7 @@ async function deleteAppointment(id) {
     }
 };
 
+// Exports
 module.exports = {
     createAppointment,
     getAppointmentById,

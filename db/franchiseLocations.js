@@ -2,8 +2,7 @@
 const { client } = require("./index");
 
 // Method: createFranchiseLocation
-async function createFranchiseLocation({ name, address, city, state, zip_code, country, phone_number, business_hours, email, additional_info 
-}) {
+async function createFranchiseLocation({ name, address, city, state, zip_code, country, phone_number, business_hours, email, additional_info }) {
     try {
         const { rows: [location] } = await client.query(`
             INSERT INTO franchise_locations(name, address, city, state, zip_code, country, 
@@ -101,6 +100,7 @@ async function deleteFranchiseLocation(id) {
     }
 };
 
+// Exports
 module.exports = {
     createFranchiseLocation,
     getAllFranchiseLocations,

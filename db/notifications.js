@@ -84,6 +84,7 @@ async function deleteNotification(id) {
     }
 };
 
+// Exports
 module.exports = {
     createNotification,
     getAllNotifications,

@@ -62,7 +62,6 @@ async function getUserById(id) {
     }
 };
 
-
 // getUserByUsername
 async function getUserByUsername(username) {
     try {
@@ -112,7 +111,6 @@ async function loginUser({ username, password }) {
     }
 };
 
-
 // deleteUser
 async function deleteUser(username) {
     try {
@@ -161,7 +159,7 @@ async function updateUser(username, fields = {}) {
     }
 
     // Check if the 'password' field is present
-    // If it is, hash the new password before updating
+        // If true, hash the new password
     if ('password' in fields) {
         const SALT_COUNT = 10;
         fields.password = await bcrypt.hash(fields.password, SALT_COUNT);
@@ -184,7 +182,7 @@ async function updateUser(username, fields = {}) {
     }
 };
 
-
+// Exports
 module.exports = {
     createUser,
     getAllUsers,
