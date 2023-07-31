@@ -749,35 +749,35 @@ const { createPromotion, getAllPromotions, getPromotionById, updatePromotion, de
 
 
         // Test Messages
-                // console.log("Testing 'createInitialMessages'...");
-                // await createInitialMessages();
+            //     console.log("Testing 'createInitialMessages'...");
+            //     await createInitialMessages();
                 
-            // Test getAllMessages
-                // console.log("Getting all messages...");
-                // const allMessages = await getAllMessages();
-                // console.log("All Messages: ", allMessages);
+            // // Test getAllMessages
+            //     console.log("Getting all messages...");
+            //     const allMessages = await getAllMessages();
+            //     console.log("All Messages: ", allMessages);
 
-            // Test getMessagesByUserId
-                // console.log("Getting message by id...");
-                // const message = await getMessagesByUserId(allMessages[0].id);
-                // console.log("Message: ", message);
+            // // Test getMessagesByUserId
+            //     console.log("Getting message by id...");
+            //     const message = await getMessagesByUserId(allMessages[0].id);
+            //     console.log("Message: ", message);
 
-            // Test updateMessage
-                // console.log("Updating first message...");
-                // const updatedMessage = await updateMessage(allMessages[0].id, {
-                //     content: "This message has been updated."
-                // });
-                // console.log("Updated Message: ", updatedMessage);
+            // // Test updateMessage
+            //     console.log("Updating first message...");
+            //     const updatedMessage = await updateMessage(allMessages[0].id, {
+            //         content: "This message has been updated."
+            //     });
+            //     console.log("Updated Message: ", updatedMessage);
 
-            // Test deleteMessage
-                // console.log("Deleting first message...");
-                // const deletedMessage = await deleteMessage(allMessages[0].id);
-                // console.log("Deleted Message: ", deletedMessage);
+            // // Test deleteMessage
+            //     console.log("Deleting first message...");
+            //     const deletedMessage = await deleteMessage(allMessages[0].id);
+            //     console.log("Deleted Message: ", deletedMessage);
 
-            // Test getAllMessages
-                // console.log("Getting all messages after delete...");
-                // const allMessagesAfterDelete = await getAllMessages();
-                // console.log("All Messages After Delete: ", allMessagesAfterDelete);
+            // // Test getAllMessages
+            //     console.log("Getting all messages after delete...");
+            //     const allMessagesAfterDelete = await getAllMessages();
+            //     console.log("All Messages After Delete: ", allMessagesAfterDelete);
 
 
         // Test Notifications
