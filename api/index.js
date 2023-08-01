@@ -3,7 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const apiRouter = express.Router();
 const jwt = require('jsonwebtoken');
-const { getUserById } = require("../db/Users");
+const { getUserById } = require("../db/users");
 const JWT_SECRET = process.env.JWT_SECRET
 
 // JWT Middleware
