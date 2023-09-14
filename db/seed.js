@@ -220,7 +220,7 @@ const { createPromotion, getAllPromotions, getPromotionById, updatePromotion, de
                 phone_number: "+13128282745", 
                 business_hours: "24/7",
                 email: "info@chicagosouthloop.example.com", 
-                additional_info: "24/7 access to the building."
+                additional_info: "Our South Loop salon suite offers around-the-clock access, so you can enjoy our premium beauty and grooming services whenever it fits your schedule."
             });
             console.log("Initial franchise location created: ", location);
         } catch (error) {
@@ -256,7 +256,7 @@ const { createPromotion, getAllPromotions, getPromotionById, updatePromotion, de
                 rent_start_date: '2023-08-01', 
                 rent_end_date: '2024-08-01', 
                 monthly_rental_fee: 300.00, 
-                lease_contract_link: 'www.example.com/leasecontract.pdf'
+                lease_contract_link: 'https://eforms.com/images/2015/09/Salon-Booth-Rental-Agreement.png'
             });
             console.log(renter);
             console.log("Finished creating initial salon renter.");
@@ -272,11 +272,11 @@ const { createPromotion, getAllPromotions, getPromotionById, updatePromotion, de
             console.log("Creating initial service...");
             const service = await createService({
                 user_id: 1, 
-                name: "Haircut",
-                description: "Includes wash, cut, and style.", 
+                name: "Classic Clean Cut",
+                description: "Our signature haircut service offers a refreshing wash, precision cut, and professional styling to keep you looking your best.", 
                 price: 35.00,
                 duration: 60,
-                image_link: 'www.example.com/image.jpg'
+                image_link: 'https://i.pinimg.com/originals/19/67/af/1967afb4fb68d241d3b9f67f71304192.jpg'
             });
             console.log(service);
             console.log("Finished creating initial service.");
@@ -336,7 +336,7 @@ const { createPromotion, getAllPromotions, getPromotionById, updatePromotion, de
                 userId: 1,
                 serviceId: 1, 
                 rating: 5,
-                content: "Great service! Would definitely recommend."
+                content: "I can't express how thrilled I am with my recent haircut! The stylist understood exactly what I wanted, and the result exceeded my expectations. My hair looks and feels amazing."
             });
             console.log(review1);
             console.log("Finished creating initial reviews.");
@@ -396,14 +396,14 @@ const { createPromotion, getAllPromotions, getPromotionById, updatePromotion, de
             const message1 = await createMessage({
                 sender_id: 1, 
                 receiver_id: 2,
-                content: "Hello! Looking forward to our appointment."
+                content: "I'm excited about our upcoming appointment. I can't wait to see the transformation! If you need any details from me or if there's anything I should prepare, please let me know."
             });
             console.log("Message 1 created: ", message1);
 
             const message2 = await createMessage({
                 sender_id: 2, 
                 receiver_id: 1,
-                content: "Hi, me too! Please confirm the time."
+                content: "Confirming our appointment. If the time works, reply with "confirmed." If there are changes or special requests, let me know. I'm dedicated to providing you with an exceptional experience."
             });
             console.log("Message 2 created: ", message2);
 
@@ -420,7 +420,7 @@ const { createPromotion, getAllPromotions, getPromotionById, updatePromotion, de
             const notification = await createNotification({
                 userId: 1,
                 type: 'system',
-                content: 'Welcome to our platform! We are happy to have you here.',
+                content: 'Welcome to our platform!',
             });
             console.log("Initial notification created: ", notification);
         } catch (error) {
