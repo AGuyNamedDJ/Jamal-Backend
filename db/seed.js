@@ -256,7 +256,7 @@ const { createPromotion, getAllPromotions, getPromotionById, updatePromotion, de
                 rent_start_date: '2023-08-01', 
                 rent_end_date: '2024-08-01', 
                 monthly_rental_fee: 300.00, 
-                lease_contract_link: 'https://eforms.com/images/2015/09/Salon-Booth-Rental-Agreement.png'
+                lease_contract_link: ''
             });
             console.log(renter);
             console.log("Finished creating initial salon renter.");
@@ -403,7 +403,7 @@ const { createPromotion, getAllPromotions, getPromotionById, updatePromotion, de
             const message2 = await createMessage({
                 sender_id: 2, 
                 receiver_id: 1,
-                content: "Confirming our appointment. If the time works, reply with "confirmed." If there are changes or special requests, let me know. I'm dedicated to providing you with an exceptional experience."
+                content: "Confirming our appointment. If the time works, reply with 'confirmed.' If there are changes or special requests, let me know. I'm dedicated to providing you with an exceptional experience."
             });
             console.log("Message 2 created: ", message2);
 
